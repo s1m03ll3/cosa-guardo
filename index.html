@@ -1,0 +1,1576 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f1115">
+<title>CosaGuardo</title>
+<style>
+  :root{
+    --bg:#0f1115; --card:#181b22; --card2:#20242d; --line:#2a2f3a;
+    --text:#eef0f4; --muted:#9aa1ad; --accent:#ff5a5f; --accent2:#ffb347; --ok:#3ecf8e; --gold:#f5c542;
+    --r:16px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+  body{padding-bottom:84px}
+  a{color:var(--accent2)}
+  .wrap{max-width:560px;margin:0 auto;padding:16px}
+  header{display:flex;align-items:center;justify-content:space-between;margin:4px 0 14px}
+  header h1{font-size:22px;margin:0;letter-spacing:-.3px}
+  header h1 span,.logo span{color:var(--accent)}
+  .pill{font-size:12px;color:var(--muted);border:1px solid var(--line);padding:4px 10px;border-radius:99px;cursor:pointer}
+  .pill.ok{color:var(--ok);border-color:var(--ok)}
+  .pill.gold{color:var(--gold);border-color:var(--gold)}
+  h2{font-size:15px;margin:22px 0 10px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.6px;display:flex;justify-content:space-between;align-items:center}
+  .section{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{border:1px solid var(--line);background:var(--card2);color:var(--text);padding:8px 12px;border-radius:99px;font-size:14px;cursor:pointer;user-select:none;transition:.15s;display:inline-flex;align-items:center;gap:6px}
+  .chip.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  .chip.plat.on,.chip.src.on{background:#2d5cff;border-color:#2d5cff}
+  .logo-img{width:22px;height:22px;border-radius:6px;pointer-events:none;flex:none;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff}
+  .row{display:flex;gap:12px;align-items:center;justify-content:space-between;margin:12px 0}
+  .row label{font-size:14px}
+  select,input[type=text],input[type=email],input[type=number],input[type=password]{background:var(--card2);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:15px;width:100%}
+  .row select{width:auto}
+  input[type=range]{flex:1;accent-color:var(--accent)}
+  .switch{position:relative;width:44px;height:26px;flex:none}
+  .switch input{opacity:0;width:0;height:0}
+  .switch span{position:absolute;inset:0;background:var(--line);border-radius:99px;transition:.2s;cursor:pointer}
+  .switch span:before{content:"";position:absolute;width:20px;height:20px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s}
+  .switch input:checked+span{background:var(--ok)}
+  .switch input:checked+span:before{transform:translateX(18px)}
+  .btn{display:block;width:100%;border:0;border-radius:14px;padding:15px;font-size:16px;font-weight:700;cursor:pointer;color:#fff;text-align:center;
+       background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:0 8px 24px rgba(255,90,95,.25)}
+  .btn:active{transform:scale(.98)}
+  .btn:disabled{opacity:.5;cursor:default}
+  .btn.ghost{background:var(--card2);box-shadow:none;border:1px solid var(--line);font-weight:600;font-size:14px;padding:12px;color:var(--text)}
+  .btn.danger{background:transparent;box-shadow:none;border:1px solid #6b2a2c;color:#ff8a8d;font-size:14px;padding:12px}
+  .btn.white{background:#fff;color:#111;box-shadow:none}
+  .btn.dark{background:#000;color:#fff;box-shadow:none;border:1px solid #333}
+  .btn.sm{width:auto;display:inline-block;padding:9px 14px;font-size:14px}
+  .stack>*+*{margin-top:10px}
+  .btns{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:12px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .muted{color:var(--muted);font-size:13px}
+  .count{font-size:13px;color:var(--muted);text-align:center;margin:10px 0 0;min-height:18px}
+  .banner{background:#3a2a10;border:1px solid #7a5a1a;color:#ffd58a;border-radius:12px;padding:12px;font-size:14px;margin-bottom:6px;cursor:pointer}
+  .adbanner{margin-top:18px;border:1px dashed #555;border-radius:12px;padding:12px;text-align:center;font-size:12px;color:var(--muted)}
+  .adbanner b{display:block;color:var(--text);font-size:14px;margin:2px 0}
+  /* result */
+  .result{margin-top:18px;border-radius:20px;overflow:hidden;background:var(--card);border:1px solid var(--line);animation:pop .35s ease}
+  @keyframes pop{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
+  .hero{position:relative;min-height:210px;display:flex;align-items:flex-end;gap:14px;padding:16px;background-size:cover;background-position:center}
+  .hero:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,17,21,.1),rgba(24,27,34,.95))}
+  .hero>*{position:relative}
+  .hero .poster{width:96px;height:144px;border-radius:10px;object-fit:cover;box-shadow:0 6px 20px rgba(0,0,0,.5);flex:none;background:var(--card2)}
+  .hero .bigemoji{position:absolute;right:16px;top:10px;font-size:60px}
+  .hero h3{margin:0 0 4px;font-size:22px;line-height:1.15;text-shadow:0 2px 12px rgba(0,0,0,.6)}
+  .hero .tagline{font-size:13px;color:#d6d9e0;font-style:italic}
+  .meta{padding:6px 16px 16px}
+  .tags{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 10px}
+  .tag{font-size:12px;padding:4px 9px;border-radius:99px;background:var(--card2);border:1px solid var(--line);color:var(--muted)}
+  .origin{font-size:13px;background:#1d2a45;border:1px solid #2d4370;color:#bcd0ff;border-radius:10px;padding:7px 10px;margin:4px 0 10px}
+  .provs{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:4px 0 12px}
+  .prov{display:flex;align-items:center;gap:6px;font-size:13px;background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:4px 8px 4px 4px}
+  .prov.mine{border-color:var(--ok)}
+  .plot{font-size:15px;line-height:1.45;margin:0}
+  .empty{text-align:center;padding:26px 14px;color:var(--muted)}
+  /* list items */
+  .item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}
+  .item:last-child{border-bottom:0}
+  .thumb{width:44px;height:64px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:22px;flex:none;overflow:hidden;position:relative}
+  .thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .item .info{flex:1;min-width:0}
+  .item .t{font-weight:600;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .item.seen .t{text-decoration:line-through;color:var(--muted)}
+  .icon{border:1px solid var(--line);background:var(--card2);color:var(--text);border-radius:10px;width:36px;height:36px;cursor:pointer;font-size:16px;flex:none}
+  .listcard{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px;cursor:pointer;margin-bottom:10px}
+  .listcard .lic{width:46px;height:46px;border-radius:12px;background:var(--card2);display:flex;align-items:center;justify-content:center;font-size:24px;flex:none}
+  .listcard .info{flex:1;min-width:0}
+  .listcard .t{font-weight:700;font-size:16px}
+  .avs{display:flex}
+  .av{width:28px;height:28px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;border:2px solid var(--card);margin-left:-6px;flex:none}
+  .avs .av:first-child{margin-left:0}
+  .av.lg{width:56px;height:56px;font-size:24px;border:0;margin:0}
+  .code{font-family:ui-monospace,Menlo,monospace;font-size:24px;letter-spacing:4px;font-weight:700;text-align:center;background:var(--card2);border-radius:12px;padding:12px;margin:8px 0}
+  .back{background:none;border:0;color:var(--muted);font-size:15px;cursor:pointer;padding:0;margin:4px 0 8px}
+  /* nav */
+  nav{position:fixed;bottom:0;left:0;right:0;background:rgba(15,17,21,.95);backdrop-filter:blur(10px);border-top:1px solid var(--line);
+      display:flex;justify-content:center;padding:8px 8px calc(8px + env(safe-area-inset-bottom));z-index:5}
+  nav .in{display:flex;max-width:560px;width:100%}
+  nav button{flex:1;background:none;border:0;color:var(--muted);font-size:12px;padding:6px;cursor:pointer}
+  nav button b{display:block;font-size:22px;margin-bottom:2px}
+  nav button.on{color:var(--text)}
+  nav button b{position:relative}
+  .badge{position:absolute;top:-4px;right:-10px;min-width:18px;height:18px;border-radius:99px;background:var(--accent);color:#fff;font-size:11px;font-weight:700;display:none;align-items:center;justify-content:center;padding:0 4px}
+  .view{display:none}.view.on{display:block}
+  .toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);background:var(--text);color:#111;padding:10px 16px;border-radius:99px;font-size:14px;font-weight:600;opacity:0;transition:.25s;pointer-events:none;z-index:60;max-width:90vw;text-align:center}
+  .toast.on{opacity:1}
+  /* sheet */
+  .sheet-bg{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:50;display:none;align-items:flex-end;justify-content:center}
+  .sheet-bg.on{display:flex}
+  .sheet{background:var(--card);border-radius:20px 20px 0 0;width:100%;max-width:560px;max-height:88vh;overflow:auto;padding:18px 16px calc(20px + env(safe-area-inset-bottom));animation:up .25s ease}
+  @keyframes up{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+  .sheet h3{margin:0 0 6px;font-size:19px}
+  .opt{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--line);border-radius:12px;margin-top:8px;cursor:pointer;background:var(--card2)}
+  .opt.on{border-color:var(--accent);background:#2a1a1c}
+  .opt .lic{font-size:24px}
+  /* onboarding */
+  .onb{position:fixed;inset:0;background:var(--bg);z-index:20;overflow:auto;display:none}
+  .onb.on{display:block}
+  .onb .wrap{min-height:100%;display:flex;flex-direction:column;padding-top:28px;padding-bottom:30px}
+  .onb .body{flex:1}
+  .onb h2.big{font-size:26px;color:var(--text);text-transform:none;letter-spacing:-.3px;margin:8px 0 6px;display:block}
+  .dots{display:flex;gap:6px;justify-content:center;margin-bottom:18px}
+  .dots i{width:7px;height:7px;border-radius:50%;background:var(--line)}
+  .dots i.on{background:var(--accent);width:20px;border-radius:99px}
+  .hero-emoji{font-size:84px;text-align:center;margin:40px 0 10px}
+  .logo{font-size:34px;font-weight:800;text-align:center;letter-spacing:-.5px}
+  .tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .tile{aspect-ratio:2/3;border-radius:10px;position:relative;overflow:hidden;cursor:pointer;display:flex;align-items:flex-end;padding:6px;font-size:12px;font-weight:600;border:2px solid transparent}
+  .tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .tile span{position:relative;text-shadow:0 1px 6px #000}
+  .tile.on{border-color:var(--ok)}
+  .tile.on:after{content:"✓";position:absolute;top:6px;right:6px;background:var(--ok);color:#000;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800}
+  /* loader + ad */
+  .loader{position:fixed;inset:0;background:rgba(10,11,14,.97);z-index:40;display:none;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center}
+  .loader.on{display:flex}
+  .reel{font-size:72px;height:96px;animation:bounce .5s ease infinite alternate}
+  @keyframes bounce{to{transform:translateY(-8px) rotate(-6deg)}}
+  .loader .msg{font-size:17px;font-weight:600;margin:8px 0 20px;min-height:24px}
+  .adbox{width:100%;max-width:400px;border-radius:16px;overflow:hidden;border:1px solid #333;background:#16181d}
+  .adbox .adlbl{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#888;padding:8px 12px;display:flex;justify-content:space-between}
+  .adbox .adcreative{height:210px;background:linear-gradient(135deg,#3b2b6b,#1b6b7b);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#fff}
+  .adbox .adcreative b{font-size:20px}
+  .adbar{height:4px;background:#333}.adbar i{display:block;height:100%;background:var(--accent2);width:0;transition:width linear}
+  .premium-cta{margin-top:14px;font-size:13px;color:var(--gold);cursor:pointer;background:none;border:0}
+  .feat{display:flex;gap:10px;align-items:center;padding:8px 0;font-size:15px}
+  .price{display:flex;justify-content:space-between;align-items:center}
+  .attrib{font-size:12px;color:var(--muted);line-height:1.5;margin-top:16px}
+  .profhead{display:flex;gap:14px;align-items:center}
+  .srcrow{display:flex;align-items:center;gap:8px;margin:2px 0 12px}
+  .srcrow .muted{flex:none}
+  .hscroll{display:flex;gap:8px;overflow-x:auto;padding:2px 0 6px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .hscroll::-webkit-scrollbar{display:none}
+  .hscroll .chip{flex:none;padding:7px 11px;font-size:13px}
+  .flabel{display:block;font-size:12px;color:var(--muted);margin:10px 0 6px;text-transform:uppercase;letter-spacing:.5px}
+  #modeFilters .flabel:first-child{margin-top:0}
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+  .grid3 select{width:100%;padding:9px 8px;font-size:14px}
+  .link{color:#bcd0ff;font-size:13px;cursor:pointer}
+  details.more{margin-top:10px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:10px 14px}
+  details.more summary{cursor:pointer;color:var(--muted);font-size:14px}
+  details.more .row:last-child{margin-bottom:0}
+  .actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;position:sticky;bottom:76px;z-index:4;padding:8px 0;background:linear-gradient(transparent,var(--bg) 30%)}
+  .actions .btn{padding:14px 8px}
+  .reshead{display:flex;justify-content:space-between;align-items:center;margin:18px 0 6px}
+  .reshead b{font-size:16px}
+  .ressub{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin:14px 0 2px}
+  .ritem{cursor:pointer}
+  .ritem .origin-mini{font-size:12px;color:#bcd0ff}
+  .avgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
+  .avopt{border:2px solid transparent;border-radius:14px;background:var(--card2);padding:10px 4px;text-align:center;cursor:pointer;font-size:11px;color:var(--muted)}
+  .avopt span{display:flex;width:52px;height:52px;margin:0 auto 6px;border-radius:50%;align-items:center;justify-content:center;font-size:30px}
+  .avopt.on{border-color:var(--accent);color:var(--text)}
+  .av.emo{font-size:16px}
+  .av.lg.emo{font-size:34px}
+  .seg{display:flex;background:var(--card2);border-radius:12px;padding:4px;gap:4px;margin-bottom:10px}
+  .seg button{flex:1;border:0;background:transparent;color:var(--muted);padding:8px 4px;border-radius:9px;font-size:13px;cursor:pointer}
+  .seg button.on{background:var(--text);color:#111;font-weight:600}
+  .ask{display:flex;gap:8px}
+  .ask input{flex:1;min-width:0}
+  .ask .btn{width:auto;padding:10px 16px;font-size:15px;flex:none}
+  .understood{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:10px;font-size:13px}
+  .understood .tag{color:var(--text)}
+  .hint{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.5}
+  .hint i{cursor:pointer;color:#bcd0ff;font-style:normal}
+  .fu{background:linear-gradient(135deg,#1d2a45,#2a1d3f);border:1px solid #3b4a7a;border-radius:var(--r);padding:14px;margin-bottom:6px;display:flex;gap:12px;align-items:center}
+  .fu .info{flex:1;min-width:0}
+  .fu .btns{grid-template-columns:1fr 1fr 1fr;margin-top:10px}
+  .fu .btn.ghost{padding:9px 4px;font-size:13px}
+  .watch{margin-top:12px}
+  .chip .x{opacity:.7;margin-left:2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Cosa<span>Guardo</span></h1>
+    <span class="pill" id="statusPill" data-a="goto" data-view="v-profile"></span>
+  </header>
+
+  <!-- ===================== SCEGLI ===================== -->
+  <section id="v-pick" class="view on">
+    <div id="setupBanner"></div>
+    <div id="followUp"></div>
+    <div class="srcrow"><span class="muted">Da dove:</span><div class="hscroll" id="srcChips"></div></div>
+
+    <div class="seg" id="modeSeg">
+      <button data-a="mode" data-id="desc">✨ Descrivi</button>
+      <button data-a="mode" data-id="filters">⚙️ Filtri</button>
+    </div>
+
+    <div class="section" id="modeDesc">
+      <div class="ask"><input type="text" id="descBox" placeholder="Es. un horror coi fantasmi sotto le 2 ore" autocomplete="off" enterkeyhint="search">
+        <button class="btn" data-a="describe" id="descBtn">Cerca</button></div>
+      <div id="descOut"></div>
+    </div>
+
+    <div class="section" id="modeFilters">
+      <div class="flabel">Genere</div><div class="hscroll" id="genreChips"></div>
+      <div class="flabel">Mood</div><div class="hscroll" id="moodChips"></div>
+      <div class="grid3">
+        <label><span class="flabel">Durata</span><select id="fDuration">
+          <option value="0">Qualsiasi</option><option value="100">&lt; 1h40</option><option value="130">&lt; 2h10</option><option value="160">&lt; 2h40</option></select></label>
+        <label><span class="flabel">Epoca</span><select id="fEra">
+          <option value="all">Qualsiasi</option><option value="classic">Classici</option><option value="2000">2000–2014</option><option value="recent">Dal 2015</option><option value="new">Ultimi 2 anni</option></select></label>
+        <label><span class="flabel">Voto</span><select id="fRating">
+          <option value="0">Qualsiasi</option><option value="6">6+</option><option value="6.5">6.5+</option><option value="7">7+</option><option value="7.5">7.5+</option><option value="8">8+</option></select></label>
+      </div>
+      <div style="text-align:right;margin-top:8px"><span class="link" data-a="resetFilters">Azzera filtri</span></div>
+    </div>
+
+    <details class="more"><summary>Altre opzioni</summary>
+      <div class="row"><label>Solo film che posso vedere<br><span class="muted">sulle mie piattaforme (anche per le liste)</span></label>
+        <label class="switch"><input type="checkbox" id="fOnlyAvail"><span></span></label></div>
+      <div class="row"><label>Solo film conosciuti<br><span class="muted">almeno 300 voti su TMDB</span></label>
+        <label class="switch"><input type="checkbox" id="fPopular"><span></span></label></div>
+      <div class="row"><label>Escludi film che ho già visto</label>
+        <label class="switch"><input type="checkbox" id="fHideSeen"><span></span></label></div>
+    </details>
+
+    <div class="actions">
+      <button class="btn ghost" data-a="showResults" id="showBtn">🔍 Mostra film</button>
+      <button class="btn" data-a="pick">🎲 A caso</button>
+    </div>
+    <div id="results"></div>
+  </section>
+
+  <!-- ===================== LISTE ===================== -->
+  <section id="v-lists" class="view"></section>
+
+  <!-- ===================== PROFILO ===================== -->
+  <section id="v-profile" class="view"></section>
+</div>
+
+<nav><div class="in">
+  <button data-a="goto" data-view="v-pick" class="on"><b>🔍</b>Cerca</button>
+  <button data-a="goto" data-view="v-lists"><b>📋<span class="badge" id="invBadge"></span></b>Liste</button>
+  <button data-a="goto" data-view="v-profile"><b>👤</b>Profilo</button>
+</div></nav>
+
+<div class="onb" id="onb"></div>
+<div class="loader" id="loader"></div>
+<div class="sheet-bg" id="sheetBg"><div class="sheet" id="sheet"></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* =====================================================================
+   1. CONFIGURAZIONE
+   ===================================================================== */
+const API = "https://api.themoviedb.org/3";
+const IMG = "https://image.tmdb.org/t/p/";
+const REGION = "IT", LANG = "it-IT";
+const MIN_VOTES = 300;
+const AD_EVERY = 3;          // pubblicità alla 1ª scelta e poi ogni 3 (solo utenti gratuiti)
+const AD_SECONDS = 5;        // durata annuncio simulato
+const FREE_MAX_LISTS = 3;    // liste massime per utenti gratuiti
+const LIST_TYPES = {
+  personal:{icon:"📋", label:"Personale", desc:"Solo per te"},
+  couple:  {icon:"💑", label:"Coppia",    desc:"Tu e un'altra persona", max:2},
+  friends: {icon:"👯", label:"Amici",     desc:"Fino a 10 persone",      max:10},
+};
+const MOODS = {
+  leggero:   {label:"😌 Leggero",        g:[35,16,10751],   not:[27,53,10752]},
+  adrenalina:{label:"⚡ Adrenalina",     g:[28,53,12]},
+  emozione:  {label:"🥹 Emozionante",    g:[18,10749]},
+  riflessivo:{label:"🧠 Riflessivo",     g:[18,99,36,878]},
+  paura:     {label:"😱 Paura",          g:[27]},
+  romantico: {label:"💕 Romantico",      g:[10749]},
+  famiglia:  {label:"🍿 Con la famiglia",g:[10751,16],      not:[27,53,80]},
+  giallo:    {label:"🔎 Mistero",        g:[9648,80]},
+};
+const GENRE_EMOJI = {28:"💥",12:"🗺️",16:"🎨",35:"😂",80:"🕵️",99:"📽️",18:"🎭",10751:"👨‍👩‍👧",14:"🐉",36:"🏛️",27:"👻",10402:"🎵",9648:"🔎",10749:"❤️",878:"🚀",10770:"📺",53:"🔪",10752:"🪖",37:"🤠"};
+const BASE_GENRES = [[28,"Azione"],[12,"Avventura"],[16,"Animazione"],[35,"Commedia"],[80,"Crime"],[99,"Documentario"],[18,"Dramma"],[10751,"Famiglia"],[14,"Fantasy"],[36,"Storia"],[27,"Horror"],[10402,"Musica"],[9648,"Mistero"],[10749,"Romance"],[878,"Fantascienza"],[53,"Thriller"],[10752,"Guerra"],[37,"Western"]].map(([id,name])=>({id,name}));
+const DEFAULT_FILTERS = {sources:["platforms"],genres:[],moods:[],maxDur:0,era:"all",years:null,minRating:6,popular:true,hideSeen:true,onlyAvail:false,keywords:[],people:[]};
+
+/* =====================================================================
+   2. CATALOGO DEMO (usato quando non c'è una chiave TMDB)
+   Stessi id piattaforma di TMDB: 8 Netflix, 119 Prime, 337 Disney+, 350 Apple TV+, 39 NOW, 531 Paramount+
+   ===================================================================== */
+const DEMO_BASE = 900000;
+const DEMO_PROVIDERS = [[8,"Netflix","#e50914"],[119,"Amazon Prime Video","#00a8e1"],[337,"Disney Plus","#113ccf"],[350,"Apple TV Plus","#555"],[39,"NOW","#00b39b"],[531,"Paramount Plus","#0064ff"]];
+const DEMO = [
+ [1,"Inception",2010,[878,53],148,8.4,[8,119],"Un ladro specializzato nell'entrare nei sogni altrui riceve l'incarico opposto: impiantare un'idea nella mente di un uomo."],
+ [2,"Il Re Leone",1994,[16,10751],88,8.3,[337],"Il giovane leone Simba deve affrontare il proprio passato per riprendersi il posto che gli spetta."],
+ [3,"Interstellar",2014,[878,18],169,8.4,[119,531],"Con la Terra al collasso, un gruppo di astronauti attraversa un wormhole in cerca di una nuova casa per l'umanità."],
+ [4,"Parasite",2019,[53,18],132,8.5,[119,39],"Una famiglia povera si infiltra, un membro alla volta, nella vita di una ricca famiglia di Seul."],
+ [5,"La La Land",2016,[10402,10749],128,7.9,[8,39],"Un pianista jazz e un'aspirante attrice si innamorano a Los Angeles inseguendo sogni che rischiano di separarli."],
+ [6,"Avengers: Endgame",2019,[28,878],181,8.2,[337],"Dopo la sconfitta contro Thanos, gli Avengers superstiti tentano un'ultima, disperata missione."],
+ [7,"Coco",2017,[16,10751],105,8.2,[337],"Un ragazzino appassionato di musica finisce nella Terra dei Morti e scopre la storia della sua famiglia."],
+ [8,"The Irishman",2019,[80,18],209,7.6,[8],"Un sicario ripercorre decenni di vita al servizio della mafia e il legame con Jimmy Hoffa."],
+ [9,"Il Padrino",1972,[80,18],175,8.7,[531,39],"Il patriarca di una dinastia mafiosa passa il controllo dell'impero al figlio più riluttante."],
+ [10,"Pulp Fiction",1994,[80,53],154,8.5,[119,8],"Storie intrecciate di sicari, pugili e piccoli criminali a Los Angeles, raccontate in ordine sparso."],
+ [11,"Get Out",2017,[27,9648],104,7.6,[8,119],"Un weekend dai genitori della fidanzata si trasforma lentamente in un incubo inquietante."],
+ [12,"Hereditary",2018,[27],127,7.3,[119],"Dopo la morte della nonna, una famiglia scopre segreti terrificanti sulle proprie origini."],
+ [13,"Toy Story",1995,[16,35,10751],81,8.0,[337],"Il cowboy Woody vede il suo ruolo di giocattolo preferito minacciato dall'arrivo di Buzz."],
+ [14,"Oppenheimer",2023,[18,36],180,8.1,[119,39],"La vita del fisico che guidò il Progetto Manhattan e il peso morale della bomba atomica."],
+ [15,"Dune",2021,[878,12],155,7.8,[8,39],"L'erede di una nobile casata viene coinvolto in una guerra per il controllo del pianeta Arrakis."],
+ [16,"Grand Budapest Hotel",2014,[35,12],99,8.0,[337],"Le rocambolesche avventure del concierge di un celebre hotel europeo e del suo giovane fattorino."],
+ [17,"Mad Max: Fury Road",2015,[28,12],120,7.6,[8,119],"In un deserto post-apocalittico, una fuga a tutta velocità contro un tiranno e il suo esercito."],
+ [18,"Everything Everywhere All at Once",2022,[878,35],139,7.8,[119],"Una proprietaria di lavanderia scopre di poter accedere alle vite delle sue versioni in altri universi."],
+ [19,"CODA – I segni del cuore",2021,[18,35],111,8.0,[350],"Unica udente in una famiglia di sordi, una ragazza scopre il talento per il canto."],
+ [20,"Killers of the Flower Moon",2023,[80,36],206,7.5,[350],"Negli anni '20 una serie di omicidi colpisce la nazione Osage, arricchitasi grazie al petrolio."],
+ [21,"Napoleon",2023,[36,28],158,6.4,[350],"L'ascesa e la caduta di Napoleone, tra campi di battaglia e il rapporto con Giuseppina."],
+ [22,"Top Gun: Maverick",2022,[28],130,8.2,[531,119],"Dopo trent'anni, Maverick torna ad addestrare giovani piloti per una missione impossibile."],
+ [23,"Glass Onion",2022,[9648,35],139,7.0,[8],"Il detective Benoit Blanc è invitato sull'isola di un miliardario, dove un gioco con delitto diventa reale."],
+ [24,"Cena con delitto – Knives Out",2019,[9648,35],130,7.8,[119,8],"Un celebre giallista muore la notte del suo compleanno: ogni familiare è un sospettato."],
+ [25,"La vita è bella",1997,[18,35],116,8.4,[8,119],"Un padre usa fantasia e ironia per proteggere il figlio dagli orrori di un campo di concentramento."],
+ [26,"Perfetti sconosciuti",2016,[35,18],97,7.6,[119,8],"A cena tra amici si decide di condividere ogni messaggio e telefonata ricevuti. Cosa potrebbe andare storto?"],
+ [27,"Il Signore degli Anelli – La Compagnia dell'Anello",2001,[14,12],178,8.4,[119,39],"Un giovane hobbit parte per distruggere un anello dal potere oscuro."],
+ [28,"Shrek",2001,[16,35,10751],90,7.7,[8,39],"Un orco scorbutico accetta di salvare una principessa pur di riavere la sua palude."],
+ [29,"Pirati dei Caraibi – La maledizione della prima luna",2003,[12,14],143,7.8,[337],"Jack Sparrow si allea con un fabbro per salvare una giovane rapita da pirati maledetti."],
+ [30,"Titanic",1997,[10749,18],194,7.9,[337,531],"A bordo del transatlantico più famoso della storia nasce un amore tra due giovani di mondi opposti."],
+ [31,"Il diavolo veste Prada",2006,[35],109,7.4,[337],"Una neolaureata diventa assistente della temutissima direttrice di una rivista di moda."],
+ [32,"Joker",2019,[18,53],122,8.1,[8,39],"Un comico fallito, emarginato dalla società, scivola lentamente nella follia."],
+ [33,"Barbie",2023,[35,14],114,7.0,[39,119],"Barbie inizia ad avere pensieri esistenziali e lascia Barbieland per il mondo reale."],
+ [34,"Spider-Man: Un nuovo universo",2018,[16,28],117,8.4,[8,119],"Miles Morales diventa Spider-Man e incontra eroi ragno da universi paralleli."],
+ [35,"Whiplash",2014,[18,10402],106,8.4,[8,39],"Un giovane batterista jazz si scontra con un insegnante spietato."],
+ [36,"Il favoloso mondo di Amélie",2001,[10749,35],122,7.9,[119],"Una timida cameriera di Montmartre decide di cambiare in segreto la vita di chi la circonda."],
+ [37,"A Quiet Place",2018,[27,878],90,7.4,[531,119],"Una famiglia sopravvive in silenzio assoluto in un mondo di creature che cacciano col suono."],
+ [38,"Gravity",2013,[878,53],91,7.2,[39],"Due astronauti rimangono alla deriva nello spazio dopo la distruzione della loro navetta."],
+ [39,"Notting Hill",1999,[10749,35],124,7.2,[119,8],"Il proprietario di una libreria di Londra si innamora della star del cinema più famosa del mondo."],
+ [40,"Up",2009,[16,12,10751],96,8.0,[337],"Un anziano vedovo lega migliaia di palloncini alla sua casa e parte per il Sud America."],
+ [41,"The Conjuring – L'evocazione",2013,[27],112,7.5,[8,39],"Due investigatori del paranormale aiutano una famiglia perseguitata da una presenza oscura."],
+ [42,"Il buono, il brutto, il cattivo",1966,[37,12],178,8.5,[119],"Tre pistoleri si danno la caccia durante la Guerra di Secessione per un tesoro sepolto."],
+].map(([n,title,year,g,rt,v,p,o])=>({id:DEMO_BASE+n,title,release_date:`${year}-06-01`,genre_ids:g,runtime:rt,vote_average:v,vote_count:5000-n*50,providers:p,overview:o,poster_path:null,backdrop_path:null}));
+
+// parole chiave (nomi inglesi come su TMDB) e persone, con i numeri dei film demo collegati
+const DEMO_KEYWORDS = [["ghost",[41,12]],["haunted house",[41]],["demon",[41,12]],["possession",[41,12]],["space",[3,38]],["astronaut",[3,38]],
+  ["time travel",[6]],["mafia",[9,8]],["dream",[1]],["superhero",[6,34]],["alien",[37]],["monster",[37,28]],["murder",[23,24,10]],
+  ["based on true story",[14,20,21,8]],["biography",[14,21]],["post-apocalyptic",[17,37]],["pirate",[29]],["jazz",[5,35]],["musician",[5,35]],
+  ["friendship",[13,28,40]],["revenge",[42]],["dog",[40]],["desert",[15,17]],["world war ii",[25,14]],["holocaust",[25]],["poverty",[4,32]],
+  ["class differences",[4,30]],["princess",[28]],["dragon",[28]],["journey",[40,27]],["coming of age",[19,35]],["island",[23]],["family",[7,40,19]]]
+  .map(([name,films],i)=>({id:DEMO_BASE+800+i,name,films:films.map(n=>DEMO_BASE+n)}));
+const DEMO_PEOPLE = [["Leonardo DiCaprio","Acting",[1,30,20]],["Christopher Nolan","Directing",[1,3,14]],["Tom Hanks","Acting",[13]],
+  ["Martin Scorsese","Directing",[8,20]],["Robert De Niro","Acting",[8,20]],["Al Pacino","Acting",[9,8]],["Timothée Chalamet","Acting",[15,3]],
+  ["Margot Robbie","Acting",[33]],["Ryan Gosling","Acting",[5,33]],["Emma Stone","Acting",[5]],["Tom Cruise","Acting",[22]],
+  ["Roberto Benigni","Acting",[25]],["Joaquin Phoenix","Acting",[32,21]],["Quentin Tarantino","Directing",[10]],["Matthew McConaughey","Acting",[3]],
+  ["Daniel Craig","Acting",[23,24]],["Cillian Murphy","Acting",[14,1]],["Sandra Bullock","Acting",[38]],["Hugh Grant","Acting",[39]],["Julia Roberts","Acting",[39]]]
+  .map(([name,dep,films],i)=>({id:DEMO_BASE+500+i,name,known_for_department:dep,popularity:50-i,films:films.map(n=>DEMO_BASE+n)}));
+const fold = s => String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
+
+function mockApi(path, q){
+  const strip = m => { const {providers,runtime,...r}=m; return r; };
+  const ids=s=>String(s).split(/[|,]/).map(Number);
+  if(path==="/search/keyword") return {results:DEMO_KEYWORDS.filter(k=>k.name.includes(fold(q.query))).map(({films,...k})=>k)};
+  if(path==="/search/person") return {results:DEMO_PEOPLE.filter(p=>fold(q.query).split(/\s+/).every(w=>fold(p.name).includes(w))).map(({films,...p})=>p)};
+  if(path==="/genre/movie/list") return {genres:BASE_GENRES};
+  if(path==="/watch/providers/movie") return {results:DEMO_PROVIDERS.map(([id,name],i)=>({provider_id:id,provider_name:name,logo_path:null,display_priorities:{IT:i}}))};
+  if(path==="/discover/movie"||path==="/search/movie"){
+    let r=DEMO;
+    if(path==="/search/movie") r=r.filter(m=>fold(m.title).includes(fold(q.query)));
+    else{
+      const films=(list,s)=>ids(s).flatMap(id=>(list.find(x=>x.id===id)||{films:[]}).films);
+      if(q.with_keywords){ const f=films(DEMO_KEYWORDS,q.with_keywords); r=r.filter(m=>f.includes(m.id)); }
+      if(q.with_cast){ const f=films(DEMO_PEOPLE,q.with_cast); r=r.filter(m=>f.includes(m.id)); }
+      if(q.with_crew){ const f=films(DEMO_PEOPLE,q.with_crew); r=r.filter(m=>f.includes(m.id)); }
+      if(q.with_watch_providers) r=r.filter(m=>m.providers.some(p=>ids(q.with_watch_providers).includes(p)));
+      if(q.with_genres) r=r.filter(m=>m.genre_ids.some(g=>ids(q.with_genres).includes(g)));
+      if(q.without_genres) r=r.filter(m=>!m.genre_ids.some(g=>ids(q.without_genres).includes(g)));
+      if(q["with_runtime.lte"]) r=r.filter(m=>m.runtime<=q["with_runtime.lte"]);
+      if(q["vote_average.gte"]) r=r.filter(m=>m.vote_average>=q["vote_average.gte"]);
+      if(q["primary_release_date.gte"]) r=r.filter(m=>m.release_date>=q["primary_release_date.gte"]);
+      if(q["primary_release_date.lte"]) r=r.filter(m=>m.release_date<=q["primary_release_date.lte"]);
+    }
+    const page=+q.page||1, per=20;
+    return {page,results:r.slice((page-1)*per,page*per).map(strip),total_results:r.length,total_pages:Math.max(1,Math.ceil(r.length/per))};
+  }
+  const mm=path.match(/^\/movie\/(\d+)$/);
+  if(mm){
+    const m=DEMO.find(x=>x.id===+mm[1]); if(!m) throw new Error("HTTP 404");
+    const flat=m.providers.map(id=>{const p=DEMO_PROVIDERS.find(x=>x[0]===id); return {provider_id:id,provider_name:p[1],logo_path:null};});
+    return {...strip(m),runtime:m.runtime,genres:m.genre_ids.map(id=>({id})),tagline:"",
+      "watch/providers":{results:{IT:{link:null,flatrate:flat}}}};
+  }
+  throw new Error("HTTP 404");
+}
+
+/* =====================================================================
+   3. "FINTO DATABASE"
+   Stesse tabelle che avremo su Supabase/Postgres. In produzione si
+   sostituisce SOLO questa sezione con chiamate al server.
+   ===================================================================== */
+const DB_KEY = "cosaguardo_db_v3", DEV_KEY = "cosaguardo_dev";
+const DB = {
+  data:null,
+  empty(){ return {users:[],profiles:{},lists:[],list_members:[],list_items:[],list_invites:[],list_links:[],seen:[],ratings:[],session:null}; },
+  load(){ try{ this.data=JSON.parse(localStorage.getItem(DB_KEY)); }catch(e){} if(!this.data) this.data=this.empty();
+    for(const [k,v] of Object.entries(this.empty())) if(!(k in this.data)) this.data[k]=v;
+    for(const u of this.data.users) if(!u.username && u.provider!=="guest") u.username=Usernames.suggest(u.name); },
+  save(){ localStorage.setItem(DB_KEY, JSON.stringify(this.data)); },
+};
+const uid = p => p+"_"+Math.random().toString(36).slice(2,10);
+// @nomeutente: unico, 3-20 caratteri, minuscole/numeri/punto/trattino basso. In produzione l'unicità la garantisce il DB
+const Usernames = {
+  norm: s => fold(s).replace(/^@/,"").replace(/[^a-z0-9._]/g,""),
+  valid: u => /^[a-z0-9._]{3,20}$/.test(u) && !/^[._]|[._]$/.test(u),
+  taken: (u,exceptId) => DB.data.users.some(x=>x.username===u && x.id!==exceptId),
+  suggest(name){ let base=Usernames.norm(String(name).trim().replace(/\s+/g,".")).replace(/^[._]+|[._]+$/g,"").slice(0,16);
+    if(base.length<3) base=(base+"film").slice(0,16); let u=base,i=1; while(Usernames.taken(u)) u=base+(++i); return u; },
+  error(u,exceptId){ if(!Usernames.valid(u)) return "Da 3 a 20 caratteri: lettere minuscole, numeri, punto o trattino basso";
+    if(Usernames.taken(u,exceptId)) return "Nome utente già in uso"; return null; },
+};
+const D = () => DB.data;
+
+const Auth = {
+  current(){ const s=D().session; return s ? D().users.find(u=>u.id===s.userId)||null : null; },
+  signUp({name,email,provider,username}){
+    const u={id:uid("u"),name,username:username||null,email:email||null,provider,created_at:Date.now()};
+    D().users.push(u);
+    D().profiles[u.id]={providerIds:[],favGenres:[],onboarded:false,premium:false,filters:structuredClone(DEFAULT_FILTERS)};
+    D().session={userId:u.id};
+    Lists.create("La mia lista","personal");
+    DB.save(); return u;
+  },
+  login(userId){ D().session={userId}; DB.save(); },
+  logout(){ D().session=null; DB.save(); },
+  byEmail(email){ return D().users.find(u=>u.email && u.email.toLowerCase()===email.toLowerCase()); },
+  upgradeGuest(name,email,username){ const u=Auth.current(); Object.assign(u,{name,email,username,provider:"email"}); DB.save(); },
+  setUsername(username){ Auth.current().username=username; DB.save(); },
+  deleteAccount(){
+    const id=Auth.current().id, d=D();
+    for(const l of Lists.mine()){
+      const others=d.list_members.filter(m=>m.list_id===l.id && m.user_id!==id);
+      if(!others.length) Lists.remove(l.id);
+      else { if(l.owner_id===id){ l.owner_id=others[0].user_id; others[0].role="owner"; } }
+    }
+    d.list_members=d.list_members.filter(m=>m.user_id!==id);
+    d.list_items=d.list_items.filter(i=>i.added_by!==id);
+    d.list_links=d.list_links.filter(x=>x.linked_by!==id);
+    d.list_invites=d.list_invites.filter(x=>x.from_user!==id && x.to_user!==id);
+    d.seen=d.seen.filter(s=>s.user_id!==id);
+    d.ratings=d.ratings.filter(r=>r.user_id!==id);
+    delete d.profiles[id];
+    d.users=d.users.filter(u=>u.id!==id);
+    d.session=null; DB.save();
+  },
+};
+const userById = id => D().users.find(u=>u.id===id);
+const userName = id => userById(id)?.name || "Utente eliminato";
+
+const Lists = {
+  mine(){ const me=Auth.current(); if(!me) return [];
+    const ids=D().list_members.filter(m=>m.user_id===me.id).map(m=>m.list_id);
+    return D().lists.filter(l=>ids.includes(l.id)); },
+  get(id){ return D().lists.find(l=>l.id===id); },
+  isMember(id){ return Lists.mine().some(l=>l.id===id); },
+  members(id){ return D().list_members.filter(m=>m.list_id===id).map(m=>({...m,user:userById(m.user_id)})); },
+  newCode(){ const c="ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; let s; do{ s=[...Array(6)].map(()=>c[Math.random()*c.length|0]).join(""); }while(D().lists.some(l=>l.invite_code===s)); return s; },
+  create(name,type){
+    const me=Auth.current();
+    const l={id:uid("l"),name,type,owner_id:me.id,invite_code:type==="personal"?null:Lists.newCode(),created_at:Date.now()};
+    D().lists.push(l); D().list_members.push({list_id:l.id,user_id:me.id,role:"owner",joined_at:Date.now()});
+    DB.save(); return l;
+  },
+  byCode(code){ return D().lists.find(x=>x.invite_code===String(code||"").trim().toUpperCase()); },
+  seatsLeft(id){ const max=LIST_TYPES[Lists.get(id).type].max||99; return max-Lists.members(id).length-Invites.forList(id).length; },
+  addMember(id,userId){
+    const l=Lists.get(id); if(!l) return {error:"La lista non esiste più"};
+    if(D().list_members.some(m=>m.list_id===id&&m.user_id===userId)) return {error:"Fai già parte di questa lista",list:l};
+    const max=LIST_TYPES[l.type].max; if(max && Lists.members(id).length>=max) return {error:`La lista è al completo (max ${max} persone)`};
+    D().list_members.push({list_id:id,user_id:userId,role:"member",joined_at:Date.now()});
+    D().list_invites.forEach(i=>{ if(i.list_id===id&&i.to_user===userId&&i.status==="pending") i.status="accepted"; });
+    DB.save(); return {list:l};
+  },
+  joinByLink(code){ const l=Lists.byCode(code); return l ? Lists.addMember(l.id,Auth.current().id) : {error:"Invito non valido o scaduto"}; },
+  leave(id){ const me=Auth.current().id, d=D();
+    d.list_members=d.list_members.filter(m=>!(m.list_id===id&&m.user_id===me));
+    d.list_links=d.list_links.filter(x=>!(x.list_id===id&&x.linked_by===me)); DB.save(); },
+  remove(id){ const d=D(); d.lists=d.lists.filter(l=>l.id!==id); d.list_members=d.list_members.filter(m=>m.list_id!==id); d.list_items=d.list_items.filter(i=>i.list_id!==id);
+    d.list_links=d.list_links.filter(x=>x.list_id!==id&&x.linked_list_id!==id); d.list_invites=d.list_invites.filter(x=>x.list_id!==id); DB.save(); },
+  // --- liste collegate (Premium): una lista condivisa "include" le liste personali dei membri, senza duplicare i film
+  links(id){ return D().list_links.filter(x=>x.list_id===id && Lists.get(x.linked_list_id)); },
+  link(id,linkedId){ if(Lists.links(id).some(x=>x.linked_list_id===linkedId)) return;
+    D().list_links.push({list_id:id,linked_list_id:linkedId,linked_by:Auth.current().id,at:Date.now()}); DB.save(); },
+  unlink(id,linkedId){ D().list_links=D().list_links.filter(x=>!(x.list_id===id&&x.linked_list_id===linkedId)); DB.save(); },
+  linkedItems(id){ const own=new Set(Lists.items(id).map(i=>i.movie.id)), out=[];
+    for(const ln of Lists.links(id)) for(const it of Lists.items(ln.linked_list_id)){
+      if(own.has(it.movie.id)||out.some(o=>o.movie.id===it.movie.id)) continue; out.push({...it,via:ln.linked_list_id}); }
+    return out; },
+  allItems(id){ return [...Lists.items(id),...Lists.linkedItems(id)]; },
+  copy(fromId,toId){ let n=0; for(const it of Lists.allItems(fromId)) if(!Lists.has(toId,it.movie.id)){ Lists.add(toId,it.movie); n++; } return n; },
+  items(id){ return D().list_items.filter(i=>i.list_id===id); },
+  has(id,movieId){ return D().list_items.some(i=>i.list_id===id && i.movie.id===movieId); },
+  add(id,movie){ if(Lists.has(id,movie.id)) return; const {overview,providers,tagline,origin,...lite}=movie;
+    D().list_items.unshift({id:uid("i"),list_id:id,movie:lite,added_by:Auth.current().id,added_at:Date.now()}); DB.save(); },
+  removeItem(id,movieId){ D().list_items=D().list_items.filter(i=>!(i.list_id===id&&i.movie.id===movieId)); DB.save(); },
+};
+const Invites = {
+  forList(id){ return D().list_invites.filter(i=>i.list_id===id&&i.status==="pending"); },
+  received(){ const me=Auth.current(); return me ? D().list_invites.filter(i=>i.to_user===me.id&&i.status==="pending"&&Lists.get(i.list_id)) : []; },
+  send(listId,userId){
+    if(D().list_members.some(m=>m.list_id===listId&&m.user_id===userId)) return {error:"È già nella lista"};
+    if(Invites.forList(listId).some(i=>i.to_user===userId)) return {error:"Invito già inviato"};
+    if(Lists.seatsLeft(listId)<=0) return {error:"Non ci sono più posti in questa lista"};
+    D().list_invites.push({id:uid("inv"),list_id:listId,from_user:Auth.current().id,to_user:userId,status:"pending",at:Date.now()}); DB.save(); return {};
+  },
+  get(id){ return D().list_invites.find(i=>i.id===id); },
+  cancel(id){ D().list_invites=D().list_invites.filter(i=>i.id!==id); DB.save(); },
+  accept(id){ const i=Invites.get(id); const r=Lists.addMember(i.list_id,i.to_user); if(!r.error) i.status="accepted"; DB.save(); return r; },
+  decline(id){ Invites.get(id).status="declined"; DB.save(); },
+};
+// ricerca utenti registrati: SOLO per @nomeutente (per privacy non si cerca per nome o email)
+const Users = {
+  search(q){ const me=Auth.current().id, f=Usernames.norm(q.trim()); if(f.length<2) return [];
+    return D().users.filter(u=>u.id!==me && u.username && u.username.startsWith(f))
+      .sort((a,b)=>(a.username===f?-1:0)-(b.username===f?-1:0) || a.username.length-b.username.length).slice(0,8); },
+};
+const handle = u => u?.username ? "@"+u.username : "";
+// nome lista leggibile anche per chi non ne è il proprietario ("La mia lista di Marco")
+const listLabel = l => l.type==="personal" && l.owner_id!==Auth.current()?.id ? `${l.name} di ${userName(l.owner_id)}` : l.name;
+const Seen = {
+  has(movieId,userId=Auth.current().id){ return D().seen.some(s=>s.user_id===userId&&s.movie_id===movieId); },
+  set(movieId,on){ const me=Auth.current().id; D().seen=D().seen.filter(s=>!(s.user_id===me&&s.movie_id===movieId)); if(on) D().seen.push({user_id:me,movie_id:movieId,at:Date.now()}); DB.save(); },
+  ids(){ const me=Auth.current().id; return D().seen.filter(s=>s.user_id===me).map(s=>s.movie_id); },
+};
+const Ratings = {
+  set(movie,value){ const me=Auth.current().id; D().ratings=D().ratings.filter(r=>!(r.user_id===me&&r.movie_id===movie.id));
+    if(value) D().ratings.push({user_id:me,movie_id:movie.id,value,genre_ids:movie.genre_ids||[],at:Date.now()}); DB.save(); },
+  get(movieId){ const me=Auth.current().id; return D().ratings.find(r=>r.user_id===me&&r.movie_id===movieId)?.value||0; },
+  mine(){ const me=Auth.current().id; return D().ratings.filter(r=>r.user_id===me); },
+};
+const me = () => Auth.current();
+const prof = () => D().profiles[me().id];
+const F = () => { const p=prof(); if(!("keywords" in p.filters)) p.filters={...structuredClone(DEFAULT_FILTERS),...p.filters}; return p.filters; };
+
+/* =====================================================================
+   4. UTILITY
+   ===================================================================== */
+const $ = s => document.querySelector(s);
+const esc = s => String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fmtDur = m => m ? `${Math.floor(m/60)}h${String(m%60).padStart(2,"0")}` : "";
+const img = (path,size) => path ? IMG+size+path : "";
+const toggle=(arr,v)=>arr.includes(v)?arr.filter(x=>x!==v):[...arr,v];
+const sleep = ms => new Promise(r=>setTimeout(r,ms));
+function hue(t){ let h=0; for(const c of String(t)) h=(h*31+c.charCodeAt(0))%360; return h; }
+const gradient = t => { const h=hue(t); return `linear-gradient(135deg,hsl(${h} 60% 35%),hsl(${(h+50)%360} 70% 20%))`; };
+const AVATARS = [
+  ["mago","🧙","Il Mago",270],["eroe","🦸","L'Eroe",0],["pirata","🏴‍☠️","Il Pirata",20],["astronauta","🧑‍🚀","L'Astronauta",220],
+  ["detective","🕵️","Il Detective",35],["vampiro","🧛","Il Vampiro",340],["cowboy","🤠","Il Cowboy",30],["alieno","👽","L'Alieno",120],
+  ["robot","🤖","Il Robot",200],["zombie","🧟","Lo Zombie",90],["fantasma","👻","Il Fantasma",250],["ninja","🥷","Il Ninja",0],
+  ["principessa","👸","La Principessa",310],["cattivo","🦹","Il Cattivo",280],["sirena","🧜","La Sirena",185],["drago","🐉","Il Drago",140],
+  ["clown","🤡","Il Clown",50],["spia","🕴️","La Spia",230],["cavaliere","🤺","Il Cavaliere",210],["dinosauro","🦖","Il Dinosauro",100],
+].map(([id,e,name,h])=>({id,e,name,bg:`linear-gradient(135deg,hsl(${h} 60% 45%),hsl(${(h+40)%360} 65% 28%))`}));
+const avatarOf = u => AVATARS.find(a=>a.id===u?.avatar);
+const avatar = (u,cls="") => { const a=avatarOf(u);
+  if(a) return `<span class="av emo ${cls}" style="background:${a.bg}" title="${esc(u?.name)}">${a.e}</span>`;
+  return `<span class="av ${cls}" style="background:hsl(${hue(u?.id||"x")} 55% 45%)" title="${esc(u?.name)}">${esc((u?.name||"?")[0].toUpperCase())}</span>`; };
+const avatarGrid = sel => `<div class="avgrid">${AVATARS.map(a=>`<div class="avopt ${a.id===sel?"on":""}" data-a="setAvatar" data-id="${a.id}"><span style="background:${a.bg}">${a.e}</span>${a.name}</div>`).join("")}</div>`;
+function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("on"); clearTimeout(t._x); t._x=setTimeout(()=>t.classList.remove("on"),2200); }
+function debounce(fn,ms){ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a),ms); }; }
+function emojiFor(f){ return GENRE_EMOJI[(f.genre_ids||[])[0]]||"🎬"; }
+function thumbHtml(f){
+  return `<div class="thumb" style="background:${gradient(f.title)}">${emojiFor(f)}
+    ${f.poster?`<img src="${img(f.poster,"w92")}" alt="" loading="lazy" onerror="this.remove()">`:""}</div>`;
+}
+function logoHtml(p){ // p: {logo_path|logo, provider_id|ids, provider_name|name}
+  const path=p.logo_path??p.logo, name=p.provider_name??p.name, id=p.provider_id??(p.ids||[])[0];
+  if(path) return `<img class="logo-img" src="${img(path,"w92")}" alt="" onerror="this.remove()">`;
+  const c=(DEMO_PROVIDERS.find(x=>x[0]===id)||[])[2]||`hsl(${hue(name)} 50% 40%)`;
+  return `<span class="logo-img" style="background:${c}">${esc(name[0])}</span>`;
+}
+
+/* =====================================================================
+   5. CLIENT API (TMDB reale oppure catalogo demo)
+   ===================================================================== */
+let GENRES = BASE_GENRES, PROVIDERS = [], metaOk = false, showAllProv = false;
+const devKey = () => (localStorage.getItem(DEV_KEY)||"").trim();
+const isDemo = () => !devKey();
+const memo = new Map();
+async function api(path, params={}, forceMock=false){
+  const q={}; for(const [k,v] of Object.entries(params)) if(v!==undefined&&v!==null&&v!=="") q[k]=v;
+  if(isDemo()||forceMock){ await sleep(120); return mockApi(path,q); }
+  const key=devKey(), isToken=key.startsWith("eyJ");
+  const u=new URL(API+path);
+  for(const [k,v] of Object.entries(q)) u.searchParams.set(k,v);
+  if(!isToken) u.searchParams.set("api_key",key);
+  const url=u.toString();
+  if(memo.has(url)) return memo.get(url);
+  const p=fetch(url,{headers:{accept:"application/json",...(isToken?{Authorization:"Bearer "+key}:{})}})
+    .then(async r=>{ if(r.status===401) throw new Error("KEY"); if(!r.ok) throw new Error("HTTP "+r.status); return r.json(); });
+  memo.set(url,p); p.catch(()=>memo.delete(url));
+  return p;
+}
+// diagnosi leggibile dei problemi di connessione a TMDB
+let connInfo=null;
+function diagnose(e){
+  const k=devKey();
+  if(e.message==="KEY") return {title:"Chiave rifiutata da TMDB",
+    tip:`TMDB ha risposto “non autorizzato”. Controlla di aver copiato la <b>Chiave API</b> (32 caratteri) o il <b>Token di accesso in lettura</b> (lungo, inizia con “eyJ”), senza spazi. La chiave inserita ha ${k.length} caratteri${k.length===32||k.startsWith("eyJ")?"":" ⚠️ (formato insolito)"}. Le chiavi nuove possono richiedere qualche minuto per attivarsi.`};
+  if(e instanceof TypeError) return {title:"Connessione bloccata",
+    tip:`L'app non riesce nemmeno a raggiungere TMDB, quindi la chiave non c'entra. Succede quasi sempre quando l'app è aperta <b>dentro l'anteprima dell'app di Claude</b>, che blocca le connessioni esterne. Soluzione: scarica il file <b>index.html</b> e aprilo in Chrome o Safari, oppure mettiamo l'app online (GitHub Pages). Altre cause: rete aziendale/scolastica o un blocco pubblicità che filtra themoviedb.org.`};
+  return {title:"Errore di TMDB ("+e.message+")",tip:"Riprova tra qualche minuto."};
+}
+function apiErrorMsg(e){
+  if(e.message==="KEY") return "Chiave API non valida. Controllala in Profilo → Sviluppatore.";
+  if(e instanceof TypeError) return "Connessione a TMDB non riuscita (rete assente o bloccata).";
+  return "Errore ("+e.message+")";
+}
+const normalize = m => ({
+  id:m.id, title:m.title||m.original_title, year:(m.release_date||"").slice(0,4)||null,
+  poster:m.poster_path||null, backdrop:m.backdrop_path||null,
+  genre_ids:m.genre_ids || (m.genres||[]).map(g=>g.id),
+  vote:m.vote_average ?? null, overview:m.overview||"", runtime:m.runtime||null,
+});
+async function loadMeta(){
+  const [g,p]=await Promise.all([api("/genre/movie/list",{language:LANG}), api("/watch/providers/movie",{language:LANG,watch_region:REGION})]);
+  GENRES=g.genres;
+  const groups=new Map();
+  p.results.map(x=>({...x,prio:(x.display_priorities||{})[REGION]??x.display_priority??999}))
+    .sort((a,b)=>a.prio-b.prio)
+    .forEach(x=>{ const name=x.provider_name.replace(/\s+(basic|standard)?\s*with ads$/i,"").trim();
+      if(!groups.has(name)) groups.set(name,{name,logo:x.logo_path,ids:[]}); groups.get(name).ids.push(x.provider_id); });
+  PROVIDERS=[...groups.values()]; metaOk=true;
+}
+const genreName = id => (GENRES.find(g=>g.id===id)||BASE_GENRES.find(g=>g.id===id)||{}).name || "";
+async function details(f){
+  if(f.custom) return {...f,providers:null};
+  const d=await api(`/movie/${f.id}`,{language:LANG,append_to_response:"watch/providers"}, f.id>=DEMO_BASE);
+  let overview=d.overview;
+  if(!overview && f.id<DEMO_BASE){ try{ overview=(await api(`/movie/${f.id}`,{language:"en-US"})).overview; }catch(e){} }
+  return {...normalize(d),overview,tagline:d.tagline,providers:(d["watch/providers"]?.results||{})[REGION]||null};
+}
+const availableToMe = d => (d.providers?.flatrate||[]).some(p=>prof().providerIds.includes(p.provider_id));
+
+/* =====================================================================
+   5b. RICERCA DESCRITTIVA (linguaggio naturale)
+   Prototipo: regole + dizionario italiano. In produzione: un modello AI
+   lato server trasforma la frase in filtri (stesso formato di output).
+   ===================================================================== */
+const NL_GENRES = [
+  ["horror|paura|spaventos\\w*|terrore|terrificant\\w*|da brivido",27],["commedi\\w*|divertent\\w*|ridere|comic\\w*|risate",35],
+  ["azione",28],["avventur\\w*",12],["animazione|animat\\w*|cartone|cartoni",16],["thriller|suspense|tesissimo|tensione",53],
+  ["giall\\w*|mister\\w*|investigativ\\w*|detective",9648],["crimin\\w*|gangster|poliziesc\\w*|crime",80],
+  ["drammatic\\w*|dramma|triste|commovent\\w*|strappalacrime",18],["fantascienza|sci-?fi|futur\\w*",878],["fantasy|magi[ac]\\w*|fiab\\w*",14],
+  ["romantic\\w*|d'amore|love story|sentimental\\w*",10749],["documentar\\w*",99],["musical|musicale",10402],
+  ["di guerra|bellic\\w*",10752],["western|cowboy",37],["storic\\w*|in costume",36],
+];
+const NL_MOODS = [["leggero|spensierat\\w*|rilassant\\w*|senza pensieri|leggerezza","leggero"],["bambini|in famiglia|coi figli|con i figli","famiglia"],
+  ["adrenalin\\w*|mozzafiato","adrenalina"],["far riflettere|profond\\w*|riflessiv\\w*","riflessivo"],["emozionant\\w*|piangere|commuov\\w*","emozione"]];
+const NL_KEYWORDS = [ // italiano → parola chiave TMDB (in inglese)
+  ["fantasm\\w*|spettr\\w*","ghost"],["casa infestata|case infestate|infestat\\w*","haunted house"],["demon\\w*|diavol\\w*","demon"],
+  ["esorcism\\w*|possession\\w*|possedut\\w*","possession"],["zombi\\w*","zombie"],["vampir\\w*","vampire"],["alien\\w*|extraterrestr\\w*|ufo","alien"],
+  ["spazio|spaziale|astronav\\w*","space"],["astronaut\\w*","astronaut"],["viagg\\w* nel tempo|macchina del tempo","time travel"],
+  ["superero\\w*|supereroi","superhero"],["mafi\\w*|mafios\\w*","mafia"],["sogn\\w*","dream"],["dinosaur\\w*","dinosaur"],["robot","robot"],
+  ["intelligenza artificiale","artificial intelligence"],["serial killer","serial killer"],["omicidi\\w*|delitt\\w*|assassini\\w*","murder"],
+  ["natal\\w*","christmas"],["rapin\\w*|colpo grosso|furto","heist"],["spi[ae]|spionaggio|agente segreto","spy"],["pirat\\w*","pirate"],
+  ["can[ei]|cagnolin\\w*","dog"],["gatt\\w*","cat"],["liceo|high school","high school"],["amicizia|amici per la pelle","friendship"],
+  ["vendett\\w*","revenge"],["apocalis\\w*|post.?apocalittic\\w*|fine del mondo","post-apocalyptic"],["squal\\w*","shark"],["mostr[oi]","monster"],
+  ["streg\\w*","witch"],["drag[oh]\\w*","dragon"],["principess\\w*","princess"],["tribunal\\w*|processo","courtroom"],["prigion\\w*|carcer\\w*","prison"],
+  ["storia vera|fatti reali|tratto da una storia vera","based on true story"],["biografi\\w*|biopic","biography"],["calcio","football (soccer)"],
+  ["boxe|pugil\\w*","boxing"],["matrimoni\\w*","wedding"],["isola","island"],["desert\\w*","desert"],["jazz","jazz"],["musicist\\w*","musician"],
+  ["olocausto","holocaust"],["seconda guerra mondiale","world war ii"],["povert\\w*|pover[io]","poverty"],["classi sociali|ricchi e poveri","class differences"],
+  ["cucina|chef|cuoc\\w*","chef"],["adolescen\\w*|crescita|diventare grand\\w*","coming of age"],["viaggio|viaggi","journey"],["famiglia","family"],
+];
+const NL_NUM = {un:1,uno:1,una:1,due:2,tre:3,quattro:4};
+const NL_DECADES = {sessanta:60,settanta:70,ottanta:80,novanta:90,duemila:0};
+const NL_STOP = new Set("un una uno il lo la i gli le che e ed non ma per in a al da di del della con dove film ore ora minuti anni piu più meno qualcosa tipo come sotto sopra stasera nello nella nei negli nel sul sulla col coi tra fra senza molto bello bella brutto paura".split(" "));
+const rx = p => new RegExp(`(^|[^a-zà-ù])(${p})(?![a-zà-ù])`,"i");
+
+async function parseQuery(text){
+  const out={genres:[],moods:[],maxDur:0,era:null,years:null,yearsLabel:null,minRating:null,keywords:[],people:[],labels:[]};
+  let t=" "+text.trim()+" ";
+  // 1) persone: "con Tom Hanks", "di Nolan Christopher", "diretto da ...", "regia di ..."
+  const pr=/(?:\bcon|\bcoi|\bdi|\bda|diretto da|regia di|interpretato da|protagonista)\s+(?=([A-Za-zÀ-ÿ'.-]+(?:\s+[A-Za-zÀ-ÿ'.-]+){0,2}))/gi;
+  for(const m of [...t.matchAll(pr)]){
+    let toks=m[1].split(/\s+/); const cut=toks.findIndex(w=>NL_STOP.has(w.toLowerCase())); if(cut>=0) toks=toks.slice(0,cut);
+    if(toks.length<2 || toks.some(w=>w.length<2)) continue;
+    for(const n of [toks.length, 2]){
+      const q=toks.slice(0,n).join(" ");
+      try{ const r=(await api("/search/person",{query:q,language:LANG})).results||[];
+        const hit=r.find(p=>q.split(" ").every(w=>fold(p.name).includes(fold(w))));
+        if(hit && !out.people.some(p=>p.id===hit.id)){ out.people.push({id:hit.id,name:hit.name,role:hit.known_for_department==="Directing"?"crew":"cast"}); t=t.replace(q," "); break; }
+      }catch(e){}
+    }
+  }
+  const low=t.toLowerCase().replace(/’/g,"'");
+  // 2) generi e mood
+  for(const [p,id] of NL_GENRES) if(rx(p).test(low) && !out.genres.includes(id)) out.genres.push(id);
+  for(const [p,m] of NL_MOODS) if(rx(p).test(low) && !out.moods.includes(m)) out.moods.push(m);
+  // 3) durata: "2h", "2 ore", "1h30", "90 minuti", "un'ora e mezza", "corto"
+  let dur=0, m;
+  if((m=low.match(/(\d+)\s*h\s*(\d{1,2})?/))) dur=+m[1]*60+(+m[2]||0);
+  else if((m=low.match(/(\d+(?:[.,]5)?|un|una|due|tre|quattro)\s*'?\s*or[ae](\s*e\s*mezz[ao])?/))) dur=(NL_NUM[m[1]]||parseFloat(m[1].replace(",",".")))*60+(m[2]?30:0);
+  else if((m=low.match(/(\d{2,3})\s*(?:minuti|min)\b/))) dur=+m[1];
+  else if(rx("cort\\w*|breve|veloce").test(low)) dur=100;
+  if(dur>=30 && dur<=300) out.maxDur=dur;
+  // 4) epoca: "anni 80", "anni '90", "anni ottanta", "del 1994", "recente", "classico"
+  if((m=low.match(/anni\s*'?\s*(\d0)\b/)) || (m=low.match(/anni\s+(sessanta|settanta|ottanta|novanta|duemila)/))){
+    const d=NL_DECADES[m[1]]??+m[1], from=d>=50?1900+d:2000+d; out.years=[from,from+9]; out.yearsLabel=`Anni ${String(d).padStart(2,"0")}`;
+  } else if((m=low.match(/\b(19[2-9]\d|20[0-3]\d)\b/))) { out.years=[+m[1],+m[1]]; out.yearsLabel=m[1]; }
+  else if(rx("recent\\w*|nuov\\w*|uscit\\w* da poco|ultim\\w* anni").test(low)) out.era="recent";
+  else if(rx("classic\\w*|vecchi\\w*|d'epoca|intramontabil\\w*").test(low)) out.era="classic";
+  // 5) qualità
+  if(rx("bell[oaie]|capolavor\\w*|premiat\\w*|oscar|acclamat\\w*|di qualit\\w*|imperdibil\\w*").test(low)) out.minRating=7.5;
+  // 6) temi → parole chiave TMDB
+  for(const [p,en] of NL_KEYWORDS){
+    const hit=low.match(rx(p)); if(!hit) continue;
+    try{ const r=(await api("/search/keyword",{query:en})).results||[];
+      const k=r.find(x=>x.name.toLowerCase()===en)||r[0];
+      if(k && !out.keywords.some(x=>x.id===k.id)) out.keywords.push({id:k.id,name:hit[2],en});
+    }catch(e){}
+  }
+  // etichette "Ho capito"
+  out.genres.forEach(g=>out.labels.push(`${GENRE_EMOJI[g]||"🎬"} ${genreName(g)}`));
+  out.moods.forEach(x=>out.labels.push(MOODS[x].label));
+  out.keywords.forEach(k=>out.labels.push(`🏷 ${k.name}`));
+  out.people.forEach(p=>out.labels.push(`${p.role==="crew"?"🎬 regia":"🎭"} ${p.name}`));
+  if(out.maxDur) out.labels.push(`⏱ max ${fmtDur(out.maxDur)}`);
+  if(out.yearsLabel) out.labels.push(`📅 ${out.yearsLabel}`);
+  if(out.era) out.labels.push(out.era==="recent"?"📅 Recenti":"📅 Classici");
+  if(out.minRating) out.labels.push(`⭐ ${out.minRating}+`);
+  return out;
+}
+// parametri "discover" da una frase interpretata (per cercare film da aggiungere alle liste, su tutto il catalogo)
+function parsedToParams(r){
+  const p={language:LANG,sort_by:"popularity.desc",include_adult:false,"vote_count.gte":50};
+  if(r.genres.length) p.with_genres=r.genres.join(",");
+  else if(r.moods.length) p.with_genres=[...new Set(r.moods.flatMap(m=>MOODS[m].g))].join("|");
+  if(r.keywords.length) p.with_keywords=r.keywords.map(k=>k.id).join("|");
+  const cast=r.people.filter(x=>x.role==="cast"), crew=r.people.filter(x=>x.role==="crew");
+  if(cast.length) p.with_cast=cast.map(x=>x.id).join("|");
+  if(crew.length) p.with_crew=crew.map(x=>x.id).join("|");
+  if(r.maxDur) p["with_runtime.lte"]=r.maxDur;
+  if(r.minRating) p["vote_average.gte"]=r.minRating;
+  if(r.years){ p["primary_release_date.gte"]=`${r.years[0]}-01-01`; p["primary_release_date.lte"]=`${r.years[1]}-12-31`; }
+  else if(r.era==="recent") p["primary_release_date.gte"]="2015-01-01";
+  else if(r.era==="classic") p["primary_release_date.lte"]="1999-12-31";
+  return p;
+}
+const understoodHtml = r => r.labels.length
+  ? `<div class="understood"><span class="muted">Ho capito:</span>${r.labels.map(l=>`<span class="tag">${esc(l)}</span>`).join("")}</div>`
+  : `<div class="hint">🤔 Non ho capito bene. Prova a indicare un genere (horror, commedia…), un tema (fantasmi, spazio, mafia…), una durata (“max 2 ore”), un periodo (“anni 90”) o un attore (“con Tom Hanks”).</div>`;
+
+/* =====================================================================
+   6. MOTORE DI SCELTA
+   ===================================================================== */
+// criteri attivi: quelli della modalità "Descrivi" oppure quelli della modalità "Filtri".
+// Fonti e opzioni (piattaforme/liste, già visti, solo disponibili) sono in comune.
+const C = () => { const f=F(), p=prof();
+  if(p.searchMode!=="desc") return {...f,keywords:[],people:[]};
+  const d=p.descCrit||{};
+  return {...structuredClone(DEFAULT_FILTERS),sources:f.sources,hideSeen:f.hideSeen,popular:f.popular,onlyAvail:f.onlyAvail,
+    genres:d.genres||[],moods:d.moods||[],maxDur:d.maxDur||0,era:d.years?"custom":(d.era||"all"),years:d.years||null,
+    minRating:d.minRating??0,keywords:d.keywords||[],people:d.people||[]}; };
+const moodGenres = () => [...new Set(C().moods.flatMap(m=>MOODS[m].g))];
+const moodExcluded = () => { const inc=new Set([...moodGenres(),...C().genres]);
+  return [...new Set(C().moods.flatMap(m=>MOODS[m].not||[]))].filter(g=>!inc.has(g)); };
+function eraRange(){ const y=new Date().getFullYear();
+  if(C().era==="custom" && C().years) return [`${C().years[0]}-01-01`,`${C().years[1]}-12-31`];
+  return {classic:[null,"1999-12-31"],"2000":["2000-01-01","2014-12-31"],recent:["2015-01-01",null],new:[`${y-2}-01-01`,null]}[C().era]||[null,null]; }
+function discoverParams(){
+  const f=C(), [from,to]=eraRange();
+  const p={language:LANG,watch_region:REGION,include_adult:false,sort_by:"popularity.desc",
+    with_watch_providers:prof().providerIds.join("|"),with_watch_monetization_types:"flatrate",
+    "primary_release_date.gte":from,"primary_release_date.lte":to,"with_runtime.lte":f.maxDur||null,
+    "vote_average.gte":f.minRating||null,"vote_count.gte":f.popular?MIN_VOTES:20};
+  if(f.genres.length) p.with_genres=f.genres.join("|"); else if(f.moods.length) p.with_genres=moodGenres().join("|");
+  const not=moodExcluded(); if(not.length) p.without_genres=not.join(",");
+  if(f.keywords.length) p.with_keywords=f.keywords.map(k=>k.id).join("|");
+  const cast=f.people.filter(x=>x.role==="cast"), crew=f.people.filter(x=>x.role==="crew");
+  if(cast.length) p.with_cast=cast.map(x=>x.id).join("|");
+  if(crew.length) p.with_crew=crew.map(x=>x.id).join("|");
+  return p;
+}
+const moodOk = ids => !C().moods.length || !C().genres.length || ids.some(g=>moodGenres().includes(g));
+function movieMatches(m){
+  const f=C(), ids=m.genre_ids||[];
+  if(f.genres.length && !ids.some(g=>f.genres.includes(g))) return false;
+  if(f.moods.length && !ids.some(g=>moodGenres().includes(g))) return false;
+  if(moodExcluded().some(g=>ids.includes(g))) return false;
+  if(f.maxDur && m.runtime && m.runtime>f.maxDur) return false;
+  const [from,to]=eraRange();
+  if(m.year && from && m.year<from.slice(0,4)) return false;
+  if(m.year && to && m.year>to.slice(0,4)) return false;
+  if(m.vote!=null && !m.custom && m.vote<f.minRating) return false;
+  if(f.hideSeen && Seen.has(m.id)) return false;
+  return true;
+}
+const activeListIds = () => C().sources.filter(s=>s!=="platforms" && Lists.isMember(s));
+function listPool(){ // elementi delle liste selezionate, senza doppioni
+  const map=new Map();
+  for(const lid of activeListIds()) for(const it of Lists.allItems(lid)){
+    if(!movieMatches(it.movie)) continue;
+    const e=map.get(it.movie.id)||{movie:it.movie,lists:[],addedBy:[]};
+    const name=it.via?`${Lists.get(lid).name} → ${listLabel(Lists.get(it.via))}`:Lists.get(lid).name;
+    if(!e.lists.includes(name)) e.lists.push(name); if(!e.addedBy.includes(it.added_by)) e.addedBy.push(it.added_by);
+    map.set(it.movie.id,e);
+  }
+  return [...map.values()];
+}
+// gusti: generi preferiti + voti 👍/👎 dati in passato
+function affinity(genreIds){
+  let s=0; const fav=prof().favGenres;
+  for(const g of genreIds||[]){ if(fav.includes(g)) s+=1; for(const r of Ratings.mine()) if(r.genre_ids.includes(g)) s+=0.5*r.value; }
+  return Math.min(3,Math.max(0.3,1+0.25*s));
+}
+function weighted(arr,getMovie=x=>x){
+  const w=arr.map(x=>{const m=getMovie(x); return Math.pow(Math.max((m.vote||6.5)-3,1),2)*affinity(m.genre_ids);});
+  let r=Math.random()*w.reduce((a,b)=>a+b,0), i=0; while(i<arr.length-1 && (r-=w[i])>0) i++; return arr[i];
+}
+let recent=[];
+function remember(id,n){ recent.push(id); if(recent.length>Math.max(1,Math.min(50,Math.floor(n/2)))) recent.shift(); }
+
+async function pickFromPlatforms(){
+  if(!prof().providerIds.length) return null;
+  const p=discoverParams(), first=await api("/discover/movie",{...p,page:1});
+  if(!first.total_results) return null;
+  const maxPage=Math.min(first.total_pages,500);
+  for(let a=0;a<6;a++){
+    const page=a===0?1+Math.floor(Math.random()*maxPage):1+Math.floor(Math.random()*Math.min(maxPage,a*3));
+    const data=page===1?first:await api("/discover/movie",{...p,page});
+    const cand=data.results.filter(m=>!recent.includes(m.id)&&!(C().hideSeen&&Seen.has(m.id))&&moodOk(m.genre_ids||[])).map(normalize);
+    if(cand.length){ const f=weighted(cand); remember(f.id,first.total_results); return await details(f); }
+  }
+  recent=[]; return null;
+}
+async function pickFromLists(pool){
+  let cand=pool.filter(e=>!recent.includes(e.movie.id)); if(!cand.length) cand=pool;
+  for(let i=0;i<10 && cand.length;i++){
+    const e=weighted(cand,x=>x.movie), d=await details(e.movie);
+    if(!C().onlyAvail || availableToMe(d)){ remember(e.movie.id,pool.length);
+      return {...d,origin:{lists:e.lists,addedBy:e.addedBy}}; }
+    cand=cand.filter(x=>x!==e);
+  }
+  return null;
+}
+async function pick(){
+  const usePlat=C().sources.includes("platforms"), pool=listPool();
+  const listFirst=pool.length && (!usePlat || Math.random()<0.5);
+  if(listFirst){ const r=await pickFromLists(pool); if(r) return r; }
+  if(usePlat){ const r=await pickFromPlatforms(); if(r) return r; }
+  if(!listFirst && pool.length) return await pickFromLists(pool);
+  return null;
+}
+
+/* =====================================================================
+   7. PUBBLICITÀ (simulata) + ANIMAZIONE DI CARICAMENTO
+   In produzione: interstitial AdMob mostrato mentre carichiamo il film.
+   ===================================================================== */
+let pickCount=0;
+const shouldShowAd = () => !prof().premium && (pickCount%AD_EVERY===1);
+async function withLoader(task, showAd){
+  const L=$("#loader"), emojis=["🎬","🍿","🎞️","📽️","🎥","⭐","🎟️"], msgs=["Mescolo i titoli…","Controllo le tue piattaforme…","Guardo cosa ti piace…","Quasi pronto…"];
+  L.innerHTML=`<div class="reel" id="reel">🎬</div><div class="msg" id="lmsg">${msgs[0]}</div>
+    ${showAd?`<div class="adbox"><div class="adlbl"><span>Pubblicità</span><span id="adcd">${AD_SECONDS}</span></div>
+      <div class="adcreative"><span style="font-size:40px">📣</span><b>Spazio pubblicitario</b><span style="font-size:13px;opacity:.8">Qui comparirà un annuncio (AdMob)</span></div>
+      <div class="adbar"><i id="adbar"></i></div></div>
+      <button class="premium-cta" data-a="premium">⭐ Elimina la pubblicità con Premium</button>`:""}`;
+  L.classList.add("on");
+  let i=0; const iv=setInterval(()=>{ i++; $("#reel").textContent=emojis[i%emojis.length]; if(i%6===0) $("#lmsg").textContent=msgs[Math.min(msgs.length-1,i/6|0)]; },140);
+  const wait = showAd ? (async()=>{ requestAnimationFrame(()=>{ const b=$("#adbar"); b.style.transitionDuration=AD_SECONDS+"s"; b.style.width="100%"; });
+      for(let s=AD_SECONDS;s>0;s--){ $("#adcd").textContent=s; await sleep(1000); } })() : sleep(1200);
+  try{ const [res]=await Promise.all([task, wait]); return res; }
+  finally{ clearInterval(iv); L.classList.remove("on"); }
+}
+
+/* =====================================================================
+   8. RENDER – SCEGLI
+   ===================================================================== */
+const chip=(label,on,attrs="",cls="")=>`<span class="chip ${cls} ${on?"on":""}" ${attrs}>${label}</span>`;
+function renderHeader(){
+  const pill=$("#statusPill");
+  if(!me()){ pill.textContent=""; return; }
+  pill.textContent = prof().premium ? "⭐ Premium" : (isDemo() ? "🧪 Dati demo" : (metaOk?"TMDB":"TMDB ⚠️"));
+  pill.className="pill "+(prof().premium?"gold":(!isDemo()&&metaOk?"ok":""));
+}
+function renderPick(){
+  const f=F(), p=prof(), mode=p.searchMode==="desc"?"desc":"filters";
+  f.sources=f.sources.filter(s=>s==="platforms"||Lists.isMember(s));
+  $("#setupBanner").innerHTML = !p.providerIds.length ? `<div class="banner" data-a="goto" data-view="v-profile">📺 Non hai ancora indicato le tue piattaforme. Tocca qui.</div>` : "";
+  $("#srcChips").innerHTML = chip("📺 Piattaforme",f.sources.includes("platforms"),`data-a="src" data-id="platforms"`,"src")
+    + Lists.mine().map(l=>chip(`${LIST_TYPES[l.type].icon} ${esc(l.name)}`,f.sources.includes(l.id),`data-a="src" data-id="${l.id}"`,"src")).join("");
+  document.querySelectorAll("#modeSeg button").forEach(b=>b.classList.toggle("on",b.dataset.id===mode));
+  $("#modeDesc").style.display=mode==="desc"?"":"none";
+  $("#modeFilters").style.display=mode==="filters"?"":"none";
+  if(mode==="desc"){
+    const d=p.descCrit;
+    if(d && $("#descBox").value==="" ) $("#descBox").value=d.text||"";
+    $("#descOut").innerHTML = d ? understoodHtml(d)
+      : `<div class="hint">Prova: <i data-a="example">una commedia romantica anni 90</i> · <i data-a="example">qualcosa con Leonardo DiCaprio sotto le 3 ore</i> · <i data-a="example">fantascienza nello spazio, bello</i></div>`;
+  }
+  $("#genreChips").innerHTML=GENRES.map(g=>chip(`${GENRE_EMOJI[g.id]||"🎬"} ${esc(g.name)}`,f.genres.includes(g.id),`data-a="genre" data-id="${g.id}"`)).join("");
+  $("#moodChips").innerHTML=Object.entries(MOODS).map(([k,v])=>chip(v.label,f.moods.includes(k),`data-a="mood" data-id="${k}"`)).join("");
+  setOption("#fDuration",f.maxDur,f.maxDur?`< ${fmtDur(f.maxDur)}`:"");
+  setOption("#fEra",f.era,f.era==="custom"&&f.years?`${f.years[0]}–${f.years[1]}`:"");
+  setOption("#fRating",f.minRating,`${f.minRating}+`);
+  $("#fOnlyAvail").checked=f.onlyAvail; $("#fHideSeen").checked=f.hideSeen; $("#fPopular").checked=f.popular;
+  renderFollowUp();
+  if(mode==="desc" && !p.descCrit){ R.key=null; renderResults(); } else refreshResults();
+}
+function setOption(sel,val,label){ // aggiunge un'opzione "personalizzata" se il valore non è tra quelle standard
+  const el=$(sel); [...el.options].filter(o=>o.dataset.custom).forEach(o=>o.remove());
+  if(![...el.options].some(o=>o.value==String(val))){ const o=new Option(label,val); o.dataset.custom=1; el.add(o); }
+  el.value=val;
+}
+
+/* ---- Elenco risultati: prima i film delle liste scelte, poi quelli delle piattaforme (per popolarità) ---- */
+let R={key:null,items:[],listCount:0,page:0,totalPages:0,platTotal:0,loading:false,error:null};
+const resultsKey = () => JSON.stringify([prof().searchMode,C(),discoverParams(),Seen.ids().length,activeListIds().map(id=>Lists.allItems(id).length),prof().providerIds]);
+function clearResults(){ R={key:null,items:[],listCount:0,page:0,totalPages:0,platTotal:0,loading:false,error:null}; $("#results").innerHTML=""; }
+const refreshResults=debounce(async()=>{ if(!me()) return; const k=resultsKey(); if(k===R.key){ renderResults(); return; } await loadResults(true); },300);
+async function loadResults(reset){
+  const c=C();
+  if(reset){
+    R={key:resultsKey(),items:[],listCount:0,page:0,totalPages:1,platTotal:0,loading:true,error:null}; renderResults();
+    let li=listPool().map(e=>({...e.movie,origin:{lists:e.lists,addedBy:e.addedBy}}));
+    if(c.onlyAvail){ const det=await Promise.all(li.slice(0,40).map(m=>details(m).catch(()=>null))); li=li.filter((m,i)=>det[i]&&availableToMe(det[i])); }
+    R.items=li; R.listCount=li.length;
+  }
+  const k=R.key;
+  if(c.sources.includes("platforms") && prof().providerIds.length && R.page<R.totalPages){
+    R.loading=true; renderResults();
+    try{
+      const d=await api("/discover/movie",{...discoverParams(),page:R.page+1});
+      if(k!==R.key) return;
+      R.page=d.page; R.totalPages=Math.min(d.total_pages,500); R.platTotal=d.total_results;
+      const have=new Set(R.items.map(m=>m.id));
+      R.items.push(...d.results.filter(m=>!have.has(m.id)&&!(c.hideSeen&&Seen.has(m.id))&&moodOk(m.genre_ids||[])).map(normalize));
+    }catch(e){ R.error=apiErrorMsg(e); }
+  } else if(reset) R.totalPages=0;
+  R.loading=false; renderResults();
+}
+function renderResults(){
+  const el=$("#results"), c=C(), btn=$("#showBtn");
+  const total=R.listCount+(R.platTotal||0);
+  btn.textContent = R.loading&&!R.items.length ? "🔍 Cerco…" : `🔍 Mostra ${total.toLocaleString("it-IT")} film`;
+  if(!c.sources.length){ el.innerHTML=`<div class="empty">Seleziona almeno una fonte in “Da dove”.</div>`; return; }
+  if(prof().searchMode==="desc" && !prof().descCrit){ el.innerHTML=`<div class="empty">Descrivi cosa ti va di vedere e premi “Cerca”.</div>`; btn.textContent="🔍 Mostra film"; return; }
+  if(R.error && !R.items.length){ el.innerHTML=`<div class="empty">${esc(R.error)}</div>`; return; }
+  if(!R.items.length){ el.innerHTML=R.loading?`<div class="empty">Cerco…</div>`:`<div class="empty">😕 Nessun film corrisponde. Prova ad allargare la ricerca.</div>`; return; }
+  const row=f=>`<div class="item ritem" data-a="openDetail" data-id="${f.id}">${thumbHtml(f)}
+    <div class="info"><div class="t">${esc(f.title)}</div>
+      <div class="muted">${[f.year,fmtDur(f.runtime),f.vote?`⭐ ${f.vote.toFixed(1)}`:"",(f.genre_ids||[]).map(genreName).filter(Boolean).slice(0,2).join(", ")].filter(Boolean).join(" · ")}</div>
+      ${f.origin?`<div class="origin-mini">📋 ${f.origin.lists.map(esc).join(" · ")}</div>`:""}</div><span class="muted">›</span></div>`;
+  const lists=R.items.filter(f=>f.origin), plats=R.items.filter(f=>!f.origin);
+  el.innerHTML=`<div class="reshead" id="resTop"><b>${total.toLocaleString("it-IT")} film</b><button class="btn sm" data-a="pick">🎲 Pesca a caso</button></div>
+    ${lists.length?`<div class="ressub">Dalle tue liste</div><div class="section">${lists.map(row).join("")}</div>`:""}
+    ${plats.length?`<div class="ressub">Sulle tue piattaforme</div><div class="section">${plats.map(row).join("")}</div>`:""}
+    ${R.page<R.totalPages?`<button class="btn ghost" data-a="moreResults" style="margin-top:10px" ${R.loading?"disabled":""}>${R.loading?"Carico…":"Carica altri"}</button>`:""}`;
+}
+
+/* ---- Follow-up: "Hai visto l'ultimo film che ti ho proposto?" ----
+   Si chiede alla riapertura dell'app (sessione successiva). In produzione
+   anche con una notifica push la sera dopo il "Lo guardo!". */
+let sessionStart=Date.now();
+const pendingFollowUp = () => { const lp=prof().lastPick;
+  return lp && !lp.done && lp.at<sessionStart && !Seen.has(lp.movie.id) ? lp : null; };
+function renderFollowUp(){
+  const lp=pendingFollowUp(), el=$("#followUp");
+  if(!lp){ el.innerHTML=""; return; }
+  el.innerHTML=`<div class="fu">${thumbHtml(lp.movie)}<div class="info">
+    <div class="muted">${lp.chosen?"Avevi scelto di guardare":"L'ultima volta ti ho proposto"}</div>
+    <div style="font-weight:700;font-size:16px">${esc(lp.movie.title)}</div>
+    <div class="muted">${lp.chosen?"Com'è andata?":"L'hai visto?"}</div>
+    <div class="btns"><button class="btn ghost" data-a="fuSeen">✅ Visto</button>
+      <button class="btn ghost" data-a="fuLater">📋 Dopo</button><button class="btn ghost" data-a="fuNo">✕ No</button></div>
+  </div></div>`;
+}
+
+/* ---- Scheda film (pannello dal basso): da elenco o da "A caso" ---- */
+let current=null, currentRandom=false;
+const liteMovie = f => { const {overview,providers,tagline,origin,...lite}=f; return lite; };
+function showDetail(f,random){
+  current=f; currentRandom=!!random;
+  if(random && !pendingFollowUp() && (prof().lastPick?.movie.id!==f.id || prof().lastPick.done)){ prof().lastPick={movie:liteMovie(f),at:Date.now(),chosen:false,done:false}; DB.save(); }
+  const chosen=prof().lastPick?.movie.id===f.id && prof().lastPick.chosen && !prof().lastPick.done;
+  const mineIds=new Set(prof().providerIds), flat=f.providers?.flatrate||[];
+  const mine=flat.filter(p=>mineIds.has(p.provider_id)), others=flat.filter(p=>!mineIds.has(p.provider_id));
+  const prov=p=>`<span class="prov ${mineIds.has(p.provider_id)?"mine":""}">${logoHtml(p)}${esc(p.provider_name)}</span>`;
+  const bg=f.backdrop?`background-image:url('${img(f.backdrop,"w780")}')`:`background:${gradient(f.title)}`;
+  let provHtml;
+  if(f.custom) provHtml=`<span class="muted">Aggiunto a mano: disponibilità sconosciuta</span>`;
+  else if(mine.length) provHtml=mine.map(prov).join("")+(others.length?`<span class="muted">anche su ${others.map(p=>esc(p.provider_name)).join(", ")}</span>`:"");
+  else if(flat.length) provHtml=`<span class="muted">⚠️ Non è nei tuoi abbonamenti. Disponibile su:</span>`+flat.map(prov).join("");
+  else provHtml=`<span class="muted">⚠️ Non risulta in abbonamento su nessuna piattaforma in Italia.</span>`;
+  const o=f.origin, shared=o && o.addedBy.some(id=>id!==me().id);
+  const originHtml=o?`<div class="origin">${o.lists.map(n=>"📋 "+esc(n)).join(" · ")}${shared?` · aggiunto da ${o.addedBy.map(id=>id===me().id?"te":esc(userName(id))).join(", ")}`:""}</div>`:"";
+  const saved=Lists.mine().some(l=>Lists.has(l.id,f.id));
+  openSheet(`
+  <div class="result" style="margin:-4px 0 0;animation:none">
+    <div class="hero" style="${bg}">
+      ${f.poster?`<img class="poster" src="${img(f.poster,"w185")}" alt="" onerror="this.remove()">`:`<span class="bigemoji">${emojiFor(f)}</span>`}
+      <div>${random?`<div class="muted" style="color:#ffd58a">🎲 Scelto per te</div>`:""}<h3>${esc(f.title)}</h3>${f.tagline?`<div class="tagline">${esc(f.tagline)}</div>`:""}</div>
+    </div>
+    <div class="meta">
+      ${originHtml}
+      <div class="tags">
+        ${f.year?`<span class="tag">${f.year}</span>`:""}${f.runtime?`<span class="tag">⏱ ${fmtDur(f.runtime)}</span>`:""}
+        ${f.vote?`<span class="tag">⭐ ${f.vote.toFixed(1)}</span>`:""}
+        ${(f.genre_ids||[]).map(genreName).filter(Boolean).map(n=>`<span class="tag">${esc(n)}</span>`).join("")}
+      </div>
+      <div class="provs">${provHtml}</div>
+      <p class="plot">${esc(f.overview||"Trama non disponibile.")}</p>
+      ${f.providers?.link?`<p style="margin:10px 0 0;font-size:13px"><a href="${esc(f.providers.link)}" target="_blank" rel="noopener">Dove guardarlo →</a></p>`:""}
+      <button class="btn watch" data-a="watchIt" ${chosen?"disabled":""}>${chosen?"🍿 Buona visione!":"▶️ Lo guardo!"}</button>
+      <div class="btns" style="grid-template-columns:${random?"1fr 1fr 1fr":"1fr 1fr"}">
+        ${random?`<button class="btn ghost" data-a="pick">🔄 Un altro</button>`:""}
+        <button class="btn ghost" data-a="saveSheet" ${f.custom?"disabled":""}>${saved?"📋 Salvato":"➕ Salva"}</button>
+        <button class="btn ghost" data-a="seenCurrent">✅ Già visto</button>
+      </div>
+      ${random?"":`<button class="btn ghost" data-a="closeSheet" style="margin-top:8px">Chiudi</button>`}
+    </div>
+  </div>`);
+}
+async function openDetail(id){
+  const f=R.items.find(x=>String(x.id)===String(id)); if(!f) return;
+  openSheet(`<div class="empty"><div class="reel" style="font-size:40px;height:auto">🎬</div>Carico la scheda…</div>`);
+  try{ const d=await details(f); showDetail(f.origin?{...d,origin:f.origin}:d,false); }
+  catch(e){ openSheet(`<div class="empty">${esc(apiErrorMsg(e))}</div>`); }
+}
+let picking=false;
+async function doPick(){
+  if(picking) return; picking=true; pickCount++; closeSheet();
+  try{
+    const f=await withLoader(pick(), shouldShowAd());
+    if(f) showDetail(f,true);
+    else toast(!C().sources.length?"Seleziona almeno una fonte":"Nessun film corrisponde ai criteri");
+  }catch(e){ toast(apiErrorMsg(e)); }
+  finally{ picking=false; }
+}
+
+/* =====================================================================
+   9. RENDER – LISTE
+   ===================================================================== */
+let openListId=null, searchResults=[], searchSections=[];
+function renderInvBadge(){ const n=me()?Invites.received().length:0; $("#invBadge").textContent=n||""; $("#invBadge").style.display=n?"inline-flex":"none"; }
+function renderLists(){
+  const v=$("#v-lists");
+  renderInvBadge();
+  if(openListId && !Lists.isMember(openListId)) openListId=null;
+  if(openListId) return renderListDetail(v);
+  const lists=Lists.mine(), inv=Invites.received();
+  v.innerHTML=`
+    ${inv.length?`<h2>📩 Inviti ricevuti</h2>${inv.map(i=>{ const l=Lists.get(i.list_id);
+      return `<div class="fu">${avatar(userById(i.from_user))}<div class="info">
+        <div><b>${esc(userName(i.from_user))}</b> <span class="muted">${esc(handle(userById(i.from_user)))}</span> ti ha invitato in</div>
+        <div style="font-weight:700;font-size:16px">${LIST_TYPES[l.type].icon} ${esc(l.name)}</div>
+        <div class="grid2" style="margin-top:10px"><button class="btn sm" data-a="acceptInv" data-id="${i.id}">Accetta</button>
+        <button class="btn ghost sm" data-a="declineInv" data-id="${i.id}">Rifiuta</button></div></div></div>`; }).join("")}`:""}
+    <h2>Le mie liste <span class="muted">${prof().premium?"":`${lists.length}/${FREE_MAX_LISTS}`}</span></h2>
+    ${lists.map(l=>{ const mem=Lists.members(l.id), n=Lists.allItems(l.id).length, nl=Lists.links(l.id).length;
+      return `<div class="listcard" data-a="openList" data-id="${l.id}">
+        <div class="lic">${LIST_TYPES[l.type].icon}</div>
+        <div class="info"><div class="t">${esc(l.name)}</div><div class="muted">${LIST_TYPES[l.type].label} · ${n} film${nl?` · 🔗 ${nl} collegat${nl>1?"e":"a"}`:""}</div></div>
+        <div class="avs">${mem.map(m=>avatar(m.user)).join("")}</div></div>`; }).join("")}
+    <button class="btn ghost" data-a="newList" style="margin-top:6px">＋ Nuova lista</button>
+    <p class="muted" style="margin-top:14px;line-height:1.5">Crea una lista <b>Coppia</b> o <b>Amici</b> e aggiungi le persone: ognuno inserisce i propri film dal suo account. Con <b>⭐ Premium</b> puoi anche <b>collegare</b> la tua lista personale a quella condivisa, senza duplicare i film.</p>
+    ${prof().premium?"":`<div class="adbanner">PUBBLICITÀ<b>Banner pubblicitario</b>Qui comparirà un banner (AdMob)</div>`}`;
+}
+function itemRow(it,{mem,shared,canDel}){
+  const f=it.movie, seenBy=mem.filter(m=>Seen.has(f.id,m.user_id)).map(m=>m.user_id===me().id?"te":m.user?.name);
+  const who = it.via ? `da “${esc(listLabel(Lists.get(it.via)))}”` : (shared?`aggiunto da ${it.added_by===me().id?"te":esc(userName(it.added_by))}`:(f.custom?"aggiunto a mano":""));
+  return `<div class="item ${Seen.has(f.id)?"seen":""}">${thumbHtml(f)}
+    <div class="info"><div class="t">${esc(f.title)}</div>
+      <div class="muted">${[f.year,(f.genre_ids||[]).map(genreName).filter(Boolean).slice(0,2).join(", "),fmtDur(f.runtime)].filter(Boolean).join(" · ")}</div>
+      <div class="muted">${who}${seenBy.length?` · 👀 visto da ${seenBy.map(esc).join(", ")}`:""}</div></div>
+    <button class="icon" title="Visto / da vedere" data-a="toggleSeen" data-id="${f.id}">${Seen.has(f.id)?"↩️":"✅"}</button>
+    ${canDel?`<button class="icon" title="Rimuovi" data-a="delItem" data-id="${f.id}">🗑️</button>`:""}
+  </div>`;
+}
+function renderListDetail(v){
+  const l=Lists.get(openListId), mem=Lists.members(l.id), items=Lists.items(l.id), linked=Lists.linkedItems(l.id), shared=l.type!=="personal";
+  const isOwner=l.owner_id===me().id, pend=Invites.forList(l.id), links=Lists.links(l.id), star=prof().premium?"":" ⭐";
+  v.innerHTML=`
+    <button class="back" data-a="closeList">‹ Tutte le liste</button>
+    <div class="listcard" style="cursor:default"><div class="lic">${LIST_TYPES[l.type].icon}</div>
+      <div class="info"><div class="t">${esc(l.name)}</div><div class="muted">${LIST_TYPES[l.type].label} · ${items.length+linked.length} film</div></div></div>
+    ${shared?`<div class="section">
+      <div class="muted">Membri</div>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;margin:8px 0 4px">${mem.map(m=>`<span style="display:flex;align-items:center;gap:6px">${avatar(m.user)}${esc(m.user?.name)}${m.role==="owner"?" 👑":""}</span>`).join("")}</div>
+      ${pend.length?`<div class="muted" style="margin-top:10px">In attesa di risposta</div>${pend.map(i=>`<div class="item">${avatar(userById(i.to_user))}<div class="info"><div class="t">${esc(userName(i.to_user))}</div><div class="muted">invitato da ${i.from_user===me().id?"te":esc(userName(i.from_user))}</div></div>
+        ${i.from_user===me().id||isOwner?`<button class="btn ghost sm" data-a="cancelInv" data-id="${i.id}">Annulla</button>`:""}</div>`).join("")}`:""}
+      ${Lists.seatsLeft(l.id)>0?`<button class="btn ghost" data-a="peopleSheet" style="margin-top:10px">＋ Aggiungi ${l.type==="couple"?"il/la partner":"persone"}</button>`:`<p class="muted" style="margin:10px 0 0">Lista al completo.</p>`}
+    </div>
+    <h2>🔗 Liste collegate</h2>
+    <div class="section">
+      ${links.length?links.map(x=>{ const ll=Lists.get(x.linked_list_id);
+        return `<div class="item"><div class="thumb" style="background:var(--card2)">📋</div><div class="info"><div class="t">${esc(listLabel(ll))}</div>
+          <div class="muted">${Lists.items(ll.id).length} film · collegata da ${x.linked_by===me().id?"te":esc(userName(x.linked_by))}</div></div>
+          ${x.linked_by===me().id||isOwner?`<button class="icon" title="Scollega" data-a="unlink" data-id="${ll.id}">✕</button>`:""}</div>`; }).join("")
+        :`<p class="muted" style="margin:0 0 10px;line-height:1.5">Collega la tua lista personale: i suoi film entrano anche qui, senza doppioni, e restano aggiornati.</p>`}
+      <button class="btn ghost" data-a="linkSheet" style="margin-top:8px">＋ Collega una mia lista${star}</button>
+    </div>`:""}
+    <h2>Aggiungi un film</h2>
+    <div class="section">
+      <input type="text" id="listSearch" placeholder="Cerca un film…" autocomplete="off" enterkeyhint="search">
+      <div class="hint">Scrivi quello che vuoi: un titolo anche a metà (“padri”), un attore o regista (“DiCaprio”), oppure una descrizione (“horror con fantasmi anni 80”).</div>
+      <div id="sugg" style="margin-top:6px"></div>
+      <details style="margin-top:10px"><summary class="muted" style="cursor:pointer">Non lo trovi? Aggiungilo a mano</summary>
+        <div class="stack" style="margin-top:8px">
+          <input type="text" id="mTitle" placeholder="Titolo">
+          <div class="grid2"><select id="mGenre">${GENRES.map(g=>`<option value="${g.id}">${esc(g.name)}</option>`).join("")}</select>
+          <input type="number" id="mDur" placeholder="Durata (min)" min="1"></div>
+          <button class="btn ghost" data-a="addManual">+ Aggiungi</button>
+        </div></details>
+    </div>
+    <h2>Film (${items.length})</h2>
+    <div class="section">${items.length?items.map(it=>itemRow(it,{mem,shared,canDel:it.added_by===me().id||isOwner})).join(""):`<div class="empty">Ancora nessun film. Cercane uno qui sopra.</div>`}</div>
+    ${linked.length?`<h2>Dalle liste collegate (${linked.length})</h2><div class="section">${linked.map(it=>itemRow(it,{mem,shared,canDel:false})).join("")}</div>`:""}
+    <div class="stack" style="margin-top:18px">
+      ${items.length+linked.length?`<button class="btn ghost" data-a="copySheet">📤 Copia questi film in un'altra lista${star}</button>`:""}
+      ${isOwner?`<button class="btn danger" data-a="deleteList">Elimina lista</button>`:`<button class="btn danger" data-a="leaveList">Esci dalla lista</button>`}</div>`;
+  $("#listSearch").oninput=doSearch;
+}
+// ricerca unica: titolo + persona + descrizione in parallelo, risultati raggruppati
+const doSearch=debounce(async()=>{
+  const q=$("#listSearch")?.value.trim(); if(q===undefined) return;
+  if(q.length<2){ $("#sugg").innerHTML=""; return; }
+  $("#sugg").innerHTML=`<p class="muted">Cerco…</p>`;
+  try{
+    const words=q.split(/\s+/);
+    const [byTitle,ppl,parsed]=await Promise.all([
+      api("/search/movie",{query:q,language:LANG,include_adult:false}).then(r=>r.results).catch(()=>[]),
+      words.length<=3 ? api("/search/person",{query:q,language:LANG}).then(r=>r.results||[]).catch(()=>[]) : [],
+      parseQuery(q).catch(()=>null),
+    ]);
+    const sections=[], seen=new Set();
+    const add=(head,list,max)=>{ const items=list.map(normalize).filter(f=>!seen.has(f.id)).slice(0,max); items.forEach(f=>seen.add(f.id)); if(items.length) sections.push({head,items}); };
+    const person=ppl.find(x=>words.every(w=>fold(x.name).includes(fold(w))));
+    const tasks=[];
+    if(person){ const dir=person.known_for_department==="Directing";
+      tasks.push(api("/discover/movie",{language:LANG,sort_by:"popularity.desc",include_adult:false,[dir?"with_crew":"with_cast"]:person.id})
+        .then(r=>({head:`${dir?"🎬 Film diretti da":"🎭 Film con"} ${esc(person.name)}`,list:r.results})).catch(()=>null)); }
+    const useDesc=parsed && parsed.labels.length && !(person && parsed.people.length===parsed.labels.length);
+    if(useDesc) tasks.push(api("/discover/movie",parsedToParams(parsed))
+      .then(r=>({head:`✨ Ho capito: ${parsed.labels.map(esc).join(" · ")}`,list:r.results})).catch(()=>null));
+    const extra=(await Promise.all(tasks)).filter(Boolean);
+    if(q!==$("#listSearch")?.value.trim()) return;
+    add("🔤 Titoli",byTitle,6);
+    extra.forEach(x=>add(x.head,x.list,8));
+    searchSections=sections; searchResults=sections.flatMap(x=>x.items); renderSugg();
+  }catch(e){ $("#sugg").innerHTML=`<p class="muted">${esc(apiErrorMsg(e))}</p>`; }
+},450);
+function renderSugg(){
+  $("#sugg").innerHTML=searchSections.length?searchSections.map(sec=>`<div class="muted" style="margin:12px 0 2px;font-weight:600">${sec.head}</div>`+
+    sec.items.map(f=>`<div class="item">${thumbHtml(f)}
+      <div class="info"><div class="t">${esc(f.title)}</div><div class="muted">${f.year||"—"}${f.vote?` · ⭐ ${f.vote.toFixed(1)}`:""}</div></div>
+      ${Lists.has(openListId,f.id)?`<span class="muted">in lista</span>`:`<button class="icon" data-a="addSearch" data-id="${f.id}">➕</button>`}</div>`).join("")).join("")
+    :`<p class="muted">Nessun film trovato. Prova con un'altra parola o aggiungilo a mano qui sotto.</p>`;
+}
+
+/* =====================================================================
+   10. RENDER – PROFILO
+   ===================================================================== */
+function renderProfile(){
+  const u=me(), p=prof(), guest=u.provider==="guest";
+  const loginLbl={apple:" Apple",google:"Google",email:"Email",guest:"Senza account"}[u.provider];
+  const provList=showAllProv?PROVIDERS:PROVIDERS.slice(0,16);
+  PROVIDERS.forEach(g=>{ if(!provList.includes(g)&&g.ids.some(id=>p.providerIds.includes(id))) provList.push(g); });
+  const others=D().users.filter(x=>x.id!==u.id);
+  $("#v-profile").innerHTML=`
+    <div class="section profhead"><span data-a="avatarSheet" style="cursor:pointer;position:relative">${avatar(u,"lg")}<span style="position:absolute;right:-4px;bottom:-4px;font-size:14px;background:var(--card2);border-radius:50%;padding:3px">✏️</span></span>
+      <div style="flex:1;min-width:0"><div style="font-weight:700;font-size:18px">${esc(u.name)}</div>
+        <div class="muted">${guest?"Profilo ospite":`<b style="color:var(--text)">${esc(handle(u))}</b> <span data-a="usernameSheet" style="cursor:pointer;color:#bcd0ff">modifica</span>`}</div>
+        <div class="muted">${esc(u.email||"")}${u.email?" · ":""}${loginLbl}</div>
+        <div style="margin-top:6px">${p.premium?`<span class="pill gold">⭐ Premium</span>`:`<span class="pill">Piano gratuito</span>`}</div></div></div>
+    ${guest?`<div class="banner" data-a="upgradeSheet" style="margin-top:12px">👤 Stai usando l'app senza account. Crea un account per salvare i dati e condividere liste.</div>`:""}
+
+    <h2>I miei abbonamenti</h2>
+    <div class="section"><div class="chips">${metaOk?provList.map(g=>chip(`${logoHtml(g)}${esc(g.name)}`,g.ids.some(id=>p.providerIds.includes(id)),`data-a="prov" data-name="${esc(g.name)}"`,"plat")).join(""):`<span class="muted">Caricamento…</span>`}</div>
+      ${PROVIDERS.length>16?`<button class="btn ghost" data-a="moreProv" style="margin-top:10px">${showAllProv?"Mostra solo le principali":`Mostra tutte (${PROVIDERS.length})`}</button>`:""}</div>
+
+    <h2>Generi preferiti</h2>
+    <div class="section"><div class="chips">${GENRES.map(g=>chip(`${GENRE_EMOJI[g.id]||"🎬"} ${esc(g.name)}`,p.favGenres.includes(g.id),`data-a="favGenre" data-id="${g.id}"`)).join("")}</div>
+      <p class="muted" style="margin:10px 0 0">Servono a proporti più spesso film di questi generi. Anche i tuoi 👍/👎 contano (${Ratings.mine().length} voti finora).</p></div>
+
+    <h2>Abbonamento</h2>
+    <div class="section">${p.premium
+      ?`<p style="margin:0 0 10px">⭐ Sei Premium: niente pubblicità, liste illimitate, liste collegate.</p><button class="btn ghost" data-a="cancelPremium">Annulla Premium (simulato)</button>`
+      :`<p style="margin:0 0 10px">Togli la pubblicità, crea liste illimitate e collega le tue liste.</p><button class="btn" data-a="premium">⭐ Passa a Premium</button>`}</div>
+
+    <h2>Account</h2>
+    <div class="section stack">
+      <button class="btn ghost" data-a="logout">Esci</button>
+      <button class="btn danger" data-a="deleteAccount">Elimina account</button>
+    </div>
+
+    <h2>🧪 Prova multi-utente</h2>
+    <div class="section">
+      <p class="muted" style="margin:0 0 10px;line-height:1.5">Solo nel prototipo: crea un secondo utente su questo dispositivo per provare le liste condivise (es. tu e il/la partner).</p>
+      ${others.map(o=>`<div class="item">${avatar(o)}<div class="info"><div class="t">${esc(o.name)}</div><div class="muted">${esc(handle(o)||"ospite")}</div></div><button class="btn ghost sm" data-a="switchUser" data-id="${o.id}">Entra</button></div>`).join("")}
+      <button class="btn ghost" data-a="newUser" style="margin-top:10px">＋ Crea un altro utente</button>
+    </div>
+
+    <h2>🛠 Sviluppatore</h2>
+    <div class="section">
+      <div class="muted" style="margin-bottom:8px">Fonte dati: <b>${isDemo()?"🧪 catalogo demo (42 film)":"TMDB reale"}</b>${!isDemo()&&metaOk?" – ✅ connesso":""}</div>
+      ${!isDemo()&&connInfo?`<div class="banner" style="cursor:default;line-height:1.5"><b>❌ ${esc(connInfo.title)}</b><br>${connInfo.tip}</div>`:""}
+      <div style="display:flex;gap:8px"><input type="password" id="apiKey" placeholder="Chiave API TMDB" value="${esc(devKey())}" autocomplete="off">
+        <button class="btn sm" data-a="saveKey">Salva</button></div>
+      ${isDemo()?"":`<button class="btn ghost" data-a="clearKey" style="margin-top:8px">Torna ai dati demo</button>`}
+      <button class="btn ghost" data-a="reopen" style="margin-top:8px">🔁 Simula riapertura app (domanda sull'ultimo film)</button>
+      <button class="btn danger" data-a="resetAll" style="margin-top:8px">Cancella tutti i dati del prototipo</button>
+    </div>
+    <p class="attrib">Questo prodotto usa l'API di TMDB ma non è approvato né certificato da TMDB.<br>Dati sulla disponibilità in streaming forniti da JustWatch tramite TMDB.</p>`;
+}
+
+/* =====================================================================
+   11. BOTTOM SHEET
+   ===================================================================== */
+function openSheet(html){ $("#sheet").innerHTML=html; $("#sheetBg").classList.add("on"); }
+function closeSheet(){ $("#sheetBg").classList.remove("on"); }
+$("#sheetBg").addEventListener("click",e=>{ if(e.target.id==="sheetBg") closeSheet(); });
+function needAccount(){ if(me().provider!=="guest") return false;
+  openSheet(`<h3>Serve un account</h3><p class="muted">Per condividere liste con altre persone devi avere un account.</p>
+    <button class="btn" data-a="upgradeSheet">Crea account</button>`); return true; }
+function overLimit(){ if(prof().premium || Lists.mine().length<FREE_MAX_LISTS) return false;
+  openPremium(`Con il piano gratuito puoi avere al massimo ${FREE_MAX_LISTS} liste.`); return true; }
+function openPremium(reason){
+  openSheet(`<h3>⭐ CosaGuardo Premium</h3>${reason?`<p class="muted">${esc(reason)}</p>`:""}
+    <div class="feat">🚫 Nessuna pubblicità</div><div class="feat">📋 Liste illimitate (gratis: ${FREE_MAX_LISTS})</div><div class="feat">🔗 Collega e copia le liste</div><div class="feat">❤️ Sostieni lo sviluppo dell'app</div>
+    <div class="stack" style="margin-top:12px">
+      <button class="btn" data-a="buyPremium"><span class="price"><span>Annuale</span><span>19,99 € / anno</span></span></button>
+      <button class="btn ghost" data-a="buyPremium"><span class="price"><span>Mensile</span><span>2,49 € / mese</span></span></button>
+    </div><p class="muted" style="text-align:center">Prototipo: nessun pagamento reale.</p>`);
+}
+function openSaveSheet(){
+  const f=current;
+  openSheet(`<h3>Salva in…</h3><p class="muted">${esc(f.title)}</p>
+    ${Lists.mine().map(l=>`<div class="opt ${Lists.has(l.id,f.id)?"on":""}" data-a="toggleSave" data-id="${l.id}">
+      <span class="lic">${LIST_TYPES[l.type].icon}</span><div style="flex:1"><b>${esc(l.name)}</b><div class="muted">${LIST_TYPES[l.type].label}</div></div>
+      <span>${Lists.has(l.id,f.id)?"✓":""}</span></div>`).join("")}
+    <button class="btn ghost" data-a="backDetail" style="margin-top:12px">Fatto</button>`);
+}
+function openRate(f){
+  openSheet(`<h3>Ti è piaciuto?</h3><p class="muted">${esc(f.title)} · il tuo voto ci aiuta a consigliarti meglio</p>
+    <div class="grid2" style="margin-top:12px"><button class="btn ghost" data-a="rate" data-v="1" style="font-size:22px">👍</button>
+    <button class="btn ghost" data-a="rate" data-v="-1" style="font-size:22px">👎</button></div>
+    <button class="btn ghost" data-a="rate" data-v="0" style="margin-top:8px">Salta</button>`);
+}
+let newListType="couple";
+function openNewList(){
+  openSheet(`<h3>Nuova lista</h3>
+    <input type="text" id="nlName" placeholder="Nome (es. Film con Giulia)" style="margin:8px 0">
+    ${Object.entries(LIST_TYPES).map(([k,t])=>`<div class="opt ${k===newListType?"on":""}" data-a="nlType" data-id="${k}"><span class="lic">${t.icon}</span><div><b>${t.label}</b><div class="muted">${t.desc}</div></div></div>`).join("")}
+    <button class="btn" data-a="createList" style="margin-top:14px">Crea lista</button>`);
+}
+
+function renderPeopleRes(){
+  const el=$("#peopleRes"); if(!el) return; const q=$("#peopleQ").value;
+  const res=Users.search(q), pend=Invites.forList(openListId);
+  el.innerHTML = q.trim().length<2 ? "" : res.length ? res.map(u=>{
+    const member=Lists.members(openListId).some(m=>m.user_id===u.id), invited=pend.some(i=>i.to_user===u.id);
+    return `<div class="item">${avatar(u)}<div class="info"><div class="t">${esc(u.name)}</div><div class="muted">${esc(handle(u))}</div></div>
+      ${member?`<span class="muted">nella lista</span>`:invited?`<span class="muted">invitato ✓</span>`:`<button class="btn sm" data-a="inviteUser" data-id="${u.id}">Invita</button>`}</div>`; }).join("")
+    : `<p class="muted">Nessun utente con questo nome utente. Mandagli il link di iscrizione qui sotto.</p>`;
+}
+const maskEmail = e => e ? e.replace(/^(.)(.*)(@.*)$/,(m,a,b,c)=>a+"•".repeat(Math.min(b.length,6))+c) : "";
+
+/* =====================================================================
+   12. ONBOARDING (primo avvio)
+   ===================================================================== */
+let onb=null;
+// invito ricevuto tramite link (?invito=CODICE). In produzione: deep link https://cosaguardo.app/invito/CODICE
+let pendingInvite=new URLSearchParams(location.search).get("invito");
+function consumeInvite(){
+  if(!pendingInvite || !me()) return;
+  const code=pendingInvite; pendingInvite=null;
+  const l=Lists.byCode(code); if(!l) return toast("Invito non valido o scaduto");
+  if(Lists.isMember(l.id)){ openListId=l.id; renderAll(); goTo("v-lists"); return; }
+  if(me().provider==="guest") return needAccount();
+  openSheet(`<h3>${LIST_TYPES[l.type].icon} ${esc(l.name)}</h3><p><b>${esc(userName(l.owner_id))}</b> ti ha invitato in questa lista.</p>
+    <button class="btn" data-a="joinLink" data-code="${l.invite_code}">Unisciti</button><button class="btn ghost" data-a="closeSheet" style="margin-top:8px">Non ora</button>`);
+}
+const ONB_STEPS=["welcome","auth","avatar","platforms","genres","seen","done"];
+function startOnboarding(step){ onb={step,method:null,seenTiles:null}; renderOnb(); $("#onb").classList.add("on"); }
+function endOnboarding(){ onb=null; $("#onb").classList.remove("on"); renderAll(); goTo("v-pick"); }
+async function renderOnb(){
+  const el=$("#onb"), s=onb.step, idx=ONB_STEPS.indexOf(s);
+  const dots=`<div class="dots">${ONB_STEPS.slice(1,-1).map((x,i)=>`<i class="${i+1===idx?"on":""}"></i>`).join("")}</div>`;
+  let body="", foot="";
+  if(s==="welcome"){
+    const il=pendingInvite && Lists.byCode(pendingInvite);
+    body=`${il?`<div class="fu" style="margin-top:10px">${avatar(userById(il.owner_id))}<div class="info"><b>${esc(userName(il.owner_id))}</b> ti ha invitato nella lista <b>${LIST_TYPES[il.type].icon} ${esc(il.name)}</b>. Registrati per entrare.</div></div>`:""}
+      <div class="hero-emoji">🍿</div><div class="logo">Cosa<span>Guardo</span></div>
+      <p style="text-align:center;font-size:18px;color:var(--muted);line-height:1.4;margin:14px 10px">Basta mezz'ore a scorrere cataloghi.<br>Scegli il mood, al film pensiamo noi.</p>
+      <div class="section stack" style="margin-top:30px">
+        <div class="feat">📺 Solo film delle piattaforme che hai</div>
+        <div class="feat">💑 Liste condivise con partner e amici</div>
+        <div class="feat">🎲 Un titolo, subito. Niente indecisione.</div></div>`;
+    foot=`<button class="btn" data-a="onbGo" data-step="auth">Inizia</button>`;
+  }
+  if(s==="auth" && !onb.method){
+    const users=D().users;
+    body=`${dots}<h2 class="big">Crea il tuo account</h2><p class="muted">Così ritrovi liste e preferenze su ogni dispositivo e puoi condividerle.</p>
+      <div class="stack" style="margin-top:20px">
+        <button class="btn dark" data-a="onbMethod" data-m="apple"> Continua con Apple</button>
+        <button class="btn white" data-a="onbMethod" data-m="google"><b style="color:#4285f4">G</b>&nbsp; Continua con Google</button>
+        <button class="btn ghost" data-a="onbMethod" data-m="email">✉️ Continua con email</button>
+        ${pendingInvite?"":`<button class="btn ghost" data-a="onbMethod" data-m="guest" style="border:0;background:none;color:var(--muted)">Prova senza account</button>`}
+      </div>
+      ${users.length?`<h2>Account su questo dispositivo (demo)</h2><div class="section">${users.map(o=>`<div class="item">${avatar(o)}<div class="info"><div class="t">${esc(o.name)}</div><div class="muted">${esc(handle(o)||"ospite")}</div></div><button class="btn ghost sm" data-a="switchUser" data-id="${o.id}">Entra</button></div>`).join("")}</div>`:""}
+      <p class="muted" style="margin-top:18px;font-size:12px">Prototipo: il login è simulato, nessun dato lascia il dispositivo.</p>`;
+  }
+  if(s==="auth" && onb.method){
+    const m=onb.method, label={apple:"Apple",google:"Google",email:"email"}[m];
+    body=`${dots}<h2 class="big">${m==="email"?"Registrati con email":"Accesso con "+label}</h2>
+      <p class="muted">${m==="email"?"":"Simulazione: in produzione si aprirà la finestra di "+label+"."}</p>
+      <div class="stack" style="margin-top:16px">
+        <input type="text" id="oName" placeholder="Come ti chiami?" autocomplete="given-name">
+        <div><input type="text" id="oUser" placeholder="@nomeutente" autocomplete="off" autocapitalize="none" spellcheck="false">
+          <div class="hint" id="oUserMsg">Serve ai tuoi amici per trovarti e invitarti nelle liste.</div></div>
+        ${m==="email"?`<input type="email" id="oEmail" placeholder="Email"><input type="password" placeholder="Password (min. 8 caratteri)" id="oPwd">`:""}
+      </div>`;
+    foot=`<button class="btn" data-a="onbAuth">Continua</button><button class="btn ghost" data-a="onbMethod" data-m="" style="margin-top:8px">Indietro</button>`;
+  }
+  if(s==="avatar"){
+    body=`${dots}<h2 class="big">Scegli il tuo personaggio</h2><p class="muted">Sarà la tua immagine del profilo: la vedranno gli amici nelle liste condivise.</p>
+      <div style="text-align:center;margin:14px 0 4px">${avatar(me(),"lg")}<div style="margin-top:6px;font-weight:600">${esc(avatarOf(me())?.name||me().name)}</div></div>
+      ${avatarGrid(me().avatar)}`;
+    foot=`<button class="btn" data-a="onbGo" data-step="platforms">${me().avatar?"Continua":"Salta per ora"}</button>`;
+  }
+  if(s==="platforms"){
+    const p=prof();
+    body=`${dots}<h2 class="big">A cosa sei abbonato?</h2><p class="muted">Ti proporremo solo film inclusi nei tuoi abbonamenti. Puoi cambiarli quando vuoi.</p>
+      <div class="chips" style="margin-top:16px">${metaOk?PROVIDERS.slice(0,16).map(g=>chip(`${logoHtml(g)}${esc(g.name)}`,g.ids.some(id=>p.providerIds.includes(id)),`data-a="prov" data-name="${esc(g.name)}"`,"plat")).join(""):`<span class="muted">Caricamento piattaforme…</span>`}</div>`;
+    foot=`<button class="btn" data-a="onbGo" data-step="genres" ${p.providerIds.length?"":"disabled"}>Continua</button>`;
+  }
+  if(s==="genres"){
+    body=`${dots}<h2 class="big">Cosa ti piace guardare?</h2><p class="muted">Facoltativo. Ci aiuta a centrare i tuoi gusti.</p>
+      <div class="chips" style="margin-top:16px">${GENRES.map(g=>chip(`${GENRE_EMOJI[g.id]||"🎬"} ${esc(g.name)}`,prof().favGenres.includes(g.id),`data-a="favGenre" data-id="${g.id}"`)).join("")}</div>`;
+    foot=`<button class="btn" data-a="onbGo" data-step="seen">Continua</button>`;
+  }
+  if(s==="seen"){
+    if(!onb.seenTiles){
+      body=`${dots}<h2 class="big">Hai già visto qualcuno di questi?</h2><p class="muted">Caricamento…</p>`;
+      el.innerHTML=`<div class="wrap"><div class="body">${body}</div></div>`;
+      try{ const d=await api("/discover/movie",{language:LANG,watch_region:REGION,with_watch_providers:prof().providerIds.join("|"),with_watch_monetization_types:"flatrate",sort_by:"popularity.desc","vote_count.gte":MIN_VOTES,page:1});
+        onb.seenTiles=d.results.slice(0,12).map(normalize); }catch(e){ onb.seenTiles=[]; }
+      return renderOnb();
+    }
+    body=`${dots}<h2 class="big">Hai già visto qualcuno di questi?</h2><p class="muted">Tocca quelli che hai visto: non te li proporremo.</p>
+      <div class="tiles" style="margin-top:14px">${onb.seenTiles.map(f=>`<div class="tile ${Seen.has(f.id)?"on":""}" data-a="onbSeen" data-id="${f.id}" style="background:${gradient(f.title)}">
+        ${f.poster?`<img src="${img(f.poster,"w185")}" alt="" onerror="this.remove()">`:""}<span>${f.poster?"":esc(f.title)}</span></div>`).join("")||`<p class="muted">Nessun film da mostrare.</p>`}</div>`;
+    foot=`<button class="btn" data-a="onbGo" data-step="done">Continua</button>`;
+  }
+  if(s==="done"){
+    body=`<div class="hero-emoji">🎉</div><h2 class="big" style="text-align:center">Tutto pronto, ${esc(me().name)}!</h2>
+      <p style="text-align:center;color:var(--muted);line-height:1.5">Scegli genere e mood, poi tocca <b>“Scegli un film per me”</b>.<br><br>Vuoi decidere in due? Vai su <b>Liste</b> e crea una lista <b>Coppia</b>.</p>`;
+    foot=`<button class="btn" data-a="onbFinish">Andiamo</button>`;
+  }
+  el.innerHTML=`<div class="wrap"><div class="body">${body}</div><div style="margin-top:24px">${foot}</div></div>`;
+  el.scrollTop=0;
+}
+
+/* =====================================================================
+   13. AZIONI (tutti i click passano da qui)
+   ===================================================================== */
+function save(){ DB.save(); }
+function renderAll(){ if(!me()) return; renderHeader(); renderPick(); renderLists(); renderProfile(); }
+function goTo(view){
+  document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("on",x.dataset.view===view));
+  document.querySelectorAll(".view").forEach(v=>v.classList.toggle("on",v.id===view));
+  window.scrollTo(0,0);
+}
+const A = {
+  goto:d=>{ if(d.view==="v-lists") openListId=null; renderAll(); goTo(d.view); },
+  // --- filtri
+  src:d=>{ F().sources=toggle(F().sources,d.id); save(); renderPick(); },
+  genre:d=>{ F().genres=toggle(F().genres,+d.id); save(); renderPick(); },
+  mood:d=>{ F().moods=toggle(F().moods,d.id); save(); renderPick(); },
+  pick:()=>{ if(prof().searchMode==="desc" && !prof().descCrit) return toast("Prima descrivi cosa vuoi vedere"); doPick(); },
+  mode:d=>{ prof().searchMode=d.id; save(); renderPick(); },
+  showResults:()=>{ renderResults(); ($("#resTop")||$("#results")).scrollIntoView({behavior:"smooth",block:"start"}); },
+  moreResults:()=>loadResults(false),
+  openDetail:d=>openDetail(d.id),
+  resetFilters:()=>{ Object.assign(F(),{genres:[],moods:[],maxDur:0,era:"all",years:null,minRating:0}); save(); renderPick(); },
+  backDetail:()=>showDetail(current,currentRandom),
+  // --- risultato
+  saveSheet:()=>openSaveSheet(),
+  toggleSave:d=>{ Lists.has(d.id,current.id)?Lists.removeItem(d.id,current.id):Lists.add(d.id,current); openSaveSheet(); renderLists(); },
+  seenCurrent:()=>{ Seen.set(current.id,true); onbRateNext=currentRandom; openRate(current); },
+  rate:d=>{ const v=+d.v; if(v) Ratings.set(current,v); closeSheet(); toast(v?"Grazie! Terremo conto del tuo voto":"Segnato come visto"); renderAll(); if(onbRateNext) doPick(); },
+  watchIt:()=>{ prof().lastPick={movie:liteMovie(current),at:Date.now(),chosen:true,done:false}; DB.save();
+    showDetail(current,currentRandom); toast("🍿 Buona visione! Poi dimmi com'era"); },
+  fuSeen:()=>{ const lp=prof().lastPick; lp.done=true; Seen.set(lp.movie.id,true); current=lp.movie; onbRateNext=false; renderAll(); openRate(lp.movie); },
+  fuLater:()=>{ const lp=prof().lastPick; lp.done=true; DB.save();
+    const l=Lists.mine().find(x=>x.type==="personal"&&x.owner_id===me().id);
+    if(l){ Lists.add(l.id,lp.movie); toast(`Salvato in “${l.name}”`); renderAll(); } else { current=lp.movie; renderAll(); openSaveSheet(); } },
+  fuNo:()=>{ prof().lastPick.done=true; DB.save(); renderFollowUp(); },
+  reopen:()=>{ sessionStart=Date.now()+1; clearResults(); current=null; renderAll(); goTo("v-pick"); toast("App riaperta (simulazione)"); },
+  // --- ricerca descrittiva
+  example:(d,el)=>{ $("#descBox").value=el.textContent; A.describe(); },
+  describe:async()=>{
+    const t=$("#descBox").value.trim(); if(!t) return toast("Scrivi cosa ti va di vedere");
+    const btn=$("#descBtn"); btn.disabled=true; btn.textContent="…";
+    try{
+      const r=await parseQuery(t);
+      if(!r.labels.length){ $("#descOut").innerHTML=understoodHtml(r); return; }
+      prof().descCrit={...r,text:t}; save(); renderPick();
+      setTimeout(()=>A.showResults(),400);
+    }catch(e){ $("#descOut").innerHTML=`<div class="hint">${esc(apiErrorMsg(e))}</div>`; }
+    finally{ btn.disabled=false; btn.textContent="Cerca"; }
+  },
+  // --- liste
+  newList:()=>{ if(overLimit()) return; newListType="couple"; openNewList(); },
+  nlType:d=>{ const name=$("#nlName").value; newListType=d.id; openNewList(); $("#nlName").value=name; },
+  createList:()=>{
+    const name=$("#nlName").value.trim()||({personal:"La mia lista",couple:"Noi due",friends:"Serata film"}[newListType]);
+    if(newListType!=="personal" && needAccount()) return;
+    const l=Lists.create(name,newListType); closeSheet(); openListId=l.id; renderAll(); toast("Lista creata");
+  },
+  // --- persone e inviti
+  peopleSheet:()=>{ if(needAccount()) return;
+    openSheet(`<h3>Aggiungi alla lista</h3><p class="muted">Cerca il suo <b>@nomeutente</b>: riceverà un invito da accettare.</p>
+      <input type="text" id="peopleQ" placeholder="@nomeutente" autocomplete="off" autocapitalize="none" spellcheck="false" style="margin:8px 0">
+      <div id="peopleRes"></div>
+      <h2 style="margin-top:18px">Non è ancora su CosaGuardo?</h2>
+      <button class="btn" data-a="shareSignup">📤 Mandagli il link di iscrizione</button>
+      <p class="muted" style="font-size:12px">Chi si registra dal link entra subito nella lista.</p>
+      <button class="btn ghost" data-a="simLink" style="margin-top:6px">🧪 Prototipo: apri il link come nuovo utente</button>`);
+    $("#peopleQ").oninput=renderPeopleRes; $("#peopleQ").focus(); },
+  inviteUser:d=>{ const r=Invites.send(openListId,d.id); toast(r.error||`Invito inviato a ${userName(d.id)}`); renderPeopleRes(); renderLists(); },
+  cancelInv:d=>{ Invites.cancel(d.id); renderLists(); },
+  acceptInv:d=>{ const r=Invites.accept(d.id); toast(r.error||`Sei entrato in “${r.list.name}”`); if(!r.error){ openListId=r.list.id; } renderAll(); },
+  declineInv:d=>{ Invites.decline(d.id); renderAll(); },
+  shareSignup:async()=>{ const l=Lists.get(openListId), link=`https://cosaguardo.app/invito/${l.invite_code}`;
+    const text=`${me().name} ti invita su CosaGuardo nella lista “${l.name}”: scegliamo insieme cosa guardare! ${link}`;
+    try{ if(navigator.share) await navigator.share({title:"CosaGuardo",text,url:link}); else { await navigator.clipboard.writeText(text); toast("Link copiato negli appunti"); } }
+    catch(e){ toast("Link: "+link); } },
+  simLink:()=>{ pendingInvite=Lists.get(openListId).invite_code; closeSheet(); Auth.logout(); current=null; openListId=null; clearResults(); startOnboarding("welcome"); },
+  // --- liste collegate e copia (Premium)
+  linkSheet:()=>{ if(!prof().premium) return openPremium("Collegare le liste è una funzione Premium.");
+    const mine=Lists.mine().filter(x=>x.type==="personal"&&x.id!==openListId), linked=Lists.links(openListId).map(x=>x.linked_list_id);
+    openSheet(`<h3>Collega una tua lista</h3><p class="muted">I film della lista scelta compariranno anche in “${esc(Lists.get(openListId).name)}” e potrete pescarli insieme. Non vengono copiati: se aggiungi un film alla tua lista, compare anche qui.</p>
+      ${mine.map(x=>`<div class="opt ${linked.includes(x.id)?"on":""}" data-a="${linked.includes(x.id)?"unlink":"doLink"}" data-id="${x.id}"><span class="lic">📋</span>
+        <div style="flex:1"><b>${esc(x.name)}</b><div class="muted">${Lists.items(x.id).length} film</div></div><span>${linked.includes(x.id)?"✓":""}</span></div>`).join("")||`<p class="muted">Non hai liste personali da collegare.</p>`}
+      <button class="btn ghost" data-a="closeSheet" style="margin-top:12px">Fatto</button>`); },
+  doLink:d=>{ Lists.link(openListId,d.id); toast("Lista collegata"); A.linkSheet(); renderAll(); },
+  unlink:d=>{ Lists.unlink(openListId,d.id); toast("Lista scollegata"); if($("#sheetBg").classList.contains("on")) A.linkSheet(); renderAll(); },
+  copySheet:()=>{ if(!prof().premium) return openPremium("Copiare le liste è una funzione Premium.");
+    const targets=Lists.mine().filter(x=>x.id!==openListId);
+    openSheet(`<h3>Copia in…</h3><p class="muted">Copia i film di “${esc(Lists.get(openListId).name)}” in un'altra lista. I film già presenti non vengono duplicati.</p>
+      ${targets.map(x=>`<div class="opt" data-a="doCopy" data-id="${x.id}"><span class="lic">${LIST_TYPES[x.type].icon}</span><div style="flex:1"><b>${esc(x.name)}</b><div class="muted">${LIST_TYPES[x.type].label} · ${Lists.items(x.id).length} film</div></div></div>`).join("")||`<p class="muted">Crea prima un'altra lista.</p>`}`); },
+  doCopy:d=>{ const n=Lists.copy(openListId,d.id); closeSheet(); toast(n?`${n} film copiati in “${Lists.get(d.id).name}”`:"Erano già tutti presenti"); renderAll(); },
+  openList:d=>{ openListId=d.id; searchResults=[]; searchSections=[]; renderLists(); window.scrollTo(0,0); },
+  closeList:()=>{ openListId=null; renderLists(); },
+  addSearch:async (d,el)=>{ el.disabled=true; let f=searchResults.find(x=>x.id===+d.id);
+    try{ f=normalize(await api(`/movie/${f.id}`,{language:LANG}, f.id>=DEMO_BASE)); }catch(e){}
+    Lists.add(openListId,f); const q=$("#listSearch").value; renderLists(); $("#listSearch").value=q; renderSugg(); toast("Aggiunto"); },
+  addManual:()=>{ const t=$("#mTitle").value.trim(); if(!t) return toast("Inserisci un titolo");
+    Lists.add(openListId,{custom:true,id:"c_"+Date.now(),title:t,year:null,poster:null,backdrop:null,genre_ids:[+$("#mGenre").value],vote:null,runtime:+$("#mDur").value||null});
+    renderLists(); toast("Aggiunto"); },
+  toggleSeen:d=>{ const id=isNaN(+d.id)?d.id:+d.id; const on=!Seen.has(id); Seen.set(id,on); renderAll();
+    if(on){ const it=D().list_items.find(i=>i.movie.id===id); if(it&&!it.movie.custom){ current=it.movie; onbRateNext=false; openRate(it.movie);} } },
+  delItem:d=>{ const id=isNaN(+d.id)?d.id:+d.id; Lists.removeItem(openListId,id); renderAll(); },
+  leaveList:()=>{ if(confirm("Uscire da questa lista?")){ Lists.leave(openListId); openListId=null; renderAll(); } },
+  deleteList:()=>{ const n=Lists.members(openListId).length; if(confirm(n>1?"Eliminare la lista per tutti i membri?":"Eliminare questa lista?")){ Lists.remove(openListId); openListId=null; renderAll(); toast("Lista eliminata"); } },
+  // --- profilo
+  prov:d=>{ const g=PROVIDERS.find(p=>p.name===d.name), p=prof(), on=g.ids.some(id=>p.providerIds.includes(id));
+    p.providerIds=on?p.providerIds.filter(id=>!g.ids.includes(id)):[...p.providerIds,...g.ids]; save();
+    if(onb) renderOnb(); else renderAll(); },
+  moreProv:()=>{ showAllProv=!showAllProv; renderProfile(); },
+  favGenre:d=>{ prof().favGenres=toggle(prof().favGenres,+d.id); save(); if(onb) renderOnb(); else renderProfile(); },
+  premium:()=>openPremium(),
+  buyPremium:()=>{ prof().premium=true; save(); closeSheet(); renderAll(); toast("⭐ Benvenuto in Premium!"); },
+  cancelPremium:()=>{ prof().premium=false; save(); renderAll(); },
+  upgradeSheet:()=>(userEdited=false,openSheet(`<h3>Crea il tuo account</h3><div class="stack" style="margin-top:10px">
+      <input type="text" id="uName" placeholder="Nome" value="${me().name==="Ospite"?"":esc(me().name)}">
+      <div><input type="text" id="uUser" placeholder="@nomeutente" autocomplete="off" autocapitalize="none" spellcheck="false"><div class="hint" id="uUserMsg"></div></div>
+      <input type="email" id="uEmail" placeholder="Email">
+      <button class="btn" data-a="doUpgrade">Crea account</button></div><p class="muted">Liste e preferenze attuali verranno mantenute.</p>`)),
+  doUpgrade:()=>{ const n=$("#uName").value.trim(), e=$("#uEmail").value.trim(), un=Usernames.norm($("#uUser").value);
+    if(!n||!/^\S+@\S+\.\S+$/.test(e)) return toast("Inserisci nome ed email validi");
+    const err=Usernames.error(un); if(err) return toast(err);
+    if(Auth.byEmail(e)) return toast("Email già registrata");
+    Auth.upgradeGuest(n,e,un); closeSheet(); renderAll(); toast("Account creato"); },
+  avatarSheet:()=>openSheet(`<h3>Il tuo personaggio</h3><p class="muted">Scegli l'immagine del profilo.</p>${avatarGrid(me().avatar)}`),
+  setAvatar:d=>{ me().avatar=d.id; DB.save(); if(onb){ renderOnb(); } else { closeSheet(); renderAll(); toast(`Ora sei ${avatarOf(me()).name}`); } },
+  usernameSheet:()=>{ openSheet(`<h3>Il tuo nome utente</h3><p class="muted">È come ti trovano gli amici per invitarti nelle liste.</p>
+      <input type="text" id="eUser" value="${esc(me().username||"")}" autocomplete="off" autocapitalize="none" spellcheck="false" style="margin:8px 0">
+      <div class="hint" id="eUserMsg"></div><button class="btn" data-a="saveUsername" style="margin-top:10px">Salva</button>`); },
+  saveUsername:()=>{ const un=Usernames.norm($("#eUser").value), err=Usernames.error(un,me().id); if(err) return toast(err);
+    Auth.setUsername(un); closeSheet(); renderAll(); toast("Nome utente aggiornato: @"+un); },
+  logout:()=>{ Auth.logout(); current=null; clearResults(); startOnboarding("auth"); },
+  deleteAccount:()=>{ if(!confirm("Eliminare definitivamente l'account e tutti i tuoi dati? Le liste condivise resteranno agli altri membri, senza i film che hai aggiunto tu.")) return;
+    Auth.deleteAccount(); current=null; clearResults(); toast("Account eliminato"); startOnboarding("welcome"); },
+  switchUser:d=>{ Auth.login(d.id); current=null; recent=[]; clearResults(); openListId=null;
+    if(onb && prof().onboarded){ endOnboarding(); consumeInvite(); } else if(!prof().onboarded){ startOnboarding("platforms"); } else { renderAll(); goTo("v-pick"); }
+    toast("Ciao "+me().name+"!"); },
+  newUser:()=>{ Auth.logout(); current=null; clearResults(); startOnboarding("auth"); },
+  saveKey:async()=>{ localStorage.setItem(DEV_KEY,$("#apiKey").value.trim()); await reconnect(true); },
+  clearKey:async()=>{ localStorage.removeItem(DEV_KEY); await reconnect(true); },
+  resetAll:()=>{ if(confirm("Cancellare utenti, liste e dati del prototipo?")){ localStorage.removeItem(DB_KEY); DB.load(); current=null; clearResults(); startOnboarding("welcome"); } },
+  closeSheet:()=>closeSheet(),
+  // --- onboarding
+  onbGo:d=>{ onb.step=d.step; renderOnb(); },
+  onbMethod:d=>{ userEdited=false; if(d.m==="guest"){ Auth.signUp({name:"Ospite",email:null,provider:"guest"}); onb.step="avatar"; renderOnb(); return; }
+    onb.method=d.m||null; renderOnb(); },
+  onbAuth:()=>{
+    const name=$("#oName").value.trim(); if(!name) return toast("Dimmi come ti chiami");
+    const username=Usernames.norm($("#oUser").value);
+    let email;
+    if(onb.method==="email"){ email=$("#oEmail").value.trim();
+      if(!/^\S+@\S+\.\S+$/.test(email)) return toast("Email non valida");
+      if(($("#oPwd").value||"").length<8) return toast("La password deve avere almeno 8 caratteri");
+      const ex=Auth.byEmail(email); if(!ex){ const err=Usernames.error(username); if(err) return toast(err); }
+      if(ex){ Auth.login(ex.id); toast("Bentornato "+ex.name); if(prof().onboarded){ endOnboarding(); consumeInvite(); } else { onb.step="platforms"; renderOnb(); } return; }
+    } else { email=name.toLowerCase().replace(/\s+/g,".")+(onb.method==="apple"?"@icloud.com":"@gmail.com");
+      const err=Usernames.error(username); if(err) return toast(err); }
+    Auth.signUp({name,email,provider:onb.method,username}); onb.step="avatar"; onb.method=null; renderOnb();
+  },
+  onbSeen:d=>{ const id=+d.id; Seen.set(id,!Seen.has(id)); renderOnb(); },
+  onbFinish:()=>{ prof().onboarded=true; save(); endOnboarding();
+    if(pendingInvite){ const r=Lists.joinByLink(pendingInvite); pendingInvite=null;
+      if(r.list){ openListId=r.list.id; renderAll(); goTo("v-lists"); toast(r.error||`Sei entrato in “${r.list.name}”`); } else toast(r.error); } },
+  joinLink:d=>{ const r=Lists.joinByLink(d.code); closeSheet(); toast(r.error||`Sei entrato in “${r.list.name}”`); if(r.list){ openListId=r.list.id; renderAll(); goTo("v-lists"); } },
+};
+let onbRateNext=true;
+document.addEventListener("click",e=>{
+  const el=e.target.closest("[data-a]"); if(!el || el.disabled) return;
+  const fn=A[el.dataset.a]; if(!fn) return;
+  fn(el.dataset,el,e);
+});
+// input dei filtri
+let userEdited=false;
+document.addEventListener("input",e=>{
+  const id=e.target.id;
+  if(id==="oName"||id==="uName"){ const f=$(id==="oName"?"#oUser":"#uUser"); if(f && !userEdited){ f.value=e.target.value.trim()?Usernames.suggest(e.target.value):""; checkUser(f); } }
+  if(id==="oUser"||id==="uUser"||id==="eUser"){ userEdited=true; checkUser(e.target); }
+});
+function checkUser(input){
+  const msg=$("#"+input.id+"Msg"); if(!msg) return;
+  const un=Usernames.norm(input.value); if(!un){ msg.textContent=""; return; }
+  const err=Usernames.error(un,input.id==="eUser"?me()?.id:undefined);
+  msg.innerHTML = err ? `<span style="color:#ff8a8d">✕ ${esc(err)}</span>` : `<span style="color:var(--ok)">✓ @${esc(un)} è disponibile</span>`;
+}
+$("#descBox").addEventListener("keydown",e=>{ if(e.key==="Enter") A.describe(); });
+$("#fDuration").onchange=e=>{ F().maxDur=+e.target.value; save(); renderPick(); };
+$("#fEra").onchange=e=>{ F().era=e.target.value; save(); renderPick(); };
+$("#fRating").onchange=e=>{ F().minRating=+e.target.value; save(); renderPick(); };
+$("#fHideSeen").onchange=e=>{ F().hideSeen=e.target.checked; save(); renderPick(); };
+$("#fPopular").onchange=e=>{ F().popular=e.target.checked; save(); renderPick(); };
+$("#fOnlyAvail").onchange=e=>{ F().onlyAvail=e.target.checked; save(); renderPick(); };
+
+async function reconnect(verbose){
+  memo.clear(); metaOk=false;
+  connInfo=null;
+  try{ await loadMeta(); if(verbose) toast(isDemo()?"Uso il catalogo demo":"✅ Connesso a TMDB"); }
+  catch(e){ GENRES=BASE_GENRES; connInfo=diagnose(e); if(verbose) toast("❌ "+connInfo.title); }
+  if(onb){ if(["platforms","genres","seen"].includes(onb.step)) renderOnb(); } else renderAll();
+}
+
+/* =====================================================================
+   14. AVVIO
+   ===================================================================== */
+DB.load();
+if(!me()) startOnboarding("welcome");
+else if(!prof().onboarded) startOnboarding("platforms");
+else { renderAll(); consumeInvite(); }
+reconnect(false);
+</script>
+</body>
+</html>
