@@ -191,6 +191,18 @@
   .fu .btn.ghost{padding:9px 4px;font-size:13px}
   .watch{margin-top:12px}
   .chip .x{opacity:.7;margin-left:2px}
+  /* appunti */
+  .notefab{position:fixed;right:max(14px,calc(50% - 266px));bottom:calc(86px + env(safe-area-inset-bottom));z-index:55;width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:var(--card2);color:var(--text);font-size:21px;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center}
+  .notefab .badge{position:absolute;top:-4px;right:-4px}
+  .notefab.hide{display:none}
+  textarea.note{background:var(--card2);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:15px;width:100%;min-height:90px;resize:vertical;font-family:inherit}
+  .secttag{display:inline-block;font-size:12px;padding:4px 9px;border-radius:99px;background:#1d2a45;border:1px solid #2d4370;color:#bcd0ff;margin:2px 0 10px}
+  .note-it{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line)}
+  .note-it:last-child{border-bottom:0}
+  .note-it .tx{flex:1;min-width:0;white-space:pre-wrap;word-wrap:break-word;font-size:15px;line-height:1.4}
+  .note-it.done .tx{text-decoration:line-through;color:var(--muted)}
+  .note-it .ck,.note-it .del{background:none;border:0;cursor:pointer;font-size:17px;padding:2px;color:var(--muted)}
+  .notegrp h2{margin-top:18px}
 </style>
 </head>
 <body>
@@ -252,7 +264,12 @@
 
   <!-- ===================== PROFILO ===================== -->
   <section id="v-profile" class="view"></section>
+
+  <!-- ===================== APPUNTI ===================== -->
+  <section id="v-notes" class="view"></section>
 </div>
+
+<button class="notefab" id="noteFab" data-a="noteOpen" title="Appunti su questa sezione">📝<span class="badge" id="noteBadge"></span></button>
 
 <nav><div class="in">
   <button data-a="goto" data-view="v-pick" class="on"><b>🔍</b>Cerca</button>
@@ -1204,6 +1221,10 @@ function renderProfile(){
       <button class="btn ghost" data-a="newUser" style="margin-top:10px">＋ Crea un altro utente</button>
     </div>
 
+    <h2>📝 Appunti sull'app</h2>
+    <div class="section"><p class="muted" style="margin:0 0 10px;line-height:1.5">Le note che scrivi col pulsante 📝 in ogni sezione (${Notes.all().length} finora).</p>
+      <button class="btn ghost" data-a="notesPage">Apri gli appunti</button></div>
+
     <h2>🛠 Sviluppatore</h2>
     <div class="section">
       <div class="muted" style="margin-bottom:8px">Fonte dati: <b>${isDemo()?"🧪 catalogo demo (42 film)":"TMDB reale"}</b>${!isDemo()&&metaOk?" – ✅ connesso":""}</div>
@@ -1374,6 +1395,7 @@ function goTo(view){
   document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("on",x.dataset.view===view));
   document.querySelectorAll(".view").forEach(v=>v.classList.toggle("on",v.id===view));
   window.scrollTo(0,0);
+  Notes.refreshFab();
 }
 const A = {
   goto:d=>{ if(d.view==="v-lists") openListId=null; renderAll(); goTo(d.view); },
@@ -1562,6 +1584,104 @@ async function reconnect(verbose){
   catch(e){ GENRES=BASE_GENRES; connInfo=diagnose(e); if(verbose) toast("❌ "+connInfo.title); }
   if(onb){ if(["platforms","genres","seen"].includes(onb.step)) renderOnb(); } else renderAll();
 }
+
+/* =====================================================================
+   13b. APPUNTI (note sull'app, legate alla sezione in cui le scrivi)
+   Salvati a parte (NOTES_KEY): non si cancellano con "Cancella tutti i dati".
+   ===================================================================== */
+const NOTES_KEY="cosaguardo_notes";
+const Notes={
+  all(){ try{ return JSON.parse(localStorage.getItem(NOTES_KEY))||[]; }catch(e){ return []; } },
+  put(list){ localStorage.setItem(NOTES_KEY,JSON.stringify(list)); },
+  add(sec,text){ const l=this.all(); l.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),key:sec.key,label:sec.label,ref:sec.ref||null,text,at:Date.now(),done:false}); this.put(l); },
+  update(id,fn){ const l=this.all(), n=l.find(x=>x.id===id); if(n){ fn(n); this.put(l); } },
+  remove(id){ this.put(this.all().filter(x=>x.id!==id)); },
+  forKey(key){ return this.all().filter(x=>x.key===key); },
+  refreshFab(){
+    const fab=$("#noteFab"); if(!fab) return;
+    fab.classList.toggle("hide",$("#v-notes").classList.contains("on") && !$("#sheetBg").classList.contains("on"));
+    const n=this.forKey(currentSection().key).filter(x=>!x.done).length, b=$("#noteBadge");
+    b.textContent=n||""; b.style.display=n?"inline-flex":"none";
+  }
+};
+const ONB_LABELS={welcome:"Benvenuto",auth:"Account",avatar:"Avatar",platforms:"Piattaforme",genres:"Generi preferiti",seen:"Film già visti"};
+// Capisce in quale sezione/schermata ti trovi in questo momento
+function currentSection(){
+  if($("#sheetBg").classList.contains("on") && notePrevSheet===null){
+    const sh=$("#sheet");
+    if(sh.querySelector('[data-a="seenCurrent"]')) return {key:"sheet:film",label:"Scheda film",ref:current?.title||null};
+    const h=sh.querySelector("h3")?.textContent.trim();
+    if(h) return {key:"sheet:"+h,label:"Finestra · "+h};
+  }
+  if(notePrevSheet!==null && noteSheetSec) return noteSheetSec;
+  if(onb) return {key:"onb:"+onb.step,label:"Onboarding · "+(ONB_LABELS[onb.step]||onb.step)};
+  const v=document.querySelector(".view.on")?.id;
+  if(v==="v-lists"){
+    if(openListId && Lists.get(openListId)) return {key:"lists:"+openListId,label:"Liste · "+Lists.get(openListId).name,ref:openListId};
+    return {key:"lists",label:"Liste"};
+  }
+  if(v==="v-profile") return {key:"profile",label:"Profilo"};
+  if(v==="v-notes") return {key:"notes",label:"Appunti"};
+  const mode=me()?(prof().searchMode==="desc"?"desc":"filters"):"filters";
+  return {key:"pick:"+mode,label:"Cerca · "+(mode==="desc"?"Descrivi":"Filtri")};
+}
+let notePrevSheet=null, noteSheetSec=null, notesFilter="all";
+function fmtDate(t){ return new Date(t).toLocaleString("it-IT",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}); }
+function noteItem(n){
+  return `<div class="note-it${n.done?" done":""}">
+    <button class="ck" data-a="noteDone" data-id="${n.id}" title="Segna come fatto">${n.done?"✅":"⬜️"}</button>
+    <div class="tx">${esc(n.text)}<div class="muted" style="margin-top:3px">${fmtDate(n.at)}${n.ref&&n.key==="sheet:film"?" · "+esc(n.ref):""}</div></div>
+    <button class="del" data-a="noteDel" data-id="${n.id}" title="Elimina">🗑</button></div>`;
+}
+function openNoteSheet(){
+  const sec=noteSheetSec, list=Notes.forKey(sec.key).sort((a,b)=>b.at-a.at);
+  openSheet(`<h3>📝 Appunti</h3><div class="secttag">📍 ${esc(sec.label)}</div>
+    <textarea class="note" id="noteText" placeholder="Cosa noti in questa sezione? (idee, problemi, cose da cambiare…)"></textarea>
+    <button class="btn" data-a="noteSave" style="margin-top:8px">Salva appunto</button>
+    ${list.length?`<h2>In questa sezione (${list.length})</h2><div class="section">${list.map(noteItem).join("")}</div>`:""}
+    <div class="grid2" style="margin-top:14px"><button class="btn ghost" data-a="notesPage">📒 Tutti gli appunti</button>
+      <button class="btn ghost" data-a="noteClose">${notePrevSheet?"‹ Torna indietro":"Chiudi"}</button></div>`);
+  Notes.refreshFab();
+}
+function renderNotes(){
+  const all=Notes.all(), groups={};
+  all.forEach(n=>{ (groups[n.key]=groups[n.key]||{label:n.label,ref:n.ref,items:[]}).items.push(n); });
+  const keys=Object.keys(groups), open=all.filter(n=>!n.done).length;
+  const shown=notesFilter==="all"?keys:keys.filter(k=>k===notesFilter);
+  $("#v-notes").innerHTML=`
+    <h2 style="margin-top:4px">📝 Appunti sull'app <span class="muted" style="text-transform:none;letter-spacing:0">${open} da fare · ${all.length} totali</span></h2>
+    ${all.length?`<div class="hscroll" style="margin-bottom:6px">${chip("Tutte",notesFilter==="all",`data-a="notesFilter" data-id="all"`)}${keys.map(k=>chip(`${esc(groups[k].label)} (${groups[k].items.length})`,notesFilter===k,`data-a="notesFilter" data-id="${esc(k)}"`)).join("")}</div>`:""}
+    ${!all.length?`<div class="section empty">Ancora nessun appunto.<br>Vai in una sezione dell'app e tocca <b>📝</b> in basso a destra: la nota resta collegata a quella sezione.</div>`:""}
+    ${shown.map(k=>{ const g=groups[k], canGo=!k.startsWith("onb:")&&!k.startsWith("sheet:");
+      return `<div class="notegrp"><h2><span>${esc(g.label)}</span>${canGo?`<span class="link" data-a="noteGo" data-key="${esc(k)}" data-ref="${esc(g.ref||"")}" style="text-transform:none;letter-spacing:0">Vai alla sezione ›</span>`:""}</h2>
+        <div class="section">${g.items.sort((a,b)=>b.at-a.at).map(noteItem).join("")}</div></div>`; }).join("")}
+    ${all.length?`<div class="grid2" style="margin-top:16px"><button class="btn ghost" data-a="notesCopy">📋 Copia tutto</button>
+      <button class="btn danger" data-a="notesClearDone">Elimina i fatti</button></div>`:""}`;
+}
+function notesText(){
+  const g={}; Notes.all().forEach(n=>(g[n.label]=g[n.label]||[]).push(n));
+  return Object.entries(g).map(([l,ns])=>`## ${l}\n`+ns.map(n=>`- [${n.done?"x":" "}] ${n.text.replace(/\n/g,"\n  ")}`).join("\n")).join("\n\n");
+}
+function refreshNotesUI(){ if($("#sheetBg").classList.contains("on") && noteSheetSec && $("#noteText")) { const t=$("#noteText").value; openNoteSheet(); $("#noteText").value=t; } if($("#v-notes").classList.contains("on")) renderNotes(); Notes.refreshFab(); }
+Object.assign(A,{
+  noteOpen:()=>{ noteSheetSec=currentSection(); notePrevSheet=$("#sheetBg").classList.contains("on")?$("#sheet").innerHTML:""; openNoteSheet(); setTimeout(()=>$("#noteText")?.focus(),250); },
+  noteSave:()=>{ const t=$("#noteText").value.trim(); if(!t) return toast("Scrivi qualcosa"); Notes.add(noteSheetSec,t); $("#noteText").value=""; refreshNotesUI(); toast("Appunto salvato in “"+noteSheetSec.label+"”"); },
+  noteClose:()=>{ const prev=notePrevSheet; notePrevSheet=null; noteSheetSec=null; if(prev) openSheet(prev); else closeSheet(); Notes.refreshFab(); },
+  noteDone:d=>{ Notes.update(d.id,n=>n.done=!n.done); refreshNotesUI(); },
+  noteDel:d=>{ if(!confirm("Eliminare questo appunto?")) return; Notes.remove(d.id); refreshNotesUI(); },
+  notesPage:()=>{ notePrevSheet=null; noteSheetSec=null; if(onb){ A.noteClose(); return toast("Gli appunti completi si aprono dal Profilo, dopo la configurazione"); } closeSheet(); notesFilter="all"; renderNotes(); goTo("v-notes"); },
+  notesFilter:d=>{ notesFilter=d.id; renderNotes(); },
+  noteGo:d=>{ const k=d.key;
+    if(k.startsWith("pick:")){ prof().searchMode=k.slice(5); save(); openListId=null; renderAll(); goTo("v-pick"); }
+    else if(k.startsWith("lists")){ openListId=(d.ref&&Lists.isMember(d.ref))?d.ref:null; if(d.ref&&!openListId) toast("Quella lista non c'è più"); renderAll(); goTo("v-lists"); }
+    else if(k==="profile"){ renderAll(); goTo("v-profile"); } },
+  notesCopy:async()=>{ const t=notesText(); try{ await navigator.clipboard.writeText(t); toast("Appunti copiati"); }catch(e){ openSheet(`<h3>Copia gli appunti</h3><textarea class="note" style="min-height:240px" readonly>${esc(t)}</textarea>`); } },
+  notesClearDone:()=>{ const n=Notes.all().filter(x=>x.done).length; if(!n) return toast("Nessun appunto segnato come fatto"); if(!confirm(`Eliminare ${n} appunti fatti?`)) return; Notes.put(Notes.all().filter(x=>!x.done)); notesFilter="all"; renderNotes(); Notes.refreshFab(); },
+});
+// se chiudi la finestra toccando fuori, dimentica lo stato degli appunti
+$("#sheetBg").addEventListener("click",e=>{ if(e.target.id==="sheetBg"){ notePrevSheet=null; noteSheetSec=null; } setTimeout(()=>Notes.refreshFab(),0); });
+// tiene aggiornato il contatore del pulsante quando cambia sezione/finestra
+new MutationObserver(()=>Notes.refreshFab()).observe(document.body,{subtree:true,attributes:true,attributeFilter:["class"]});
 
 /* =====================================================================
    14. AVVIO

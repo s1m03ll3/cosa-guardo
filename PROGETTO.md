@@ -32,6 +32,7 @@ App che risolve l'indecisione serale: scegli genere e mood, l'app propone **un s
 - **Follow-up**: pulsante "▶️ Lo guardo!"; alla riapertura l'app chiede com'è andata con l'ultimo film (Visto → voto 👍/👎 · Dopo → in lista · No)
 - **Ricerca descrittiva** ("un horror coi fantasmi che non duri più di 2h"): riconosce generi, mood, durata, periodo, qualità, temi (→ parole chiave TMDB) e attori/registi
 - **Aggiunta in lista** con un'unica ricerca: titolo (anche parziale), attore/regista o descrizione
+- **Appunti sull'app** (strumento di revisione): pulsante 📝 in ogni schermata; la nota resta collegata alla sezione in cui la scrivi (Cerca · Filtri, Liste · nome lista, Scheda film, Onboarding…). Pagina *Profilo → Apri gli appunti* con tutte le note raggruppate per sezione, "Vai alla sezione", segna come fatto, copia tutto. Salvati a parte nel browser: non si cancellano con il reset dei dati
 - Modalità demo (42 film) se non c'è una chiave TMDB; strumento "multi-utente" per provare le liste condivise
 
 ## 4. Schema del database (bozza per Supabase/Postgres)
