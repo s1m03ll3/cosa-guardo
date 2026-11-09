@@ -122,6 +122,7 @@
   .onb .wrap{min-height:100%;display:flex;flex-direction:column;padding-top:28px;padding-bottom:30px}
   .onb .body{flex:1}
   .onb h2.big{font-size:26px;color:var(--text);text-transform:none;letter-spacing:-.3px;margin:8px 0 6px;display:block}
+  .onbfoot{position:sticky;bottom:0;margin-top:24px;padding:14px 0 calc(6px + env(safe-area-inset-bottom));background:linear-gradient(transparent,var(--bg) 22%)}
   .dots{display:flex;gap:6px;justify-content:center;margin-bottom:18px}
   .dots i{width:7px;height:7px;border-radius:50%;background:var(--line)}
   .dots i.on{background:var(--accent);width:20px;border-radius:99px}
@@ -327,6 +328,8 @@ const DEFAULT_FILTERS = {sources:["platforms"],genres:[],moods:[],maxDur:0,era:"
    ===================================================================== */
 const DEMO_BASE = 900000;
 const DEMO_PROVIDERS = [[8,"Netflix","#e50914"],[119,"Amazon Prime Video","#00a8e1"],[337,"Disney Plus","#113ccf"],[350,"Apple TV Plus","#555"],[39,"NOW","#00b39b"],[531,"Paramount Plus","#0064ff"]];
+// locandine e sfondi reali (immagini pubbliche di TMDB) per i film del catalogo demo
+const DEMO_POSTERS = {"1":["/xlaY2zyzMfkhk0HSC5VUwzoZPU1.jpg","/8ZTVqvKDQ8emSGUEMjsS4yHAwrp.jpg"],"2":["/sKCr78MXSLixwmZ8DyJLrpMsd15.jpg","/wXsQvli6tWqja51pYxXNG1LFIGV.jpg"],"3":["/yQvGrMoipbRoddT0ZR8tPoR7NfX.jpg","/8sNiAPPYU14PUepFNeSNGUTiHW.jpg"],"4":["/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg","/TU9NIjwzjoKPwQHoHshkFcQUCG.jpg"],"5":["/uDO8zWDhfWwoFdKS4fzkUJt0Rf0.jpg","/nlPCdZlHtRNcF6C9hzUH4ebmV1w.jpg"],"6":["/jtDv3lCnST0fZRvdYFwR5CVwK2x.jpg","/7RyHsO4yDXtBv1zUU3mTpHeQ0d5.jpg"],"7":["/6Ryitt95xrO8KXuqRGm1fUuNwqF.jpg","/g7CHF8gTLGooTbP4GznIGwaqAGL.jpg"],"8":["/mbm8k3GFhXS0ROd9AD1gqYbIFbM.jpg","/1RDto0tLo8Fhq7OcwgDaM7nECb7.jpg"],"9":["/3bhkrj58Vtu7enYsRolD1fZdja1.jpg","/tSPT36ZKlP2WVHJLM4cQPLSzv3b.jpg"],"10":["/vQWk5YBFWF4bZaofAbv0tShwBvQ.jpg","/suaEOtk1N1sgg2MTM7oZd2cfVp3.jpg"],"11":["/tFXcEccSQMf3lfhfXKSU9iRBpa3.jpg","/bBQHALHRAaaORlPNXv7fNcRXYdx.jpg"],"12":["/4GFPuL14eXi66V96xBWY73Y9PfR.jpg","/pS9Aub8MPyQbENblGD8mHeaqMuv.jpg"],"13":["/uXDfjJbdP4ijW5hWSBrPrlKpxab.jpg","/8AqWECiUHnz1Crj69uB9vhiK9Le.jpg"],"14":["/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg","/neeNHeXjMF5fXoCJRsOmkNGC7q.jpg"],"15":["/v1tRXZ4JtD2Iv6fjkPvT4GiwslV.jpg","/qVgZu5BTx6pu4owCvVOm4zjTfOi.jpg"],"16":["/eWdyYQreja6JGCzqHWXpWHDrrPo.jpg","/jK65srQczOKTpW62wPxwwKztGgE.jpg"],"17":["/ulcAi4dKpAjHwYGS08vNyx9H6I9.jpg","/gqrnQA6Xppdl8vIb2eJc58VC1tW.jpg"],"18":["/u68AjlvlutfEIcpmbYpKcdi09ut.jpg","/fIwiFha3WPu5nHkBeMQ4GzEk0Hv.jpg"],"19":["/BzVjmm8l23rPsijLiNLUzuQtyd.jpg","/v85FlkbMYKa5du1glm0YfYNsL2n.jpg"],"20":["/dB6Krk806zeqd0YNp2ngQ9zXteH.jpg","/jwjCWMPWSQ7h3sqG4mqI7pMEZu0.jpg"],"21":["/ytFOXyghxLzAM4KZyazDdEkM66q.jpg","/33pMXav77ICRnceEBLhL8lXTywv.jpg"],"22":["/n0YuM4f5lvGAP6MAW2kBIzugXnc.jpg","/AaV1YIdWKnjAIAOe8UUKBFm327v.jpg"],"23":["/vDGr1YdrlfbU9wxTOdpf3zChmv9.jpg","/y3uOfZAYwLkbvhunswBCskNMrfI.jpg"],"24":["/pThyQovXQrw2m0s9x82twj48Jq4.jpg","/4HWAQu28e2yaWrtupFPGFkdNU7V.jpg"],"25":["/74hLDKjD5aGYOotO6esUVaeISa2.jpg","/6aNKD81RHR1DqUUa8kOZ1TBY1Lp.jpg"],"26":["/3wknM629Vryofb1HNo2YnLQnQyn.jpg","/1YhiocGm8aOwILGX7mwlkdbr0ph.jpg"],"27":["/6oom5QYQ2yQTMJIbnvbkBL9cHo6.jpg","/oiwc338EoBgS4sEI2ixAny4KQKg.jpg"],"28":["/iB64vpL3dIObOtMZgX3RqdVdQDc.jpg","/sRvXNDItGlWCqtO3j6wks52FmbD.jpg"],"29":["/poHwCZeWzJCShH7tOjg8RIoyjcw.jpg","/uRNgkJSkNBFbbn9fPsEjDIy8Sh3.jpg"],"30":["/9xjZS2rlVxm8SFx8kPC3aIGCOYQ.jpg","/sCzcYW9h55WcesOqA12cgEr9Exw.jpg"],"31":["/8912AsVuS7Sj915apArUFbv6F9L.jpg","/gkh6Nt8DtY1XT4gQsyFq9XAVJlJ.jpg"],"32":["/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg","/rlay2M5QYvi6igbGcFjq8jxeusY.jpg"],"33":["/iuFNMS8U5cb6xfzi51Dbkovj7vM.jpg","/1esAE8sLJRWWFsLLeh5r3g2WanI.jpg"],"34":["/iiZZdoQBEYBv6id8su7ImL0oCbD.jpg","/1ntePsIqeklfmrQJqZPncCydsqY.jpg"],"35":["/7fn624j5lj3xTme2SgiLCeuedmO.jpg","/fRGxZuo7jJUWQsVg9PREb98Aclp.jpg"],"36":["/nSxDa3M9aMvGVLoItzWTepQ5h5d.jpg","/6n53UI4mX9QMfe2S0Pgt8mGebY1.jpg"],"37":["/nAU74GmpUk7t5iklEp3bufwDq4n.jpg","/nHRUtBwFNnNN70vcQ7lAsjc2T6S.jpg"],"38":["/kZ2nZw8D681aphje8NJi8EfbL1U.jpg","/a2n6bKD7qhCPCAEALgsAhWOAQcc.jpg"],"39":["/hHRIf2XHeQMbyRb3HUx19SF5Ujw.jpg","/gznkDTmyJflVCImfC36dr0EDy5W.jpg"],"40":["/mFvoEwSfLqbcWwFsDjQebn9bzFe.jpg","/hGGC9gKo7CFE3fW07RA587e5kol.jpg"],"41":["/wVYREutTvI2tmxr6ujrHT704wGF.jpg","/ecKQlAEG95k62SMGhvX83oEqANK.jpg"],"42":["/bX2xnavhMYjWDoZp1VM6VnU1xwe.jpg","/x4biAVdPVCghBlsVIzB6NmbghIz.jpg"]};
 const DEMO = [
  [1,"Inception",2010,[878,53],148,8.4,[8,119],"Un ladro specializzato nell'entrare nei sogni altrui riceve l'incarico opposto: impiantare un'idea nella mente di un uomo."],
  [2,"Il Re Leone",1994,[16,10751],88,8.3,[337],"Il giovane leone Simba deve affrontare il proprio passato per riprendersi il posto che gli spetta."],
@@ -370,7 +373,8 @@ const DEMO = [
  [40,"Up",2009,[16,12,10751],96,8.0,[337],"Un anziano vedovo lega migliaia di palloncini alla sua casa e parte per il Sud America."],
  [41,"The Conjuring – L'evocazione",2013,[27],112,7.5,[8,39],"Due investigatori del paranormale aiutano una famiglia perseguitata da una presenza oscura."],
  [42,"Il buono, il brutto, il cattivo",1966,[37,12],178,8.5,[119],"Tre pistoleri si danno la caccia durante la Guerra di Secessione per un tesoro sepolto."],
-].map(([n,title,year,g,rt,v,p,o])=>({id:DEMO_BASE+n,title,release_date:`${year}-06-01`,genre_ids:g,runtime:rt,vote_average:v,vote_count:5000-n*50,providers:p,overview:o,poster_path:null,backdrop_path:null}));
+].map(([n,title,year,g,rt,v,p,o])=>({id:DEMO_BASE+n,title,release_date:`${year}-06-01`,genre_ids:g,runtime:rt,vote_average:v,vote_count:5000-n*50,providers:p,overview:o,
+  poster_path:(DEMO_POSTERS[n]||[])[0]||null,backdrop_path:(DEMO_POSTERS[n]||[])[1]||null}));
 
 // parole chiave (nomi inglesi come su TMDB) e persone, con i numeri dei film demo collegati
 const DEMO_KEYWORDS = [["ghost",[41,12]],["haunted house",[41]],["demon",[41,12]],["possession",[41,12]],["space",[3,38]],["astronaut",[3,38]],
@@ -1471,17 +1475,20 @@ async function renderOnb(){
         onb.seenTiles=d.results.slice(0,12).map(normalize); }catch(e){ onb.seenTiles=[]; }
       return renderOnb();
     }
-    body=`${dots}<h2 class="big">Hai già visto qualcuno di questi?</h2><p class="muted">Tocca quelli che hai visto: non te li proporremo. Potrai segnarne altri quando vuoi nella scheda <b>🃏 Scopri</b>.</p>
+    body=`${dots}<h2 class="big">Hai già visto qualcuno di questi?</h2><p class="muted">Tocca quelli che hai visto: non te li proporremo.</p>
       <div class="tiles" style="margin-top:14px">${onb.seenTiles.map(f=>`<div class="tile ${Seen.has(f.id)?"on":""}" data-a="onbSeen" data-id="${f.id}" style="background:${gradient(f.title)}">
         ${f.poster?`<img src="${img(f.poster,"w185")}" alt="" onerror="this.remove()">`:""}<span>${f.poster?"":esc(f.title)}</span></div>`).join("")||`<p class="muted">Nessun film da mostrare.</p>`}</div>`;
-    foot=`<button class="btn" data-a="onbGo" data-step="done">Continua</button>`;
+    const marked=onb.seenTiles.filter(f=>Seen.has(f.id)).length;
+    foot=`<button class="btn" data-a="onbGo" data-step="done" ${marked?"":"disabled"}>${marked?`Continua (${marked} segnat${marked>1?"i":"o"})`:"Tocca i film che hai visto"}</button>
+      <button class="btn ghost" data-a="onbGo" data-step="done" style="margin-top:8px">⏭ Lo faccio dopo</button>
+      <p class="muted" style="text-align:center;margin:10px 0 0;line-height:1.5">Potrai farlo quando vuoi nella sezione <b>🃏 Scopri → 👀 Già visti?</b>, scorrendo le carte dei film.</p>`;
   }
   if(s==="done"){
     body=`<div class="hero-emoji">🎉</div><h2 class="big" style="text-align:center">Tutto pronto, ${esc(me().name)}!</h2>
       <p style="text-align:center;color:var(--muted);line-height:1.5">In <b>🔍 Cerca</b> scegli i filtri o descrivi cosa ti va: vedrai l'elenco dei film, oppure premi <b>🎲 A caso</b>.<br><br>In <b>🃏 Scopri</b> scorri le carte per segnare i film già visti e riempire la tua lista.<br><br>Vuoi decidere in due? Vai su <b>Liste</b> e crea una lista <b>Coppia</b>.</p>`;
     foot=`<button class="btn" data-a="onbFinish">Andiamo</button>`;
   }
-  el.innerHTML=`<div class="wrap"><div class="body">${body}</div><div style="margin-top:24px">${foot}</div></div>`;
+  el.innerHTML=`<div class="wrap"><div class="body">${body}</div><div class="onbfoot">${foot}</div></div>`;
   el.scrollTop=0;
 }
 
