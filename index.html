@@ -411,6 +411,7 @@ const DB = {
     for(const u of this.data.users) if(!u.username && u.provider!=="guest") u.username=Usernames.suggest(u.name); },
   save(){ localStorage.setItem(DB_KEY, JSON.stringify(this.data)); },
 };
+const clone = o => JSON.parse(JSON.stringify(o));
 const uid = p => p+"_"+Math.random().toString(36).slice(2,10);
 // @nomeutente: unico, 3-20 caratteri, minuscole/numeri/punto/trattino basso. In produzione l'unicità la garantisce il DB
 const Usernames = {
@@ -429,7 +430,7 @@ const Auth = {
   signUp({name,email,provider,username}){
     const u={id:uid("u"),name,username:username||null,email:email||null,provider,created_at:Date.now()};
     D().users.push(u);
-    D().profiles[u.id]={providerIds:[],favGenres:[],onboarded:false,premium:false,filters:structuredClone(DEFAULT_FILTERS)};
+    D().profiles[u.id]={providerIds:[],favGenres:[],onboarded:false,premium:false,filters:clone(DEFAULT_FILTERS)};
     D().session={userId:u.id};
     Lists.create("La mia lista","personal");
     DB.save(); return u;
@@ -543,7 +544,7 @@ const Ratings = {
 };
 const me = () => Auth.current();
 const prof = () => D().profiles[me().id];
-const F = () => { const p=prof(); if(!("keywords" in p.filters)) p.filters={...structuredClone(DEFAULT_FILTERS),...p.filters}; return p.filters; };
+const F = () => { const p=prof(); if(!("keywords" in p.filters)) p.filters={...clone(DEFAULT_FILTERS),...p.filters}; return p.filters; };
 
 /* =====================================================================
    4. UTILITY
@@ -761,7 +762,7 @@ const understoodHtml = r => r.labels.length
 const C = () => { const f=F(), p=prof();
   if(p.searchMode!=="desc") return {...f,keywords:[],people:[]};
   const d=p.descCrit||{};
-  return {...structuredClone(DEFAULT_FILTERS),sources:f.sources,hideSeen:f.hideSeen,popular:f.popular,onlyAvail:f.onlyAvail,
+  return {...clone(DEFAULT_FILTERS),sources:f.sources,hideSeen:f.hideSeen,popular:f.popular,onlyAvail:f.onlyAvail,
     genres:d.genres||[],moods:d.moods||[],maxDur:d.maxDur||0,era:d.years?"custom":(d.era||"all"),years:d.years||null,
     minRating:d.minRating??0,keywords:d.keywords||[],people:d.people||[]}; };
 const moodGenres = () => [...new Set(C().moods.flatMap(m=>MOODS[m].g))];
@@ -918,7 +919,7 @@ function setOption(sel,val,label){ // aggiunge un'opzione "personalizzata" se il
 
 /* ---- Elenco risultati: prima i film delle liste scelte, poi quelli delle piattaforme (per popolarità) ---- */
 let R={key:null,items:[],listCount:0,page:0,totalPages:0,platTotal:0,loading:false,error:null};
-const resultsKey = () => JSON.stringify([prof().searchMode,C(),discoverParams(),Seen.ids().length,activeListIds().map(id=>Lists.allItems(id).length),prof().providerIds]);
+const resultsKey = () => JSON.stringify([devKey(),prof().searchMode,C(),discoverParams(),Seen.ids().length,activeListIds().map(id=>Lists.allItems(id).length),prof().providerIds]);
 function clearResults(){ R={key:null,items:[],listCount:0,page:0,totalPages:0,platTotal:0,loading:false,error:null}; $("#results").innerHTML=""; }
 const refreshResults=debounce(async()=>{ if(!me()) return; const k=resultsKey(); if(k===R.key){ renderResults(); return; } await loadResults(true); },300);
 async function loadResults(reset){
@@ -949,7 +950,18 @@ function renderResults(){
   if(!c.sources.length){ el.innerHTML=`<div class="empty">Seleziona almeno una fonte in “Da dove”.</div>`; return; }
   if(prof().searchMode==="desc" && !prof().descCrit){ el.innerHTML=`<div class="empty">Descrivi cosa ti va di vedere e premi “Cerca”.</div>`; btn.textContent="🔍 Mostra film"; return; }
   if(R.error && !R.items.length){ el.innerHTML=`<div class="empty">${esc(R.error)}</div>`; return; }
-  if(!R.items.length){ el.innerHTML=R.loading?`<div class="empty">Cerco…</div>`:`<div class="empty">😕 Nessun film corrisponde. Prova ad allargare la ricerca.</div>`; return; }
+  if(!R.items.length){
+    if(R.loading){ el.innerHTML=`<div class="empty">Cerco…</div>`; return; }
+    const why=[];
+    if(c.sources.includes("platforms") && !prof().providerIds.length) why.push(`Non hai selezionato nessuna piattaforma: <span class="link" data-a="goto" data-view="v-profile">scegline almeno una nel Profilo</span>.`);
+    if(!c.sources.includes("platforms")) why.push(`Stai pescando solo dalle liste: attiva anche <b>📺 Piattaforme</b> in “Da dove”.`);
+    if(activeListIds().length && !listPool().length) why.push("Le liste selezionate non hanno film che corrispondono (o sono vuote).");
+    if(c.genres.length && c.moods.length) why.push("Genere e mood insieme possono escludersi a vicenda: prova a togliere il mood.");
+    if(c.minRating>=7.5) why.push(`Il voto minimo (${c.minRating}+) è alto.`);
+    if(c.onlyAvail) why.push("È attivo “Solo film che posso vedere”.");
+    if(c.keywords.length||c.people.length) why.push("Temi o persone molto specifici: prova una descrizione più generica.");
+    el.innerHTML=`<div class="empty">😕 Nessun film corrisponde.${why.length?`<div class="hint" style="text-align:left;margin-top:10px">${why.map(w=>"• "+w).join("<br>")}</div>`:"<br>Prova ad allargare la ricerca."}</div>`;
+    return; }
   const row=f=>`<div class="item ritem" data-a="openDetail" data-id="${f.id}">${thumbHtml(f)}
     <div class="info"><div class="t">${esc(f.title)}</div>
       <div class="muted">${[f.year,fmtDur(f.runtime),f.vote?`⭐ ${f.vote.toFixed(1)}`:"",(f.genre_ids||[]).map(genreName).filter(Boolean).slice(0,2).join(", ")].filter(Boolean).join(" · ")}</div>
@@ -1138,7 +1150,9 @@ const doSearch=debounce(async()=>{
     ]);
     const sections=[], seen=new Set();
     const add=(head,list,max)=>{ const items=list.map(normalize).filter(f=>!seen.has(f.id)).slice(0,max); items.forEach(f=>seen.add(f.id)); if(items.length) sections.push({head,items}); };
-    const person=ppl.find(x=>words.every(w=>fold(x.name).includes(fold(w))));
+    // persona affidabile: tutte le parole nel nome e, se è una parola sola, deve essere un nome/cognome intero di una persona nota
+    const person=ppl.find(x=>{ const toks=fold(x.name).split(/[\s.-]+/);
+      return words.every(w=>fold(x.name).includes(fold(w))) && (words.length>1 ? (x.popularity??1)>=1 : toks.includes(fold(words[0])) && (x.popularity??0)>=3); });
     const tasks=[];
     if(person){ const dir=person.known_for_department==="Directing";
       tasks.push(api("/discover/movie",{language:LANG,sort_by:"popularity.desc",include_adult:false,[dir?"with_crew":"with_cast"]:person.id})
@@ -1148,8 +1162,11 @@ const doSearch=debounce(async()=>{
       .then(r=>({head:`✨ Ho capito: ${parsed.labels.map(esc).join(" · ")}`,list:r.results})).catch(()=>null));
     const extra=(await Promise.all(tasks)).filter(Boolean);
     if(q!==$("#listSearch")?.value.trim()) return;
-    add("🔤 Titoli",byTitle,6);
-    extra.forEach(x=>add(x.head,x.list,8));
+    // titoli: prima quelli conosciuti; quelli senza voti solo se non c'è altro
+    const known=byTitle.filter(m=>(m.vote_count??1)>=10), titles=known.length?known:byTitle;
+    const strongTitle=titles.some(m=>(m.vote_count??1000)>=200 && fold(m.title||"").includes(fold(q)));
+    if(person && !strongTitle){ extra.forEach(x=>add(x.head,x.list,8)); add("🔤 Titoli",titles,4); }
+    else { add("🔤 Titoli",titles,6); extra.forEach(x=>add(x.head,x.list,8)); }
     searchSections=sections; searchResults=sections.flatMap(x=>x.items); renderSugg();
   }catch(e){ $("#sugg").innerHTML=`<p class="muted">${esc(apiErrorMsg(e))}</p>`; }
 },450);
@@ -1556,7 +1573,7 @@ $("#fPopular").onchange=e=>{ F().popular=e.target.checked; save(); renderPick();
 $("#fOnlyAvail").onchange=e=>{ F().onlyAvail=e.target.checked; save(); renderPick(); };
 
 async function reconnect(verbose){
-  memo.clear(); metaOk=false;
+  memo.clear(); metaOk=false; if(me()) clearResults();
   connInfo=null;
   try{ await loadMeta(); if(verbose) toast(isDemo()?"Uso il catalogo demo":"✅ Connesso a TMDB"); }
   catch(e){ GENRES=BASE_GENRES; connInfo=diagnose(e); if(verbose) toast("❌ "+connInfo.title); }
