@@ -1,6 +1,6 @@
 # CosaGuardo – prototipo
 
-App per decidere cosa guardare: filtri o descrizione libera, elenco dei film disponibili sulle tue piattaforme o nelle tue liste, oppure "🎲 A caso".
+App per decidere cosa guardare: filtri o descrizione libera, elenco dei film sulle tue piattaforme o nelle tue liste oppure "🎲 Sorprendimi"; carte da scorrere in Scopri, cine-quiz giornaliero con classifica settimanale, liste collegabili agli amici.
 
 Prototipo in un unico file (`index.html`), senza server: i dati (utenti, liste, preferenze) restano nel browser del dispositivo.
 

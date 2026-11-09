@@ -3,48 +3,41 @@
 _Ultimo aggiornamento: 9 novembre 2026 · Fase 1 (prototipo)_
 
 ## 1. Visione
-App che risolve l'indecisione serale: scegli genere e mood, l'app propone **un solo film**, preso dalle piattaforme a cui sei abbonato o dalle liste (personali o condivise con partner/amici).
+App che risolve l'indecisione serale: scegli filtri o descrivi cosa ti va, e l'app ti mostra i film disponibili sulle tue piattaforme o nelle tue liste, oppure te ne **sceglie uno lei** ("Sorprendimi"). In più: carte da scorrere per insegnarle i tuoi gusti e un cine-quiz quotidiano con classifica settimanale, che dà un motivo per aprire l'app ogni giorno.
 
 ## 2. Decisioni prese
 | Tema | Decisione |
 |---|---|
 | Contenuti | Solo film. Serie TV in una fase successiva |
 | Storico suggerimenti | Non previsto |
-| Liste | Più liste per utente: Personale, Coppia (max 2), Amici (max 10) |
-| Condivisione | Si cerca l'utente registrato **per @nomeutente** e gli arriva un **invito da accettare**; chi non è registrato riceve un **link di iscrizione** e, registrandosi, entra subito nella lista. Niente codici da digitare |
-| Liste collegate (Premium) | Una lista condivisa può *collegare* le liste personali dei membri: i film non vengono duplicati e restano aggiornati. In alternativa, **copia** dei film in un'altra lista (Premium) |
-| Pagina Cerca | Un unico blocco di filtri: **Descrivi** (campo libero), **Da dove**, Genere, Mood, Durata/Epoca/Voto, altre opzioni. Il risultato è un **elenco di film**; **🎲 A caso** è un pulsante in fondo ai filtri e in cima all'elenco (non una scheda) |
-| Scopri (giochi a carte) | Due giochi: **Già visti?** (→ visto, ← non visto, ↓ non mi interessa) su tutto il catalogo, e **Ti interessa?** (→ in lista, ← non ora, ↓ non mi interessa) partendo dai film non visti. Tutorial al primo accesso. I “non mi interessa” non vengono più proposti |
-| Ricerca film nelle liste | Un solo campo: titolo (anche parziale), attore/regista o descrizione, risultati raggruppati |
-| Selezione | Si sceglie da quali fonti pescare: piattaforme e/o una o più liste |
-| Account | Apple, Google, email + uso senza account (ospite). Alla registrazione si sceglie un **@nomeutente** unico (suggerito dal nome, modificabile dal profilo) |
-| Guadagni | Pubblicità + abbonamento Premium (vedi §5) |
+| Navigazione | 5 schede: **Cerca · Scopri · Game · Liste · Profilo** |
+| Pagina Cerca | Un blocco filtri: **Descrivi** (campo libero, con ✕ per svuotarlo; viene interpretato quando si cerca), **Cerca tra** (piattaforme, La mia lista, Rewatch, liste a tema, liste collegate), Genere e Mood tutti visibili. Durata/Epoca/Voto e opzioni in "Altre opzioni". Sotto: **🎲 Sorprendimi** (un film a caso) e **🔍 Mostra tutti i film**. L'elenco compare solo dopo la ricerca; entrambi i pulsanti partono con animazione + pubblicità |
+| Scheda film | Lo guardo · Trailer (**Premium**) · Salva · Già visto · **Non mi interessa**. Nessun link a siti esterni |
+| Scopri | Si apre direttamente sulle carte. ← **già visto** (va in Rewatch) · → **non visto** · ↓ o ✕ **escludi** · **doppio tap ❤️** = nella mia lista. Ogni film compare una volta sola. Tutorial al primo accesso |
+| Liste | Sempre presenti: **La mia lista** e **Rewatch** (i film già visti, utilizzabile in Cerca). Altre liste **a tema** create dall'utente (es. "Film romantici"). Rinomina con ✏️. Niente più liste coppia/amici |
+| Collegamento liste | Dentro una lista: "Collega a una persona" → si cerca il **@nomeutente** → invito da accettare. Chi accetta vede la lista tra le sue come **"Lista @nome"** (sola lettura, sempre aggiornata) e può usarla in Cerca. Chi non è registrato riceve un **link di iscrizione**. Il collegamento si può impostare anche mentre si crea la lista |
+| Game | **Cine-quiz del giorno**: da 1 a 5 domande al giorno uguali per tutti, 15 secondi (10 per vero/falso). Si vede solo il risultato finale. Punti = 100 + 10 per ogni secondo avanzato. **Punteggio cumulativo lun–dom**, classifica settimanale e podio della settimana precedente. **Domenica: domanda bonus che vale doppio** |
+| Account | Apple, Google, email + ospite. **@nomeutente** unico. Avatar: **personaggi famosi di film e cartoni** (vedi §8, diritti d'immagine) |
+| Registrazione | Benvenuto → account → personaggio → piattaforme → generi → "già visti?" (con **"Lo faccio dopo"**) |
+| Guadagni | Pubblicità + Premium (niente pubblicità, trailer, liste illimitate) |
 | Tecnologia (proposta) | App: React Native + Expo · Backend: Supabase (Postgres + Auth) · Dati film: TMDB |
 
 ## 3. Funzioni del prototipo (`index.html`)
-- Onboarding: benvenuto → account → piattaforme → generi preferiti → film già visti
-- Scegli: fonti multiple, generi, mood, durata, epoca, voto, "solo film conosciuti", "escludi visti", "solo film che posso vedere"
-- Risultato: piattaforme evidenziate, provenienza ("Noi due · aggiunto da Marco"), Salva in lista, Già visto → voto 👍/👎
-- Liste: creazione, inviti a utenti registrati (accetta/rifiuta, badge sulla scheda Liste), link di iscrizione, membri, chi ha aggiunto cosa, chi l'ha già visto
-- Liste collegate e copia liste (Premium)
-- Suggerimenti personalizzati: generi preferiti e voti pesano sull'estrazione
-- Pubblicità simulata: interstitial durante il caricamento (1ª scelta e poi ogni 3) + banner nella pagina Liste
-- Premium simulato: niente pubblicità, liste illimitate (gratis: 3)
-- Profilo: piattaforme, generi, abbonamento, esci, **elimina account** (obbligatorio per Apple)
-- **Follow-up**: pulsante "▶️ Lo guardo!"; alla riapertura l'app chiede com'è andata con l'ultimo film (Visto → voto 👍/👎 · Dopo → in lista · No)
-- **Ricerca descrittiva** ("un horror coi fantasmi che non duri più di 2h"): riconosce generi, mood, durata, periodo, qualità, temi (→ parole chiave TMDB) e attori/registi
-- **Aggiunta in lista** con un'unica ricerca: titolo (anche parziale), attore/regista o descrizione
-- Modalità demo (42 film) se non c'è una chiave TMDB; strumento "multi-utente" per provare le liste condivise
+- Tutte le decisioni sopra sono già provabili nel prototipo.
+- Ricerca descrittiva con **concetti** colloquiali ("che cazzo sto guardando", "per piangere", "finale a sorpresa"…) + generi, temi, durata, periodo, attori/registi.
+- Follow-up "com'è andata?" sull'ultimo film scelto, alla riapertura dell'app.
+- Pubblicità simulata (interstitial ogni 3 ricerche/scelte, banner in Liste) e Premium simulato.
+- Modalità demo (42 film con locandine vere) se non c'è una chiave TMDB; strumento "multi-utente" per provare collegamenti e classifica; giocatori simulati in classifica.
 
 ## 4. Schema del database (bozza per Supabase/Postgres)
 Rispecchia il "finto database" del prototipo (sezione 3 del codice).
 
 ```sql
--- utenti: gestiti da Supabase Auth (auth.users); qui il profilo pubblico
 create table profiles (
   id            uuid primary key references auth.users on delete cascade,
   display_name  text not null,
   username      text unique check (username ~ '^[a-z0-9._]{3,20}$'),  -- @nomeutente (null per gli ospiti)
+  avatar        text,                    -- id del personaggio scelto
   is_guest      boolean default false,
   provider_ids  int[]  default '{}',     -- piattaforme TMDB (8=Netflix, 337=Disney+ ...)
   fav_genres    int[]  default '{}',
@@ -57,33 +50,36 @@ create table profiles (
 create table lists (
   id          uuid primary key default gen_random_uuid(),
   name        text not null,
-  type        text not null check (type in ('personal','couple','friends')),
-  owner_id    uuid references profiles on delete set null,
-  invite_code text unique,               -- token del link di iscrizione (null per le liste personali)
+  type        text not null check (type in ('personal','rewatch','custom')),
+  owner_id    uuid references profiles on delete cascade,
+  invite_code text unique,               -- token del link di iscrizione (creato quando serve)
   created_at  timestamptz default now()
 );
+-- ogni utente ha una sola 'personal' e una sola 'rewatch'
+create unique index one_personal on lists(owner_id) where type='personal';
+create unique index one_rewatch  on lists(owner_id) where type='rewatch';
 
+-- proprietario + persone a cui la lista è collegata (sola lettura)
 create table list_members (
   list_id   uuid references lists on delete cascade,
   user_id   uuid references profiles on delete cascade,
-  role      text not null default 'member' check (role in ('owner','member')),
+  role      text not null check (role in ('owner','viewer')),
   joined_at timestamptz default now(),
   primary key (list_id, user_id)
 );
 
--- film: salviamo solo id TMDB + pochi dati per mostrare la lista senza chiamare l'API
 create table list_items (
-  id         uuid primary key default gen_random_uuid(),
-  list_id    uuid references lists on delete cascade,
-  tmdb_id    int,                        -- null se aggiunto a mano
+  id           uuid primary key default gen_random_uuid(),
+  list_id      uuid references lists on delete cascade,
+  tmdb_id      int,                      -- null se aggiunto a mano
   custom_title text,
-  snapshot   jsonb,                      -- titolo, anno, poster, generi, durata
-  added_by   uuid references profiles on delete cascade,
-  added_at   timestamptz default now(),
+  snapshot     jsonb,                    -- titolo, anno, poster, generi, durata
+  added_by     uuid references profiles on delete cascade,
+  added_at     timestamptz default now(),
   unique (list_id, tmdb_id)
 );
 
--- inviti a utenti già registrati (da accettare)
+-- inviti di collegamento (da accettare)
 create table list_invites (
   id         uuid primary key default gen_random_uuid(),
   list_id    uuid references lists on delete cascade,
@@ -93,38 +89,29 @@ create table list_invites (
   created_at timestamptz default now()
 );
 
--- liste collegate (Premium): la lista condivisa "include" i film di una lista personale
-create table list_links (
-  list_id        uuid references lists on delete cascade,   -- lista condivisa
-  linked_list_id uuid references lists on delete cascade,   -- lista personale collegata
-  linked_by      uuid references profiles on delete cascade,
-  created_at     timestamptz default now(),
-  primary key (list_id, linked_list_id)
+-- film visti: alimentano anche la lista Rewatch (che quindi non ha righe in list_items)
+create table seen (
+  user_id     uuid references profiles on delete cascade,
+  tmdb_id     int,
+  snapshot    jsonb,
+  in_rewatch  boolean default true,      -- false se tolto da Rewatch
+  seen_at     timestamptz default now(),
+  primary key (user_id, tmdb_id)
 );
 
--- "non mi interessa": esclusi da ricerche e suggerimenti
-create table dismissed (
+create table dismissed (                 -- "non mi interessa" / "escludi"
   user_id uuid references profiles on delete cascade,
   tmdb_id int,
   created_at timestamptz default now(),
   primary key (user_id, tmdb_id)
 );
 
--- risposte ai giochi di Scopri (servono a non riproporre le carte e come segnale di gusto)
-create table swipes (
+create table swipes (                    -- carte di Scopri: ogni film una volta sola
   user_id  uuid references profiles on delete cascade,
-  game     text check (game in ('seen','want')),
   tmdb_id  int,
-  verdict  text check (verdict in ('seen','not_seen','want','skip','dismiss')),
+  verdict  text check (verdict in ('seen','not_seen','dismiss','want')),
   snapshot jsonb,
   created_at timestamptz default now(),
-  primary key (user_id, game, tmdb_id)
-);
-
-create table seen (
-  user_id uuid references profiles on delete cascade,
-  tmdb_id int,
-  seen_at timestamptz default now(),
   primary key (user_id, tmdb_id)
 );
 
@@ -136,41 +123,64 @@ create table ratings (
   rated_at  timestamptz default now(),
   primary key (user_id, tmdb_id)
 );
-```
-**Sicurezza (Row Level Security):** ogni utente legge/scrive solo il proprio profilo, `seen` e `ratings`; vede liste e film solo se è in `list_members`. Gli ingressi (accetta invito, link di iscrizione) passano da funzioni server che controllano il limite di membri. Chi è membro di una lista condivisa può leggere anche i film delle liste collegate. **Ricerca utenti:** solo per @nomeutente (inizio del nome utente), mai per nome o email, per privacy. Da prevedere: parole riservate (admin, cosaguardo…) e filtro per nomi offensivi.
 
-**Chiave TMDB:** non sarà mai nell'app. Le chiamate passano da una funzione server (Supabase Edge Function) che aggiunge la chiave e mette in cache le risposte.
+-- cine-quiz
+create table quiz_questions (
+  id        serial primary key,
+  category  text, question text, answers text[],   -- answers[1] = giusta
+  media     jsonb,                                  -- emoji, locandina…
+  seconds   smallint default 15,
+  is_bonus  boolean default false,
+  approved  boolean default false                   -- revisione umana prima di pubblicare
+);
+create table quiz_days (                 -- domande del giorno, uguali per tutti
+  day date primary key, question_ids int[]
+);
+create table quiz_plays (
+  user_id  uuid references profiles on delete cascade,
+  day      date,
+  week     date,                         -- lunedì della settimana
+  answers  jsonb,                        -- [{question_id, ok, points}]
+  points   int default 0,
+  primary key (user_id, day)             -- una sola partita al giorno
+);
+create view quiz_weekly as
+  select week, user_id, sum(points) as points from quiz_plays group by week, user_id;
+```
+**Sicurezza (Row Level Security):** ognuno legge/scrive solo i propri dati; vede una lista solo se è in `list_members`; i `viewer` non possono modificarla. Accettare un invito o un link passa da funzioni server. **Ricerca utenti:** solo per @nomeutente. **Quiz:** la risposta giusta non arriva mai al telefono prima di rispondere; il punteggio lo calcola il server (tempo misurato lato server), così la classifica non si può truccare.
+
+**Chiave TMDB:** mai nell'app. Le chiamate passano da una funzione server che aggiunge la chiave e mette in cache le risposte.
 
 ## 5. Piano economico
-Le sole pubblicità difficilmente bastano: è un'app che si apre poche volte a settimana, per pochi minuti. Proposta su più livelli:
+1. **Pubblicità (utenti gratuiti)** – AdMob: interstitial durante "Sorprendimi"/"Mostra tutti" (ogni 3), banner nelle schermate secondarie, eventuale *rewarded* ("guarda un video per un aiuto nel quiz").
+2. **Premium** (es. 2,49 €/mese o 19,99 €/anno): niente pubblicità, **trailer**, liste illimitate; in futuro filtri avanzati, serie TV.
+3. **Il quiz come motore di ritorno quotidiano**: più aperture = più pubblicità viste. Possibili premi settimanali sponsorizzati (es. un mese di Premium al primo classificato).
+4. **Affiliazioni** (da verificare): prove gratuite delle piattaforme.
+5. **Costi:** Apple 99 $/anno, Google 25 $ una tantum, Supabase ~25 $/mese dopo la fase gratuita, dominio ~20 €/anno, **licenza commerciale TMDB (da richiedere)**, eventuale AI per descrizioni e domande del quiz.
 
-1. **Pubblicità (utenti gratuiti)** – AdMob
-   - Interstitial durante la "scelta" (già nel prototipo, frequenza regolabile)
-   - Banner nelle schermate secondarie
-   - Eventuale *rewarded*: "guarda un video per sbloccare un filtro Premium per oggi"
-2. **Premium** (es. 2,49 €/mese o 19,99 €/anno): niente pubblicità, liste illimitate, in futuro filtri avanzati, serie TV, statistiche di coppia
-   - Le liste condivise aiutano: se una persona della coppia è Premium, si può valutare di estendere i vantaggi alla lista
-3. **Affiliazioni** (da verificare): link verso prove gratuite o abbonamenti delle piattaforme e noleggio dei film
-4. **Costi da coprire (stima di partenza):** Apple 99 $/anno, Google 25 $ una tantum, Supabase gratis all'inizio poi ~25 $/mese, dominio e sito ~20 €/anno, **licenza commerciale TMDB (da richiedere: costo da definire)**
-
-⚠️ **Rischio principale:** l'uso gratuito di TMDB è solo **non commerciale**. Con pubblicità o abbonamenti serve un accordo commerciale con TMDB, anche per i dati di disponibilità di JustWatch. Va chiarito **prima** di iniziare la Fase 3. In alternativa si può valutare un'API di disponibilità a pagamento (es. Watchmode, Streaming Availability).
+⚠️ **Rischi da chiarire prima della Fase 3**
+- **TMDB:** l'uso gratuito è solo non commerciale; con pubblicità o abbonamenti serve un accordo (anche per i dati JustWatch). Alternative: Watchmode, Streaming Availability.
+- **Avatar con attori reali:** foto di attori e immagini di personaggi (De Niro, Disney/Pixar…) sono protette da diritti d'immagine e copyright. Nel prototipo vanno bene; per lo store servono licenze oppure **illustrazioni originali "ispirate a"** commissionate per l'app (consigliato).
+- **Locandine nel quiz:** stesso discorso; da coprire con la licenza TMDB o con domande senza immagini.
 
 ## 6. Roadmap
 | Fase | Contenuto | Stato |
 |---|---|---|
 | 1 | Prototipo completo + schema DB | ✅ in revisione |
-| 2 | Contatto TMDB per licenza commerciale · Supabase: tabelle, regole di sicurezza, login · proxy API | da fare |
-| 3 | App Expo: porting schermate, collegamento al DB, deep link per gli inviti (cosaguardo.app/invito/…), notifiche ("Simona ti ha invitato in Noi due", "Marco ha aggiunto un film a Noi due", "Com'era il film di ieri?") · ricerca descrittiva con AI lato server | da fare |
+| 2 | Licenza TMDB · decisione su avatar · Supabase: tabelle, regole di sicurezza, login · proxy API · banca domande del quiz | da fare |
+| 3 | App Expo: porting schermate, deep link per i collegamenti (cosaguardo.app/invito/…), notifiche ("@simona ti ha collegato una lista", "Nuove domande nel quiz!", "Classifica finale della settimana", "Com'era il film di ieri?") · ricerca descrittiva con AI lato server | da fare |
 | 4 | AdMob, acquisti in-app (RevenueCat), privacy policy GDPR, consenso pubblicità (UMP) | da fare |
 | 5 | Test con amici (TestFlight / Play test interno) → pubblicazione | da fare |
-| 6 | Serie TV, filtri avanzati, statistiche | futuro |
+| 6 | Serie TV, filtri avanzati, statistiche, sfide tra amici nel quiz | futuro |
 
-## 7. Ricerca descrittiva: dal prototipo alla versione reale
-- **Prototipo (adesso):** oltre a generi, temi, durata, periodo e persone, riconosce **concetti** espressi a parole proprie, anche in modo colloquiale (“che cazzo sto guardando”, “per piangere”, “finale a sorpresa”, “trash”, “che mi faccia pensare”…). Ogni concetto usa parole chiave TMDB verificate più una selezione di **film di riferimento** scelti per come li descrive la critica; i risultati compaiono in “✨ I più vicini a quello che hai descritto”.
-- **Prototipo:** regole e dizionario italiano. Funziona bene su frasi con generi, temi comuni, durata, periodo e nomi; non capisce trame libere ("quel film dove uno rivive sempre lo stesso giorno").
-- **Produzione:** un modello AI lato server riceve la frase e restituisce lo stesso formato di filtri (generi, temi, persone, durata, periodo). Per le trame libere può anche proporre direttamente i titoli, che poi verifichiamo su TMDB. Costo stimato molto basso per ricerca (frazioni di centesimo), da includere nel piano costi; si può limitare il numero di ricerche AI per gli utenti gratuiti (leva per il Premium).
+## 7. Ricerca descrittiva e quiz: dal prototipo alla versione reale
+- **Descrivi – prototipo:** regole + dizionario italiano + 10 "concetti" con parole chiave TMDB verificate e film di riferimento. Non capisce trame libere.
+- **Descrivi – produzione:** un modello AI lato server trasforma la frase in filtri (stesso formato) e per le trame libere propone titoli che poi verifichiamo su TMDB.
+- **Quiz – prototipo:** 89 domande scritte a mano in 12 categorie (citazioni, emoji, locandina misteriosa che si mette a fuoco col tempo, attori, registi, intruso, Oscar, colonne sonore, date, vero/falso, numeri, cinema italiano) + 7 domande bonus.
+- **Quiz – produzione:** banca domande sul server, nuove domande generate in parte automaticamente (dati TMDB + AI) ma **sempre approvate da una persona** prima di andare online.
 
 ## 8. Domande aperte
-- Nome definitivo dell'app e verifica che sia libero (store, dominio, marchio)
-- Un utente Premium "copre" anche il/la partner nella lista Coppia?
-- Frequenza pubblicità: ogni 3 scelte è un compromesso da testare con utenti reali
+- Nome definitivo dell'app (e di alcune voci: pagina "Cerca", "Cerca tra", pulsante "Sorprendimi")
+- Avatar: licenze o illustrazioni originali?
+- Premi per la classifica settimanale del quiz?
+- Frequenza pubblicità: ogni 3 ricerche è un compromesso da testare con utenti reali

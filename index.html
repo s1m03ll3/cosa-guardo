@@ -223,6 +223,57 @@
   .fu .btn.ghost{padding:9px 4px;font-size:13px}
   .watch{margin-top:12px}
   .chip .x{opacity:.7;margin-left:2px}
+  nav button{font-size:11px;padding:6px 2px}
+  .chips.sm{gap:6px}
+  .chips.sm .chip{padding:6px 10px;font-size:13px}
+  .clearx{flex:none;width:44px;border-radius:10px;border:1px solid var(--line);background:var(--card2);color:var(--muted);font-size:16px;cursor:pointer}
+  .actions2{display:grid;gap:10px;margin-top:14px}
+  .actions2 .btn small{display:block;font-size:12px;font-weight:500;opacity:.92;margin-top:3px}
+  .btn.big{padding:16px;font-size:19px}
+  .stale{background:#1d2a45;border:1px solid #2d4370;color:#bcd0ff;border-radius:10px;padding:8px 12px;font-size:13px;margin-top:14px}
+  .av.img{overflow:hidden;padding:0;background:var(--card2)}
+  .av.img img{width:100%;height:100%;object-fit:cover;object-position:center 20%}
+  .avsec{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin:16px 0 6px}
+  .avopt .ai{width:60px;height:60px;border-radius:50%;overflow:hidden;margin:0 auto 6px;background:var(--card2)}
+  .avopt .ai img{width:100%;height:100%;object-fit:cover;object-position:center 20%}
+  .avopt b{display:block;font-size:11px;color:var(--text);line-height:1.2}
+  .avopt small{display:block;font-size:10px;color:var(--muted);margin-top:2px;line-height:1.2}
+  .gwrap{position:relative;display:flex;flex-direction:column;height:calc(100vh - 150px);height:calc(100dvh - 150px);min-height:470px}
+  .gwrap .ghead{padding:0 0 2px}
+  .gwrap .gstack,.gwrap .gbtns,.gwrap .gfoot{width:100%;max-width:420px}
+  .gbtns.g4{grid-template-columns:repeat(4,1fr);gap:8px}
+  .gbtns.g4 button{font-size:20px;padding:8px 2px}
+  .gbtns .gh{border-color:#7a2d4a}
+  .stamp.l{right:20px;left:auto;color:var(--ok);border-color:var(--ok);transform:rotate(14deg)}
+  .stamp.r{left:20px;right:auto;color:#c9ced8;border-color:#c9ced8;transform:rotate(-14deg)}
+  .stamp.h{left:50%;top:38%;transform:translate(-50%,-50%);color:#ff5a8a;border-color:#ff5a8a;white-space:nowrap}
+  .heartpop{position:absolute;left:50%;top:42%;font-size:120px;transform:translate(-50%,-50%) scale(0);animation:hp .6s ease forwards;pointer-events:none;z-index:5}
+  @keyframes hp{45%{transform:translate(-50%,-50%) scale(1.2);opacity:1}100%{transform:translate(-50%,-50%) scale(1);opacity:.9}}
+  /* quiz */
+  .qhero{background:linear-gradient(135deg,#3b2b6b,#7a2d5a);border-radius:20px;padding:20px;text-align:center}
+  .qhero .big{font-size:44px}
+  .qhero h2{color:#fff;justify-content:center;text-transform:none;font-size:22px;letter-spacing:0;margin:4px 0 8px}
+  .qstat{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:16px}
+  .qstat div{background:rgba(0,0,0,.25);border-radius:12px;padding:10px 4px;font-size:12px;color:#d6d9e0}
+  .qstat b{display:block;font-size:20px;color:#fff}
+  .qflag{display:inline-block;margin-top:10px;font-size:13px;font-weight:700;padding:5px 12px;border-radius:99px;background:linear-gradient(135deg,#f5c542,#ff8a3d);color:#111}
+  .lb .item{padding:8px 0}
+  .lb .pos{width:30px;text-align:center;font-weight:800;color:var(--muted);flex:none}
+  .lb .me .t{color:var(--accent2)}
+  .lb .pts{font-weight:700}
+  .qbox{display:flex;flex-direction:column;min-height:calc(100vh - 160px);min-height:calc(100dvh - 160px)}
+  .qtop{display:flex;justify-content:space-between;align-items:center;font-size:14px;color:var(--muted)}
+  .qbar{height:7px;background:var(--line);border-radius:99px;overflow:hidden;margin:10px 0 18px}
+  .qbar i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2),var(--ok));width:100%}
+  .qcat{display:inline-block;font-size:12px;padding:4px 10px;border-radius:99px;background:var(--card2);border:1px solid var(--line);margin-bottom:10px}
+  .qcat.qbonus{background:linear-gradient(135deg,#f5c542,#ff8a3d);color:#111;font-weight:800;border:0}
+  .qq{font-size:21px;font-weight:700;line-height:1.3;margin:0 0 14px}
+  .qemoji{font-size:52px;text-align:center;letter-spacing:6px;margin:4px 0 16px}
+  .qposter{width:170px;height:250px;margin:0 auto 16px;border-radius:14px;overflow:hidden;background:var(--card2)}
+  .qposter img{width:100%;height:100%;object-fit:cover;transform:scale(1.6)}
+  .qopts{display:grid;gap:10px;margin-top:auto;padding-bottom:8px}
+  .qopt{border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:14px;padding:15px;font-size:16px;text-align:left;cursor:pointer}
+  .qopt:active{background:var(--card2)}
 </style>
 </head>
 <body>
@@ -232,19 +283,23 @@
     <span class="pill" id="statusPill" data-a="goto" data-view="v-profile"></span>
   </header>
 
-  <!-- ===================== SCEGLI ===================== -->
+  <!-- ===================== CERCA ===================== -->
   <section id="v-pick" class="view on">
     <div id="setupBanner"></div>
     <div id="followUp"></div>
     <div class="section" id="modeFilters">
       <div class="flabel">✨ Descrivi cosa ti va <span style="text-transform:none;letter-spacing:0">(facoltativo)</span></div>
-      <div class="ask"><input type="text" id="descBox" placeholder="Es. qualcosa che mi faccia dire “ma che sto guardando?”" autocomplete="off" enterkeyhint="search">
-        <button class="btn" data-a="describe" id="descBtn">OK</button></div>
+      <div class="ask"><input type="text" id="descBox" placeholder="Es. un film che mi faccia piangere" autocomplete="off" enterkeyhint="search">
+        <button class="clearx" data-a="clearDesc" id="descClear" title="Cancella" style="visibility:hidden">✕</button></div>
       <div id="descOut"></div>
-      <div class="flabel">Da dove</div><div class="hscroll" id="srcChips"></div>
-      <div class="flabel">Genere</div><div class="hscroll" id="genreChips"></div>
-      <div class="flabel">Mood</div><div class="hscroll" id="moodChips"></div>
-      <div class="grid3">
+      <div class="flabel">Cerca tra</div><div class="chips sm" id="srcChips"></div>
+      <div class="flabel">Genere</div><div class="chips sm" id="genreChips"></div>
+      <div class="flabel">Mood</div><div class="chips sm" id="moodChips"></div>
+      <div style="text-align:right;margin-top:10px"><span class="link" data-a="resetFilters">Azzera filtri</span></div>
+    </div>
+
+    <details class="more"><summary>Altre opzioni</summary>
+      <div class="grid3" style="margin-top:12px">
         <label><span class="flabel">Durata</span><select id="fDuration">
           <option value="0">Qualsiasi</option><option value="100">&lt; 1h40</option><option value="130">&lt; 2h10</option><option value="160">&lt; 2h40</option></select></label>
         <label><span class="flabel">Epoca</span><select id="fEra">
@@ -252,42 +307,37 @@
         <label><span class="flabel">Voto</span><select id="fRating">
           <option value="0">Qualsiasi</option><option value="6">6+</option><option value="6.5">6.5+</option><option value="7">7+</option><option value="7.5">7.5+</option><option value="8">8+</option></select></label>
       </div>
-      <div style="text-align:right;margin-top:8px"><span class="link" data-a="resetFilters">Azzera filtri</span></div>
-    </div>
-
-    <details class="more"><summary>Altre opzioni</summary>
       <div class="row"><label>Solo film che posso vedere<br><span class="muted">sulle mie piattaforme (anche per le liste)</span></label>
         <label class="switch"><input type="checkbox" id="fOnlyAvail"><span></span></label></div>
       <div class="row"><label>Solo film conosciuti<br><span class="muted">almeno 300 voti su TMDB</span></label>
         <label class="switch"><input type="checkbox" id="fPopular"><span></span></label></div>
-      <div class="row"><label>Escludi film che ho già visto</label>
+      <div class="row"><label>Escludi film che ho già visto<br><span class="muted">non vale per la lista Rewatch</span></label>
         <label class="switch"><input type="checkbox" id="fHideSeen"><span></span></label></div>
     </details>
 
-    <div class="actions">
-      <button class="btn ghost" data-a="showResults" id="showBtn">🔍 Mostra film</button>
-      <button class="btn" data-a="pick">🎲 A caso</button>
+    <div class="actions2">
+      <button class="btn big" data-a="pick">🎲 Sorprendimi<small>Ti scegliamo noi un film, con questi filtri</small></button>
+      <button class="btn ghost" data-a="search">🔍 Mostra tutti i film con questi filtri</button>
     </div>
     <div id="results"></div>
   </section>
 
-  <!-- ===================== LISTE ===================== -->
+  <!-- ===================== SCOPRI / GAME / LISTE / PROFILO ===================== -->
   <section id="v-discover" class="view"></section>
+  <section id="v-quiz" class="view"></section>
   <section id="v-lists" class="view"></section>
-
-  <!-- ===================== PROFILO ===================== -->
   <section id="v-profile" class="view"></section>
 </div>
 
 <nav><div class="in">
   <button data-a="goto" data-view="v-pick" class="on"><b>🔍</b>Cerca</button>
   <button data-a="goto" data-view="v-discover"><b>🃏</b>Scopri</button>
+  <button data-a="goto" data-view="v-quiz"><b>🏆</b>Game</button>
   <button data-a="goto" data-view="v-lists"><b>📋<span class="badge" id="invBadge"></span></b>Liste</button>
   <button data-a="goto" data-view="v-profile"><b>👤</b>Profilo</button>
 </div></nav>
 
 <div class="onb" id="onb"></div>
-<div class="game" id="game"></div>
 <div class="loader" id="loader"></div>
 <div class="sheet-bg" id="sheetBg"><div class="sheet" id="sheet"></div></div>
 <div class="toast" id="toast"></div>
@@ -304,10 +354,11 @@ const AD_EVERY = 3;          // pubblicità alla 1ª scelta e poi ogni 3 (solo u
 const AD_SECONDS = 5;        // durata annuncio simulato
 const FREE_MAX_LISTS = 3;    // liste massime per utenti gratuiti
 const LIST_TYPES = {
-  personal:{icon:"📋", label:"Personale", desc:"Solo per te"},
-  couple:  {icon:"💑", label:"Coppia",    desc:"Tu e un'altra persona", max:2},
-  friends: {icon:"👯", label:"Amici",     desc:"Fino a 10 persone",      max:10},
+  personal:{icon:"📋", label:"La tua lista principale"},
+  rewatch: {icon:"🔁", label:"Film già visti, da rivedere"},
+  custom:  {icon:"🎞️", label:"Lista a tema"},
 };
+const LIST_SUGGESTIONS = ["Film romantici","Avventura","Da vedere con gli amici","Classici da recuperare","Serata horror"];
 const MOODS = {
   leggero:   {label:"😌 Leggero",        g:[35,16,10751],   not:[27,53,10752]},
   adrenalina:{label:"⚡ Adrenalina",     g:[28,53,12]},
@@ -435,14 +486,28 @@ function mockApi(path, q){
 const DB_KEY = "cosaguardo_db_v3", DEV_KEY = "cosaguardo_dev";
 const DB = {
   data:null,
-  empty(){ return {users:[],profiles:{},lists:[],list_members:[],list_items:[],list_invites:[],list_links:[],seen:[],ratings:[],dismissed:[],swipes:[],session:null}; },
+  empty(){ return {users:[],profiles:{},lists:[],list_members:[],list_items:[],list_invites:[],seen:[],ratings:[],dismissed:[],swipes:[],quiz:[],session:null}; },
   load(){ try{ this.data=JSON.parse(localStorage.getItem(DB_KEY)); }catch(e){} if(!this.data) this.data=this.empty();
     for(const [k,v] of Object.entries(this.empty())) if(!(k in this.data)) this.data[k]=v;
-    for(const u of this.data.users) if(!u.username && u.provider!=="guest") u.username=Usernames.suggest(u.name); },
+    for(const u of this.data.users) if(!u.username && u.provider!=="guest") u.username=Usernames.suggest(u.name);
+    this.migrate(); },
+  // aggiorna i dati salvati dalle versioni precedenti del prototipo
+  migrate(){ const d=this.data;
+    for(const l of d.lists) if(l.type==="couple"||l.type==="friends") l.type="custom";   // niente più liste coppia/amici
+    for(const m of d.list_members) if(m.role==="member") m.role="viewer";                 // i membri diventano "collegati"
+    delete d.list_links;
+    for(const u of d.users){                                                              // ognuno ha "La mia lista" e "Rewatch"
+      if(!d.lists.some(l=>l.owner_id===u.id&&l.type==="personal")) createListFor(u.id,"La mia lista","personal");
+      if(!d.lists.some(l=>l.owner_id===u.id&&l.type==="rewatch")) createListFor(u.id,"Rewatch","rewatch");
+    } },
   save(){ localStorage.setItem(DB_KEY, JSON.stringify(this.data)); },
 };
 const clone = o => JSON.parse(JSON.stringify(o));
 const uid = p => p+"_"+Math.random().toString(36).slice(2,10);
+function createListFor(userId,name,type){
+  const l={id:uid("l"),name,type,owner_id:userId,invite_code:null,created_at:Date.now()};
+  DB.data.lists.push(l); DB.data.list_members.push({list_id:l.id,user_id:userId,role:"owner",joined_at:Date.now()}); return l;
+}
 // @nomeutente: unico, 3-20 caratteri, minuscole/numeri/punto/trattino basso. In produzione l'unicità la garantisce il DB
 const Usernames = {
   norm: s => fold(s).replace(/^@/,"").replace(/[^a-z0-9._]/g,""),
@@ -462,7 +527,7 @@ const Auth = {
     D().users.push(u);
     D().profiles[u.id]={providerIds:[],favGenres:[],onboarded:false,premium:false,filters:clone(DEFAULT_FILTERS)};
     D().session={userId:u.id};
-    Lists.create("La mia lista","personal");
+    createListFor(u.id,"La mia lista","personal"); createListFor(u.id,"Rewatch","rewatch");
     DB.save(); return u;
   },
   login(userId){ D().session={userId}; DB.save(); },
@@ -472,17 +537,10 @@ const Auth = {
   setUsername(username){ Auth.current().username=username; DB.save(); },
   deleteAccount(){
     const id=Auth.current().id, d=D();
-    for(const l of Lists.mine()){
-      const others=d.list_members.filter(m=>m.list_id===l.id && m.user_id!==id);
-      if(!others.length) Lists.remove(l.id);
-      else { if(l.owner_id===id){ l.owner_id=others[0].user_id; others[0].role="owner"; } }
-    }
+    for(const l of d.lists.filter(l=>l.owner_id===id)) Lists.remove(l.id);   // le liste collegate spariscono anche agli altri
     d.list_members=d.list_members.filter(m=>m.user_id!==id);
-    d.list_items=d.list_items.filter(i=>i.added_by!==id);
-    d.list_links=d.list_links.filter(x=>x.linked_by!==id);
     d.list_invites=d.list_invites.filter(x=>x.from_user!==id && x.to_user!==id);
-    d.seen=d.seen.filter(s=>s.user_id!==id);
-    d.ratings=d.ratings.filter(r=>r.user_id!==id);
+    for(const k of ["seen","ratings","dismissed","swipes","quiz"]) d[k]=d[k].filter(x=>x.user_id!==id);
     delete d.profiles[id];
     d.users=d.users.filter(u=>u.id!==id);
     d.session=null; DB.save();
@@ -491,65 +549,66 @@ const Auth = {
 const userById = id => D().users.find(u=>u.id===id);
 const userName = id => userById(id)?.name || "Utente eliminato";
 
+/* Liste:
+   - "La mia lista" (personal) e "Rewatch" (rewatch) ci sono sempre; Rewatch = i film già visti
+   - liste a tema create dall'utente (custom), es. "Film romantici"
+   - collegamento: chi accetta l'invito vede la lista nel suo profilo come "Lista @nome" (sola lettura, sempre aggiornata) */
 const Lists = {
   mine(){ const me=Auth.current(); if(!me) return [];
-    const ids=D().list_members.filter(m=>m.user_id===me.id).map(m=>m.list_id);
-    return D().lists.filter(l=>ids.includes(l.id)); },
+    const ids=D().list_members.filter(m=>m.user_id===me.id).map(m=>m.list_id), rank={personal:0,rewatch:1,custom:2};
+    return D().lists.filter(l=>ids.includes(l.id)).sort((a,b)=>((a.owner_id===me.id?rank[a.type]:3)-(b.owner_id===me.id?rank[b.type]:3))||a.created_at-b.created_at); },
+  owned(){ const me=Auth.current()?.id; return Lists.mine().filter(l=>l.owner_id===me); },
+  shared(){ const me=Auth.current()?.id; return Lists.mine().filter(l=>l.owner_id!==me); },
   get(id){ return D().lists.find(l=>l.id===id); },
   isMember(id){ return Lists.mine().some(l=>l.id===id); },
   members(id){ return D().list_members.filter(m=>m.list_id===id).map(m=>({...m,user:userById(m.user_id)})); },
+  viewers(id){ return Lists.members(id).filter(m=>m.role==="viewer"); },
   newCode(){ const c="ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; let s; do{ s=[...Array(6)].map(()=>c[Math.random()*c.length|0]).join(""); }while(D().lists.some(l=>l.invite_code===s)); return s; },
-  create(name,type){
-    const me=Auth.current();
-    const l={id:uid("l"),name,type,owner_id:me.id,invite_code:type==="personal"?null:Lists.newCode(),created_at:Date.now()};
-    D().lists.push(l); D().list_members.push({list_id:l.id,user_id:me.id,role:"owner",joined_at:Date.now()});
-    DB.save(); return l;
-  },
-  byCode(code){ return D().lists.find(x=>x.invite_code===String(code||"").trim().toUpperCase()); },
-  seatsLeft(id){ const max=LIST_TYPES[Lists.get(id).type].max||99; return max-Lists.members(id).length-Invites.forList(id).length; },
-  addMember(id,userId){
+  ensureCode(id){ const l=Lists.get(id); if(!l.invite_code){ l.invite_code=Lists.newCode(); DB.save(); } return l.invite_code; },
+  create(name,type="custom"){ const l=createListFor(Auth.current().id,name,type); DB.save(); return l; },
+  rename(id,name){ Lists.get(id).name=name; DB.save(); },
+  byCode(code){ return code ? D().lists.find(x=>x.invite_code===String(code).trim().toUpperCase()) : null; },
+  addViewer(id,userId){
     const l=Lists.get(id); if(!l) return {error:"La lista non esiste più"};
-    if(D().list_members.some(m=>m.list_id===id&&m.user_id===userId)) return {error:"Fai già parte di questa lista",list:l};
-    const max=LIST_TYPES[l.type].max; if(max && Lists.members(id).length>=max) return {error:`La lista è al completo (max ${max} persone)`};
-    D().list_members.push({list_id:id,user_id:userId,role:"member",joined_at:Date.now()});
+    if(l.owner_id===userId) return {error:"È una tua lista",list:l};
+    if(D().list_members.some(m=>m.list_id===id&&m.user_id===userId)) return {error:"Hai già questa lista",list:l};
+    D().list_members.push({list_id:id,user_id:userId,role:"viewer",joined_at:Date.now()});
     D().list_invites.forEach(i=>{ if(i.list_id===id&&i.to_user===userId&&i.status==="pending") i.status="accepted"; });
     DB.save(); return {list:l};
   },
-  joinByLink(code){ const l=Lists.byCode(code); return l ? Lists.addMember(l.id,Auth.current().id) : {error:"Invito non valido o scaduto"}; },
-  leave(id){ const me=Auth.current().id, d=D();
-    d.list_members=d.list_members.filter(m=>!(m.list_id===id&&m.user_id===me));
-    d.list_links=d.list_links.filter(x=>!(x.list_id===id&&x.linked_by===me)); DB.save(); },
-  remove(id){ const d=D(); d.lists=d.lists.filter(l=>l.id!==id); d.list_members=d.list_members.filter(m=>m.list_id!==id); d.list_items=d.list_items.filter(i=>i.list_id!==id);
-    d.list_links=d.list_links.filter(x=>x.list_id!==id&&x.linked_list_id!==id); d.list_invites=d.list_invites.filter(x=>x.list_id!==id); DB.save(); },
-  // --- liste collegate (Premium): una lista condivisa "include" le liste personali dei membri, senza duplicare i film
-  links(id){ return D().list_links.filter(x=>x.list_id===id && Lists.get(x.linked_list_id)); },
-  link(id,linkedId){ if(Lists.links(id).some(x=>x.linked_list_id===linkedId)) return;
-    D().list_links.push({list_id:id,linked_list_id:linkedId,linked_by:Auth.current().id,at:Date.now()}); DB.save(); },
-  unlink(id,linkedId){ D().list_links=D().list_links.filter(x=>!(x.list_id===id&&x.linked_list_id===linkedId)); DB.save(); },
-  linkedItems(id){ const own=new Set(Lists.items(id).map(i=>i.movie.id)), out=[];
-    for(const ln of Lists.links(id)) for(const it of Lists.items(ln.linked_list_id)){
-      if(own.has(it.movie.id)||out.some(o=>o.movie.id===it.movie.id)) continue; out.push({...it,via:ln.linked_list_id}); }
-    return out; },
-  allItems(id){ return [...Lists.items(id),...Lists.linkedItems(id)]; },
-  copy(fromId,toId){ let n=0; for(const it of Lists.allItems(fromId)) if(!Lists.has(toId,it.movie.id)){ Lists.add(toId,it.movie); n++; } return n; },
-  items(id){ return D().list_items.filter(i=>i.list_id===id); },
-  has(id,movieId){ return D().list_items.some(i=>i.list_id===id && i.movie.id===movieId); },
-  add(id,movie){ if(Lists.has(id,movie.id)) return; const {overview,providers,tagline,origin,...lite}=movie;
-    D().list_items.unshift({id:uid("i"),list_id:id,movie:lite,added_by:Auth.current().id,added_at:Date.now()}); DB.save(); },
-  removeItem(id,movieId){ D().list_items=D().list_items.filter(i=>!(i.list_id===id&&i.movie.id===movieId)); DB.save(); },
+  joinByLink(code){ const l=Lists.byCode(code); return l ? Lists.addViewer(l.id,Auth.current().id) : {error:"Invito non valido o scaduto"}; },
+  unshare(id,userId){ D().list_members=D().list_members.filter(m=>!(m.list_id===id&&m.user_id===userId&&m.role==="viewer")); DB.save(); },
+  leave(id){ Lists.unshare(id,Auth.current().id); },
+  remove(id){ const d=D(); d.lists=d.lists.filter(l=>l.id!==id); d.list_members=d.list_members.filter(m=>m.list_id!==id);
+    d.list_items=d.list_items.filter(i=>i.list_id!==id); d.list_invites=d.list_invites.filter(x=>x.list_id!==id); DB.save(); },
+  items(id){ const l=Lists.get(id); if(!l) return [];
+    if(l.type==="rewatch") return D().seen.filter(s=>s.user_id===l.owner_id&&s.movie&&!s.noRewatch).sort((a,b)=>b.at-a.at)
+      .map(s=>({id:"s_"+s.movie_id,list_id:id,movie:s.movie,added_by:l.owner_id,added_at:s.at}));
+    return D().list_items.filter(i=>i.list_id===id); },
+  allItems(id){ return Lists.items(id); },
+  has(id,movieId){ return Lists.items(id).some(i=>i.movie.id===movieId); },
+  add(id,movie){ const l=Lists.get(id);
+    if(l.type==="rewatch") return Seen.set(movie.id,true,movie);
+    if(Lists.has(id,movie.id)) return;
+    D().list_items.unshift({id:uid("i"),list_id:id,movie:liteMovie(movie),added_by:Auth.current().id,added_at:Date.now()}); DB.save(); },
+  removeItem(id,movieId){ const l=Lists.get(id);
+    if(l?.type==="rewatch"){ const s=D().seen.find(x=>x.user_id===l.owner_id&&x.movie_id===movieId); if(s) s.noRewatch=true; DB.save(); return; }
+    D().list_items=D().list_items.filter(i=>!(i.list_id===id&&i.movie.id===movieId)); DB.save(); },
+  personal(){ return Lists.owned().find(l=>l.type==="personal") || Lists.create("La mia lista","personal"); },
+  rewatch(){ return Lists.owned().find(l=>l.type==="rewatch") || Lists.create("Rewatch","rewatch"); },
 };
+// inviti di collegamento: la lista compare a chi accetta
 const Invites = {
   forList(id){ return D().list_invites.filter(i=>i.list_id===id&&i.status==="pending"); },
   received(){ const me=Auth.current(); return me ? D().list_invites.filter(i=>i.to_user===me.id&&i.status==="pending"&&Lists.get(i.list_id)) : []; },
   send(listId,userId){
-    if(D().list_members.some(m=>m.list_id===listId&&m.user_id===userId)) return {error:"È già nella lista"};
+    if(Lists.members(listId).some(m=>m.user_id===userId)) return {error:"Ha già questa lista"};
     if(Invites.forList(listId).some(i=>i.to_user===userId)) return {error:"Invito già inviato"};
-    if(Lists.seatsLeft(listId)<=0) return {error:"Non ci sono più posti in questa lista"};
     D().list_invites.push({id:uid("inv"),list_id:listId,from_user:Auth.current().id,to_user:userId,status:"pending",at:Date.now()}); DB.save(); return {};
   },
   get(id){ return D().list_invites.find(i=>i.id===id); },
   cancel(id){ D().list_invites=D().list_invites.filter(i=>i.id!==id); DB.save(); },
-  accept(id){ const i=Invites.get(id); const r=Lists.addMember(i.list_id,i.to_user); if(!r.error) i.status="accepted"; DB.save(); return r; },
+  accept(id){ const i=Invites.get(id); const r=Lists.addViewer(i.list_id,i.to_user); if(!r.error) i.status="accepted"; DB.save(); return r; },
   decline(id){ Invites.get(id).status="declined"; DB.save(); },
 };
 // ricerca utenti registrati: SOLO per @nomeutente (per privacy non si cerca per nome o email)
@@ -559,8 +618,10 @@ const Users = {
       .sort((a,b)=>(a.username===f?-1:0)-(b.username===f?-1:0) || a.username.length-b.username.length).slice(0,8); },
 };
 const handle = u => u?.username ? "@"+u.username : "";
-// nome lista leggibile anche per chi non ne è il proprietario ("La mia lista di Marco")
-const listLabel = l => l.type==="personal" && l.owner_id!==Auth.current()?.id ? `${l.name} di ${userName(l.owner_id)}` : l.name;
+// nome di una lista: le liste collegate da altri si chiamano "Lista @nome"
+const listLabel = l => { if(!l) return ""; if(l.owner_id===Auth.current()?.id) return l.name;
+  const o=userById(l.owner_id); return `Lista ${handle(o)||o?.name||""}`+(l.type==="personal"?"":` · ${l.name}`); };
+const listIcon = l => l.owner_id!==Auth.current()?.id ? "🔗" : (LIST_TYPES[l.type]||LIST_TYPES.custom).icon;
 // film segnati "non mi interessa": non vengono più proposti
 const Dismissed = {
   has(movieId){ const me=Auth.current(); return !!me && D().dismissed.some(x=>x.user_id===me.id&&x.movie_id===movieId); },
@@ -569,9 +630,12 @@ const Dismissed = {
   count(){ const me=Auth.current().id; return D().dismissed.filter(x=>x.user_id===me).length; },
   clear(){ const me=Auth.current().id; D().dismissed=D().dismissed.filter(x=>x.user_id!==me); DB.save(); },
 };
+// film visti (con una copia dei dati del film: alimentano la lista Rewatch)
 const Seen = {
   has(movieId,userId=Auth.current().id){ return D().seen.some(s=>s.user_id===userId&&s.movie_id===movieId); },
-  set(movieId,on){ const me=Auth.current().id; D().seen=D().seen.filter(s=>!(s.user_id===me&&s.movie_id===movieId)); if(on) D().seen.push({user_id:me,movie_id:movieId,at:Date.now()}); DB.save(); },
+  set(movieId,on,movie){ const me=Auth.current().id, old=D().seen.find(s=>s.user_id===me&&s.movie_id===movieId);
+    D().seen=D().seen.filter(s=>!(s.user_id===me&&s.movie_id===movieId));
+    if(on) D().seen.push({user_id:me,movie_id:movieId,movie:movie?liteMovie(movie):(old?.movie||null),at:Date.now()}); DB.save(); },
   ids(){ const me=Auth.current().id; return D().seen.filter(s=>s.user_id===me).map(s=>s.movie_id); },
 };
 const Ratings = {
@@ -583,6 +647,7 @@ const Ratings = {
 const me = () => Auth.current();
 const prof = () => D().profiles[me().id];
 const F = () => { const p=prof(); if(!("keywords" in p.filters)) p.filters={...clone(DEFAULT_FILTERS),...p.filters}; return p.filters; };
+const liteMovie = f => { const {overview,providers,tagline,origin,seed,trailer,...lite}=f; return lite; };
 
 /* =====================================================================
    4. UTILITY
@@ -595,18 +660,18 @@ const toggle=(arr,v)=>arr.includes(v)?arr.filter(x=>x!==v):[...arr,v];
 const sleep = ms => new Promise(r=>setTimeout(r,ms));
 function hue(t){ let h=0; for(const c of String(t)) h=(h*31+c.charCodeAt(0))%360; return h; }
 const gradient = t => { const h=hue(t); return `linear-gradient(135deg,hsl(${h} 60% 35%),hsl(${(h+50)%360} 70% 20%))`; };
-const AVATARS = [
-  ["mago","🧙","Il Mago",270],["eroe","🦸","L'Eroe",0],["pirata","🏴‍☠️","Il Pirata",20],["astronauta","🧑‍🚀","L'Astronauta",220],
-  ["detective","🕵️","Il Detective",35],["vampiro","🧛","Il Vampiro",340],["cowboy","🤠","Il Cowboy",30],["alieno","👽","L'Alieno",120],
-  ["robot","🤖","Il Robot",200],["zombie","🧟","Lo Zombie",90],["fantasma","👻","Il Fantasma",250],["ninja","🥷","Il Ninja",0],
-  ["principessa","👸","La Principessa",310],["cattivo","🦹","Il Cattivo",280],["sirena","🧜","La Sirena",185],["drago","🐉","Il Drago",140],
-  ["clown","🤡","Il Clown",50],["spia","🕴️","La Spia",230],["cavaliere","🤺","Il Cavaliere",210],["dinosauro","🦖","Il Dinosauro",100],
-].map(([id,e,name,h])=>({id,e,name,bg:`linear-gradient(135deg,hsl(${h} 60% 45%),hsl(${(h+40)%360} 65% 28%))`}));
+// Avatar: personaggi famosi del cinema (foto ufficiale dell'attore su TMDB) e dell'animazione (locandina del film).
+// ⚠️ Prototipo: per pubblicare l'app servono i diritti d'immagine, oppure illustrazioni originali.
+const AVATARS_RAW = [["vito","Vito Corleone","Robert De Niro","Il Padrino – Parte II","m","/cT8htcckIuyI1Lqwt1CvD02ynTh.jpg"],["tyler","Tyler Durden","Brad Pitt","Fight Club","m","/ajNaPmXVVMJFg9GWmu6MJzTaXdV.jpg"],["sparrow","Jack Sparrow","Johnny Depp","Pirati dei Caraibi","m","/k2xt6EUxQDwYRKIyI4IBdZxfs8n.jpg"],["joker","Joker","Joaquin Phoenix","Joker","m","/u38k3hQBDwNX0VA22aQceDp9Iyv.jpg"],["forrest","Forrest Gump","Tom Hanks","Forrest Gump","m","/oFvZoKI6lvU03n4YoNGAll9rkas.jpg"],["neo","Neo","Keanu Reeves","Matrix","m","/8RZLOyYGsoRe9p44q3xin9QkMHv.jpg"],["jack","Jack Dawson","Leonardo DiCaprio","Titanic","m","/wo2hJpn04vbtmh0B9utCFdsQhxM.jpg"],["indy","Indiana Jones","Harrison Ford","I predatori dell'arca perduta","m","/pjBMJVPpcZK23Vt1nzr1zEBTWrP.jpg"],["maximus","Massimo Decimo Meridio","Russell Crowe","Il gladiatore","m","/3IBZF0qCZMZ7zJYlgrH0sQzNZV.jpg"],["rocky","Rocky Balboa","Sylvester Stallone","Rocky","m","/gn3pDWthJqR0VDYGViGD3048og7.jpg"],["paul","Paul Atreides","Timothée Chalamet","Dune","m","/dFxpwRpmzpVfP1zjluH68DeQhyj.jpg"],["vincent","Vincent Vega","John Travolta","Pulp Fiction","m","/ap8eEYfBKTLixmVVpRlq4NslDD5.jpg"],["mia","Mia Dolan","Emma Stone","La La Land","f","/ak2Y9wOI3wi2pNQU6OWSvVvWPj5.jpg"],["amelie","Amélie Poulain","Audrey Tautou","Il favoloso mondo di Amélie","f","/d1HVrV8zXy1FJVptmOCkHWG8Jf2.jpg"],["holly","Holly Golightly","Audrey Hepburn","Colazione da Tiffany","f","/wg3RRHA5jV755dV0ksQ9g0Nc2xE.jpg"],["barbie","Barbie","Margot Robbie","Barbie","f","/euDPyqLnuwaWMHajcU3oZ9uZezR.jpg"],["hermione","Hermione Granger","Emma Watson","Harry Potter","f","/mf0OANvWYSzU1d8yggrhyw8IbIz.jpg"],["miawallace","Mia Wallace","Uma Thurman","Pulp Fiction","f","/sBgAZWi3o4FsnaTvnTNtK6jpQcF.jpg"],["furiosa","Furiosa","Charlize Theron","Mad Max: Fury Road","f","/gd7ShD0yt4bsR2STeQ19KQ6hvXL.jpg"],["ripley","Ellen Ripley","Sigourney Weaver","Alien","f","/wTSnfktNBLd6kwQxgvkqYw6vEon.jpg"],["katniss","Katniss Everdeen","Jennifer Lawrence","Hunger Games","f","/6WTY6HjXMGxnHilJRVC3eLnu43F.jpg"],["rose","Rose DeWitt Bukater","Kate Winslet","Titanic","f","/6qNnMsKtKz9si5rabpUEG85UfHp.jpg"],["miranda","Miranda Priestly","Meryl Streep","Il diavolo veste Prada","f","/g5cVxQBAQ3AXt3LhdBXtbbN47Uc.jpg"],["leia","Leia Organa","Carrie Fisher","Star Wars","f","/of4yHmryKPy92eeskUQ7MRmjC3l.jpg"],["shrek","Shrek","","Shrek","a","/iB64vpL3dIObOtMZgX3RqdVdQDc.jpg"],["woody","Woody","","Toy Story","a","/uXDfjJbdP4ijW5hWSBrPrlKpxab.jpg"],["simba","Simba","","Il Re Leone","a","/sKCr78MXSLixwmZ8DyJLrpMsd15.jpg"],["elsa","Elsa","","Frozen","a","/itAKcobTYGpYT8Phwjd8c9hleTo.jpg"],["nemo","Nemo","","Alla ricerca di Nemo","a","/eHuGQ10FUzK1mdOY69wF5pGgEf5.jpg"],["walle","WALL·E","","WALL·E","a","/hbhFnRzzg6ZDmm8YAmxBnQpQIPh.jpg"],["carl","Carl Fredricksen","","Up","a","/mFvoEwSfLqbcWwFsDjQebn9bzFe.jpg"],["totoro","Totoro","","Il mio vicino Totoro","a","/rtGDOeG9LzoerkDGZF9dnVeLppL.jpg"],["stitch","Stitch","","Lilo & Stitch","a","/cFuLvQJPoZpuruAtN3rVnMmLIH8.jpg"],["moana","Vaiana","","Oceania","a","/m5MDZOIFEFlxGiLuAzWzFSsWcye.jpg"],["remy","Rémy","","Ratatouille","a","/t3vaWRPSf6WjDSamIkKDs1iQWna.jpg"],["miles","Miles Morales","","Spider-Man: Un nuovo universo","a","/iiZZdoQBEYBv6id8su7ImL0oCbD.jpg"]];
+const AVATAR_GROUPS = {m:"Attori",f:"Attrici",a:"Animazione"};
+const AVATARS = AVATARS_RAW.map(([id,name,actor,film,g,path])=>({id,name,actor,film,g,path}));
 const avatarOf = u => AVATARS.find(a=>a.id===u?.avatar);
 const avatar = (u,cls="") => { const a=avatarOf(u);
-  if(a) return `<span class="av emo ${cls}" style="background:${a.bg}" title="${esc(u?.name)}">${a.e}</span>`;
+  if(a) return `<span class="av img ${cls}" title="${esc(u?.name)} · ${esc(a.name)}"><img src="${img(a.path,"w185")}" alt="" onerror="this.remove()"></span>`;
   return `<span class="av ${cls}" style="background:hsl(${hue(u?.id||"x")} 55% 45%)" title="${esc(u?.name)}">${esc((u?.name||"?")[0].toUpperCase())}</span>`; };
-const avatarGrid = sel => `<div class="avgrid">${AVATARS.map(a=>`<div class="avopt ${a.id===sel?"on":""}" data-a="setAvatar" data-id="${a.id}"><span style="background:${a.bg}">${a.e}</span>${a.name}</div>`).join("")}</div>`;
+const avatarGrid = sel => Object.entries(AVATAR_GROUPS).map(([g,lbl])=>`<div class="avsec">${lbl}</div><div class="avgrid">${AVATARS.filter(a=>a.g===g).map(a=>
+  `<div class="avopt ${a.id===sel?"on":""}" data-a="setAvatar" data-id="${a.id}"><div class="ai"><img src="${img(a.path,"w185")}" alt="" loading="lazy"></div><b>${esc(a.name)}</b><small>${esc(a.actor?a.actor+" · ":"")}${esc(a.film)}</small></div>`).join("")}</div>`).join("");
+
 function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("on"); clearTimeout(t._x); t._x=setTimeout(()=>t.classList.remove("on"),2200); }
 function debounce(fn,ms){ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a),ms); }; }
 function emojiFor(f){ return GENRE_EMOJI[(f.genre_ids||[])[0]]||"🎬"; }
@@ -676,10 +741,12 @@ async function loadMeta(){
 const genreName = id => (GENRES.find(g=>g.id===id)||BASE_GENRES.find(g=>g.id===id)||{}).name || "";
 async function details(f){
   if(f.custom) return {...f,providers:null};
-  const d=await api(`/movie/${f.id}`,{language:LANG,append_to_response:"watch/providers"}, f.id>=DEMO_BASE);
+  const d=await api(`/movie/${f.id}`,{language:LANG,append_to_response:"watch/providers,videos",include_video_language:"it,en"}, f.id>=DEMO_BASE);
   let overview=d.overview;
   if(!overview && f.id<DEMO_BASE){ try{ overview=(await api(`/movie/${f.id}`,{language:"en-US"})).overview; }catch(e){} }
-  return {...normalize(d),overview,tagline:d.tagline,providers:(d["watch/providers"]?.results||{})[REGION]||null};
+  const vids=(d.videos?.results||[]).filter(v=>v.site==="YouTube");
+  const tr=vids.find(v=>v.type==="Trailer"&&v.iso_639_1==="it")||vids.find(v=>v.type==="Trailer")||vids[0];
+  return {...normalize(d),overview,tagline:d.tagline,trailer:tr?tr.key:null,providers:(d["watch/providers"]?.results||{})[REGION]||null};
 }
 const availableToMe = d => (d.providers?.flatrate||[]).some(p=>prof().providerIds.includes(p.provider_id));
 
@@ -881,7 +948,7 @@ function discoverParams(){
   return p;
 }
 const moodOk = ids => !C().moods.length || !C().genres.length || ids.some(g=>moodGenres().includes(g));
-function movieMatches(m){
+function movieMatches(m,ignoreSeen){
   const f=C(), ids=m.genre_ids||[];
   if(f.genres.length && !ids.some(g=>f.genres.includes(g))) return false;
   if(f.moods.length && !ids.some(g=>moodGenres().includes(g))) return false;
@@ -891,20 +958,20 @@ function movieMatches(m){
   if(m.year && from && m.year<from.slice(0,4)) return false;
   if(m.year && to && m.year>to.slice(0,4)) return false;
   if(m.vote!=null && !m.custom && m.vote<f.minRating) return false;
-  if(f.hideSeen && Seen.has(m.id)) return false;
+  if(f.hideSeen && !ignoreSeen && Seen.has(m.id)) return false;
   if(Dismissed.has(m.id)) return false;
   return true;
 }
 const activeListIds = () => C().sources.filter(s=>s!=="platforms" && Lists.isMember(s));
 function listPool(){ // elementi delle liste selezionate, senza doppioni
   const map=new Map();
-  for(const lid of activeListIds()) for(const it of Lists.allItems(lid)){
-    if(!movieMatches(it.movie)) continue;
+  for(const lid of activeListIds()){ const l=Lists.get(lid); for(const it of Lists.items(lid)){
+    if(!movieMatches(it.movie,l.type==="rewatch")) continue;
     const e=map.get(it.movie.id)||{movie:it.movie,lists:[],addedBy:[]};
-    const name=it.via?`${Lists.get(lid).name} → ${listLabel(Lists.get(it.via))}`:Lists.get(lid).name;
+    const name=listLabel(l);
     if(!e.lists.includes(name)) e.lists.push(name); if(!e.addedBy.includes(it.added_by)) e.addedBy.push(it.added_by);
     map.set(it.movie.id,e);
-  }
+  } }
   return [...map.values()];
 }
 // gusti: generi preferiti + voti 👍/👎 dati in passato
@@ -990,11 +1057,10 @@ function renderPick(){
   f.sources=f.sources.filter(s=>s==="platforms"||Lists.isMember(s));
   $("#setupBanner").innerHTML = !p.providerIds.length ? `<div class="banner" data-a="goto" data-view="v-profile">📺 Non hai ancora indicato le tue piattaforme. Tocca qui.</div>` : "";
   $("#srcChips").innerHTML = chip("📺 Piattaforme",f.sources.includes("platforms"),`data-a="src" data-id="platforms"`,"src")
-    + Lists.mine().map(l=>chip(`${LIST_TYPES[l.type].icon} ${esc(l.name)}`,f.sources.includes(l.id),`data-a="src" data-id="${l.id}"`,"src")).join("");
+    + Lists.mine().map(l=>chip(`${listIcon(l)} ${esc(listLabel(l))}`,f.sources.includes(l.id),`data-a="src" data-id="${l.id}"`,"src")).join("");
   const d=p.descCrit;
-  if(d && document.activeElement!==$("#descBox")) $("#descBox").value=d.text||"";
-  $("#descOut").innerHTML = d ? understoodHtml(d,true)
-    : `<div class="hint">Scrivi come vuoi: <i data-a="example">roba che mi faccia dire che cazzo sto guardando</i> · <i data-a="example">un film per piangere</i> · <i data-a="example">horror coi fantasmi sotto le 2 ore</i></div>`;
+  if(d && !$("#descBox").value && document.activeElement!==$("#descBox")) $("#descBox").value=d.text||"";
+  renderDescOut();
   $("#genreChips").innerHTML=GENRES.map(g=>chip(`${GENRE_EMOJI[g.id]||"🎬"} ${esc(g.name)}`,f.genres.includes(g.id),`data-a="genre" data-id="${g.id}"`)).join("");
   $("#moodChips").innerHTML=Object.entries(MOODS).map(([k,v])=>chip(v.label,f.moods.includes(k),`data-a="mood" data-id="${k}"`)).join("");
   setOption("#fDuration",f.maxDur,f.maxDur?`< ${fmtDur(f.maxDur)}`:"");
@@ -1002,23 +1068,37 @@ function renderPick(){
   setOption("#fRating",f.minRating,`${f.minRating}+`);
   $("#fOnlyAvail").checked=f.onlyAvail; $("#fHideSeen").checked=f.hideSeen; $("#fPopular").checked=f.popular;
   renderFollowUp();
-  refreshResults();
+  if(R.key) renderResults();
 }
 function setOption(sel,val,label){ // aggiunge un'opzione "personalizzata" se il valore non è tra quelle standard
   const el=$(sel); [...el.options].filter(o=>o.dataset.custom).forEach(o=>o.remove());
   if(![...el.options].some(o=>o.value==String(val))){ const o=new Option(label,val); o.dataset.custom=1; el.add(o); }
   el.value=val;
 }
+// sotto il campo "Descrivi": cosa abbiamo capito (dopo una ricerca)
+function renderDescOut(r){
+  const d=prof().descCrit, v=$("#descBox").value.trim();
+  $("#descClear").style.visibility=v?"visible":"hidden";
+  $("#descOut").innerHTML = r && !r.labels.length ? understoodHtml(r) : (d && d.text===v ? understoodHtml(d) : "");
+}
+// la descrizione viene interpretata quando si cerca (niente pulsante OK)
+async function applyDesc(){
+  const t=$("#descBox").value.trim(), p=prof();
+  if(!t){ if(p.descCrit){ p.descCrit=null; save(); } renderDescOut(); return; }
+  if(p.descCrit?.text===t) return;
+  const r=await parseQuery(t);
+  p.descCrit = r.labels.length ? {...r,text:t} : null; save(); renderDescOut(r);
+}
 
-/* ---- Elenco risultati: prima i film delle liste scelte, poi quelli delle piattaforme (per popolarità) ---- */
-let R={key:null,items:[],listCount:0,page:0,totalPages:0,platTotal:0,loading:false,error:null};
-const resultsKey = () => JSON.stringify([devKey(),Dismissed.count(),C(),discoverParams(),Seen.ids().length,activeListIds().map(id=>Lists.allItems(id).length),prof().providerIds]);
-function clearResults(){ R={key:null,items:[],listCount:0,page:0,totalPages:0,platTotal:0,loading:false,error:null}; $("#results").innerHTML=""; }
-const refreshResults=debounce(async()=>{ if(!me()) return; const k=resultsKey(); if(k===R.key){ renderResults(); return; } await loadResults(true); },300);
+/* ---- Elenco risultati: compare solo dopo "Mostra tutti i film" ---- */
+let R={key:null,fkey:null,items:[],listCount:0,page:0,totalPages:0,platTotal:0,loading:false,error:null};
+const resultsKey = () => JSON.stringify([devKey(),Dismissed.count(),C(),discoverParams(),Seen.ids().length,activeListIds().map(id=>Lists.items(id).length),prof().providerIds]);
+const filtersKey = () => JSON.stringify([C(),activeListIds(),prof().providerIds]);
+function clearResults(){ R={key:null,fkey:null,items:[],listCount:0,page:0,totalPages:0,platTotal:0,loading:false,error:null}; $("#results").innerHTML=""; }
 async function loadResults(reset){
   const c=C(), k0=reset?resultsKey():R.key;
   if(reset){
-    R={key:resultsKey(),items:[],listCount:0,page:0,totalPages:1,platTotal:0,loading:true,error:null}; renderResults();
+    R={key:resultsKey(),fkey:filtersKey(),items:[],listCount:0,page:0,totalPages:1,platTotal:0,loading:true,error:null};
     let li=listPool().map(e=>({...e.movie,origin:{lists:e.lists,addedBy:e.addedBy}}));
     if(c.onlyAvail){ const det=await Promise.all(li.slice(0,40).map(m=>details(m).catch(()=>null))); li=li.filter((m,i)=>det[i]&&availableToMe(det[i])); }
     R.items=li; R.listCount=li.length;
@@ -1035,7 +1115,7 @@ async function loadResults(reset){
   }
   const k=R.key;
   if(c.sources.includes("platforms") && prof().providerIds.length && R.page<R.totalPages){
-    R.loading=true; renderResults();
+    R.loading=true; if(!reset) renderResults();
     try{
       const d=await api("/discover/movie",{...discoverParams(),page:R.page+1});
       if(k!==R.key) return;
@@ -1047,30 +1127,37 @@ async function loadResults(reset){
   } else if(reset) R.totalPages=0;
   R.loading=false; renderResults();
 }
+function dropFromResults(id){
+  const f=R.items.find(x=>x.id===id); if(!f) return;
+  R.items=R.items.filter(x=>x.id!==id);
+  if(f.origin) R.listCount--; else if(f.seed) R.seedCount--; else if(R.platTotal) R.platTotal--;
+  renderResults();
+}
 function renderResults(){
-  const el=$("#results"), c=C(), btn=$("#showBtn");
-  const total=R.listCount+(R.seedCount||0)+(R.platTotal||0)-(R.dup||0);
-  btn.textContent = R.loading&&!R.items.length ? "🔍 Cerco…" : `🔍 Mostra ${total.toLocaleString("it-IT")} film`;
-  if(!c.sources.length){ el.innerHTML=`<div class="empty">Seleziona almeno una fonte in “Da dove”.</div>`; return; }
-  if(R.error && !R.items.length){ el.innerHTML=`<div class="empty">${esc(R.error)}</div>`; return; }
+  const el=$("#results"), c=C();
+  if(!R.key){ el.innerHTML=""; return; }
+  const total=Math.max(0,R.listCount+(R.seedCount||0)+(R.platTotal||0)-(R.dup||0));
+  const stale = R.fkey!==filtersKey() ? `<div class="stale">Hai cambiato i filtri · <span class="link" data-a="search">aggiorna i risultati</span></div>` : "";
+  if(!c.sources.length){ el.innerHTML=stale+`<div class="empty">Seleziona almeno una voce in “Cerca tra”.</div>`; return; }
+  if(R.error && !R.items.length){ el.innerHTML=stale+`<div class="empty">${esc(R.error)}</div>`; return; }
   if(!R.items.length){
     if(R.loading){ el.innerHTML=`<div class="empty">Cerco…</div>`; return; }
     const why=[];
     if(c.sources.includes("platforms") && !prof().providerIds.length) why.push(`Non hai selezionato nessuna piattaforma: <span class="link" data-a="goto" data-view="v-profile">scegline almeno una nel Profilo</span>.`);
-    if(!c.sources.includes("platforms")) why.push(`Stai pescando solo dalle liste: attiva anche <b>📺 Piattaforme</b> in “Da dove”.`);
+    if(!c.sources.includes("platforms")) why.push(`Stai cercando solo nelle liste: attiva anche <b>📺 Piattaforme</b> in “Cerca tra”.`);
     if(activeListIds().length && !listPool().length) why.push("Le liste selezionate non hanno film che corrispondono (o sono vuote).");
     if(c.genres.length && c.moods.length) why.push("Genere e mood insieme possono escludersi a vicenda: prova a togliere il mood.");
     if(c.minRating>=7.5) why.push(`Il voto minimo (${c.minRating}+) è alto.`);
     if(c.onlyAvail) why.push("È attivo “Solo film che posso vedere”.");
     if(c.keywords.length||c.people.length) why.push("Temi o persone molto specifici: prova una descrizione più generica.");
-    el.innerHTML=`<div class="empty">😕 Nessun film corrisponde.${why.length?`<div class="hint" style="text-align:left;margin-top:10px">${why.map(w=>"• "+w).join("<br>")}</div>`:"<br>Prova ad allargare la ricerca."}</div>`;
+    el.innerHTML=stale+`<div class="empty">😕 Nessun film corrisponde.${why.length?`<div class="hint" style="text-align:left;margin-top:10px">${why.map(w=>"• "+w).join("<br>")}</div>`:"<br>Prova ad allargare la ricerca."}</div>`;
     return; }
   const row=f=>`<div class="item ritem" data-a="openDetail" data-id="${f.id}">${thumbHtml(f)}
     <div class="info"><div class="t">${esc(f.title)}</div>
       <div class="muted">${[f.year,fmtDur(f.runtime),f.vote?`⭐ ${f.vote.toFixed(1)}`:"",(f.genre_ids||[]).map(genreName).filter(Boolean).slice(0,2).join(", ")].filter(Boolean).join(" · ")}</div>
       ${f.origin?`<div class="origin-mini">📋 ${f.origin.lists.map(esc).join(" · ")}</div>`:""}</div><span class="muted">›</span></div>`;
   const lists=R.items.filter(f=>f.origin), seeds=R.items.filter(f=>f.seed), plats=R.items.filter(f=>!f.origin&&!f.seed);
-  el.innerHTML=`<div class="reshead" id="resTop"><b>${total.toLocaleString("it-IT")} film</b><button class="btn sm" data-a="pick">🎲 Pesca a caso</button></div>
+  el.innerHTML=`${stale}<div class="reshead" id="resTop"><b>${total.toLocaleString("it-IT")} film</b></div>
     ${lists.length?`<div class="ressub">Dalle tue liste</div><div class="section">${lists.map(row).join("")}</div>`:""}
     ${seeds.length?`<div class="ressub">✨ I più vicini a quello che hai descritto</div><div class="section">${seeds.map(row).join("")}</div>`:""}
     ${plats.length?`<div class="ressub">${seeds.length?"Altri sulle tue piattaforme":"Sulle tue piattaforme"}</div><div class="section">${plats.map(row).join("")}</div>`:""}
@@ -1095,9 +1182,8 @@ function renderFollowUp(){
   </div></div>`;
 }
 
-/* ---- Scheda film (pannello dal basso): da elenco o da "A caso" ---- */
+/* ---- Scheda film (pannello dal basso): da elenco o da "Sorprendimi" ---- */
 let current=null, currentRandom=false;
-const liteMovie = f => { const {overview,providers,tagline,origin,...lite}=f; return lite; };
 function showDetail(f,random){
   current=f; currentRandom=!!random;
   if(random && !pendingFollowUp() && (prof().lastPick?.movie.id!==f.id || prof().lastPick.done)){ prof().lastPick={movie:liteMovie(f),at:Date.now(),chosen:false,done:false}; DB.save(); }
@@ -1113,7 +1199,7 @@ function showDetail(f,random){
   else provHtml=`<span class="muted">⚠️ Non risulta in abbonamento su nessuna piattaforma in Italia.</span>`;
   const o=f.origin, shared=o && o.addedBy.some(id=>id!==me().id);
   const originHtml=o?`<div class="origin">${o.lists.map(n=>"📋 "+esc(n)).join(" · ")}${shared?` · aggiunto da ${o.addedBy.map(id=>id===me().id?"te":esc(userName(id))).join(", ")}`:""}</div>`:"";
-  const saved=Lists.mine().some(l=>Lists.has(l.id,f.id));
+  const saved=Lists.owned().filter(l=>l.type!=="rewatch").some(l=>Lists.has(l.id,f.id));
   openSheet(`
   <div class="result" style="margin:-4px 0 0;animation:none">
     <div class="hero" style="${bg}">
@@ -1129,14 +1215,14 @@ function showDetail(f,random){
       </div>
       <div class="provs">${provHtml}</div>
       <p class="plot">${esc(f.overview||"Trama non disponibile.")}</p>
-      ${f.providers?.link?`<p style="margin:10px 0 0;font-size:13px"><a href="${esc(f.providers.link)}" target="_blank" rel="noopener">Dove guardarlo →</a></p>`:""}
       <button class="btn watch" data-a="watchIt" ${chosen?"disabled":""}>${chosen?"🍿 Buona visione!":"▶️ Lo guardo!"}</button>
-      <div class="btns" style="grid-template-columns:${random?"1fr 1fr 1fr":"1fr 1fr"}">
-        ${random?`<button class="btn ghost" data-a="pick">🔄 Un altro</button>`:""}
+      ${f.custom?"":`<button class="btn ghost" data-a="trailer" style="margin-top:8px">🎬 Guarda il trailer${prof().premium?"":" <span style='color:var(--gold)'>⭐ Premium</span>"}</button>`}
+      <div class="btns">
         <button class="btn ghost" data-a="saveSheet" ${f.custom?"disabled":""}>${saved?"📋 Salvato":"➕ Salva"}</button>
         <button class="btn ghost" data-a="seenCurrent">✅ Già visto</button>
+        <button class="btn ghost" data-a="notInterested">🙈 Non mi interessa</button>
       </div>
-      ${random?"":`<button class="btn ghost" data-a="closeSheet" style="margin-top:8px">Chiudi</button>`}
+      ${random?`<button class="btn ghost" data-a="pick" style="margin-top:8px">🔄 Proponimene un altro</button>`:`<button class="btn ghost" data-a="closeSheet" style="margin-top:8px">Chiudi</button>`}
     </div>
   </div>`);
 }
@@ -1146,99 +1232,106 @@ async function openDetail(id){
   try{ const d=await details(f); showDetail(f.origin?{...d,origin:f.origin}:d,false); }
   catch(e){ openSheet(`<div class="empty">${esc(apiErrorMsg(e))}</div>`); }
 }
-let picking=false;
+// "Mostra tutti i film" e "Sorprendimi" partono entrambi con l'animazione (e la pubblicità per chi non è Premium)
+let busy=false;
+async function runSearch(){
+  if(busy) return; busy=true; pickCount++; closeSheet();
+  try{ await applyDesc(); await withLoader(loadResults(true), shouldShowAd()); }
+  catch(e){ R.error=apiErrorMsg(e); }
+  finally{ busy=false; renderResults(); setTimeout(()=>($("#resTop")||$("#results")).scrollIntoView({behavior:"smooth",block:"start"}),60); }
+}
 async function doPick(){
-  if(picking) return; picking=true; pickCount++; closeSheet();
+  if(busy) return; busy=true; pickCount++; closeSheet();
   try{
+    await applyDesc();
     const f=await withLoader(pick(), shouldShowAd());
     if(f) showDetail(f,true);
-    else toast(!C().sources.length?"Seleziona almeno una fonte":"Nessun film corrisponde ai criteri");
+    else toast(!C().sources.length?"Seleziona almeno una voce in “Cerca tra”":"Nessun film corrisponde ai filtri");
   }catch(e){ toast(apiErrorMsg(e)); }
-  finally{ picking=false; }
+  finally{ busy=false; }
 }
+function trailerUrl(f){ return f.trailer ? `https://www.youtube.com/watch?v=${f.trailer}` : `https://www.youtube.com/results?search_query=${encodeURIComponent(`${f.title} ${f.year||""} trailer italiano`)}`; }
 
 /* =====================================================================
    9. RENDER – LISTE
    ===================================================================== */
 let openListId=null, searchResults=[], searchSections=[];
 function renderInvBadge(){ const n=me()?Invites.received().length:0; $("#invBadge").textContent=n||""; $("#invBadge").style.display=n?"inline-flex":"none"; }
+function listCard(l){
+  const mine=l.owner_id===me().id, n=Lists.items(l.id).length, viewers=Lists.viewers(l.id).length, owner=userById(l.owner_id);
+  const sub = mine ? `${LIST_TYPES[l.type].label} · ${n} film${viewers?` · 🔗 collegata a ${viewers}`:""}`
+                   : `${l.type==="personal"?"":esc(l.name)+" · "}${n} film · di ${esc(owner?.name)}`;
+  return `<div class="listcard" data-a="openList" data-id="${l.id}">
+    <div class="lic">${mine?LIST_TYPES[l.type].icon:avatar(owner)}</div>
+    <div class="info"><div class="t">${esc(mine?l.name:`Lista ${handle(owner)||owner?.name}`)}</div><div class="muted">${sub}</div></div><span class="muted">›</span></div>`;
+}
 function renderLists(){
   const v=$("#v-lists");
   renderInvBadge();
   if(openListId && !Lists.isMember(openListId)) openListId=null;
   if(openListId) return renderListDetail(v);
-  const lists=Lists.mine(), inv=Invites.received();
+  const own=Lists.owned(), shared=Lists.shared(), inv=Invites.received();
   v.innerHTML=`
-    ${inv.length?`<h2>📩 Inviti ricevuti</h2>${inv.map(i=>{ const l=Lists.get(i.list_id);
-      return `<div class="fu">${avatar(userById(i.from_user))}<div class="info">
-        <div><b>${esc(userName(i.from_user))}</b> <span class="muted">${esc(handle(userById(i.from_user)))}</span> ti ha invitato in</div>
-        <div style="font-weight:700;font-size:16px">${LIST_TYPES[l.type].icon} ${esc(l.name)}</div>
+    ${inv.length?`<h2>📩 Ti vogliono condividere una lista</h2>${inv.map(i=>{ const l=Lists.get(i.list_id), from=userById(i.from_user);
+      return `<div class="fu">${avatar(from)}<div class="info">
+        <div><b>${esc(handle(from)||from?.name)}</b> vuole collegarti la lista</div>
+        <div style="font-weight:700;font-size:16px">${LIST_TYPES[l.type].icon} ${esc(l.name)} <span class="muted" style="font-weight:400">· ${Lists.items(l.id).length} film</span></div>
+        <div class="muted">La vedrai tra le tue liste come “Lista ${esc(handle(from))}”.</div>
         <div class="grid2" style="margin-top:10px"><button class="btn sm" data-a="acceptInv" data-id="${i.id}">Accetta</button>
         <button class="btn ghost sm" data-a="declineInv" data-id="${i.id}">Rifiuta</button></div></div></div>`; }).join("")}`:""}
-    <h2>Le mie liste <span class="muted">${prof().premium?"":`${lists.length}/${FREE_MAX_LISTS}`}</span></h2>
-    ${lists.map(l=>{ const mem=Lists.members(l.id), n=Lists.allItems(l.id).length, nl=Lists.links(l.id).length;
-      return `<div class="listcard" data-a="openList" data-id="${l.id}">
-        <div class="lic">${LIST_TYPES[l.type].icon}</div>
-        <div class="info"><div class="t">${esc(l.name)}</div><div class="muted">${LIST_TYPES[l.type].label} · ${n} film${nl?` · 🔗 ${nl} collegat${nl>1?"e":"a"}`:""}</div></div>
-        <div class="avs">${mem.map(m=>avatar(m.user)).join("")}</div></div>`; }).join("")}
+    <h2>Le mie liste <span class="muted">${prof().premium?"":`${own.filter(l=>l.type!=="rewatch").length}/${FREE_MAX_LISTS}`}</span></h2>
+    ${own.map(listCard).join("")}
     <button class="btn ghost" data-a="newList" style="margin-top:6px">＋ Nuova lista</button>
-    <p class="muted" style="margin-top:14px;line-height:1.5">Crea una lista <b>Coppia</b> o <b>Amici</b> e aggiungi le persone: ognuno inserisce i propri film dal suo account. Con <b>⭐ Premium</b> puoi anche <b>collegare</b> la tua lista personale a quella condivisa, senza duplicare i film.</p>
+    ${shared.length?`<h2>🔗 Collegate da altri</h2>${shared.map(listCard).join("")}`:""}
+    <p class="muted" style="margin-top:14px;line-height:1.5">Crea liste a tema come “Film romantici” o “Avventura”. Da dentro una lista puoi <b>collegarla</b> a un amico: la vedrà tra le sue liste come “Lista ${esc(handle(me())||"@tuonome")}”.</p>
     ${prof().premium?"":`<div class="adbanner">PUBBLICITÀ<b>Banner pubblicitario</b>Qui comparirà un banner (AdMob)</div>`}`;
 }
-function itemRow(it,{mem,shared,canDel}){
-  const f=it.movie, seenBy=mem.filter(m=>Seen.has(f.id,m.user_id)).map(m=>m.user_id===me().id?"te":m.user?.name);
-  const who = it.via ? `da “${esc(listLabel(Lists.get(it.via)))}”` : (shared?`aggiunto da ${it.added_by===me().id?"te":esc(userName(it.added_by))}`:(f.custom?"aggiunto a mano":""));
-  return `<div class="item ${Seen.has(f.id)?"seen":""}">${thumbHtml(f)}
+function itemRow(it,{canEdit,isRewatch}){
+  const f=it.movie, seen=!isRewatch&&Seen.has(f.id);
+  return `<div class="item ${seen?"seen":""}">${thumbHtml(f)}
     <div class="info"><div class="t">${esc(f.title)}</div>
       <div class="muted">${[f.year,(f.genre_ids||[]).map(genreName).filter(Boolean).slice(0,2).join(", "),fmtDur(f.runtime)].filter(Boolean).join(" · ")}</div>
-      <div class="muted">${who}${seenBy.length?` · 👀 visto da ${seenBy.map(esc).join(", ")}`:""}</div></div>
-    <button class="icon" title="Visto / da vedere" data-a="toggleSeen" data-id="${f.id}">${Seen.has(f.id)?"↩️":"✅"}</button>
-    ${canDel?`<button class="icon" title="Rimuovi" data-a="delItem" data-id="${f.id}">🗑️</button>`:""}
+      ${seen?`<div class="muted">✅ già visto</div>`:f.custom?`<div class="muted">aggiunto a mano</div>`:""}</div>
+    ${canEdit&&!isRewatch?`<button class="icon" title="Visto / da vedere" data-a="toggleSeen" data-id="${f.id}">${seen?"↩️":"✅"}</button>`:""}
+    ${canEdit?`<button class="icon" title="${isRewatch?"Togli da Rewatch":"Rimuovi"}" data-a="delItem" data-id="${f.id}">🗑️</button>`:""}
   </div>`;
 }
 function renderListDetail(v){
-  const l=Lists.get(openListId), mem=Lists.members(l.id), items=Lists.items(l.id), linked=Lists.linkedItems(l.id), shared=l.type!=="personal";
-  const isOwner=l.owner_id===me().id, pend=Invites.forList(l.id), links=Lists.links(l.id), star=prof().premium?"":" ⭐";
+  const l=Lists.get(openListId), mine=l.owner_id===me().id, items=Lists.items(l.id), isRw=l.type==="rewatch";
+  const viewers=Lists.viewers(l.id), pend=Invites.forList(l.id), owner=userById(l.owner_id);
   v.innerHTML=`
     <button class="back" data-a="closeList">‹ Tutte le liste</button>
-    <div class="listcard" style="cursor:default"><div class="lic">${LIST_TYPES[l.type].icon}</div>
-      <div class="info"><div class="t">${esc(l.name)}</div><div class="muted">${LIST_TYPES[l.type].label} · ${items.length+linked.length} film</div></div></div>
-    ${shared?`<div class="section">
-      <div class="muted">Membri</div>
-      <div style="display:flex;flex-wrap:wrap;gap:10px;margin:8px 0 4px">${mem.map(m=>`<span style="display:flex;align-items:center;gap:6px">${avatar(m.user)}${esc(m.user?.name)}${m.role==="owner"?" 👑":""}</span>`).join("")}</div>
-      ${pend.length?`<div class="muted" style="margin-top:10px">In attesa di risposta</div>${pend.map(i=>`<div class="item">${avatar(userById(i.to_user))}<div class="info"><div class="t">${esc(userName(i.to_user))}</div><div class="muted">invitato da ${i.from_user===me().id?"te":esc(userName(i.from_user))}</div></div>
-        ${i.from_user===me().id||isOwner?`<button class="btn ghost sm" data-a="cancelInv" data-id="${i.id}">Annulla</button>`:""}</div>`).join("")}`:""}
-      ${Lists.seatsLeft(l.id)>0?`<button class="btn ghost" data-a="peopleSheet" style="margin-top:10px">＋ Aggiungi ${l.type==="couple"?"il/la partner":"persone"}</button>`:`<p class="muted" style="margin:10px 0 0">Lista al completo.</p>`}
-    </div>
-    <h2>🔗 Liste collegate</h2>
-    <div class="section">
-      ${links.length?links.map(x=>{ const ll=Lists.get(x.linked_list_id);
-        return `<div class="item"><div class="thumb" style="background:var(--card2)">📋</div><div class="info"><div class="t">${esc(listLabel(ll))}</div>
-          <div class="muted">${Lists.items(ll.id).length} film · collegata da ${x.linked_by===me().id?"te":esc(userName(x.linked_by))}</div></div>
-          ${x.linked_by===me().id||isOwner?`<button class="icon" title="Scollega" data-a="unlink" data-id="${ll.id}">✕</button>`:""}</div>`; }).join("")
-        :`<p class="muted" style="margin:0 0 10px;line-height:1.5">Collega la tua lista personale: i suoi film entrano anche qui, senza doppioni, e restano aggiornati.</p>`}
-      <button class="btn ghost" data-a="linkSheet" style="margin-top:8px">＋ Collega una mia lista${star}</button>
-    </div>`:""}
-    <h2>Aggiungi un film</h2>
+    <div class="listcard" style="cursor:default"><div class="lic">${mine?LIST_TYPES[l.type].icon:avatar(owner)}</div>
+      <div class="info"><div class="t">${esc(listLabel(l))}</div><div class="muted">${items.length} film${mine?"":` · di ${esc(owner?.name)}`}</div></div>
+      ${mine?`<button class="icon" title="Rinomina" data-a="renameSheet">✏️</button>`:""}</div>
+    ${isRw&&mine?`<p class="muted" style="line-height:1.5">Qui finiscono i film che hai già visto (da 🃏 Scopri, dalla scheda film o dalla registrazione). Usala in <b>Cerca tra → 🔁 Rewatch</b> quando hai voglia di riguardarne uno.</p>`:""}
+    ${!mine?`<div class="fu"><div class="info">🔗 <b>Lista collegata da ${esc(handle(owner)||owner?.name)}</b><br><span class="muted">La vedi in sola lettura e si aggiorna quando ${esc(owner?.name)} aggiunge film. Puoi usarla in “Cerca tra”.</span></div></div>`:""}
+    ${mine?`<h2>🔗 Collegamenti</h2><div class="section">
+      ${viewers.map(m=>`<div class="item">${avatar(m.user)}<div class="info"><div class="t">${esc(m.user?.name)}</div><div class="muted">${esc(handle(m.user))} · la vede come “Lista ${esc(handle(me()))}”</div></div>
+        <button class="btn ghost sm" data-a="unshare" data-id="${m.user_id}">Scollega</button></div>`).join("")}
+      ${pend.map(i=>{ const u=userById(i.to_user); return `<div class="item">${avatar(u)}<div class="info"><div class="t">${esc(u?.name)}</div><div class="muted">${esc(handle(u))} · deve ancora accettare</div></div>
+        <button class="btn ghost sm" data-a="cancelInv" data-id="${i.id}">Annulla</button></div>`; }).join("")}
+      ${!viewers.length&&!pend.length?`<p class="muted" style="margin:0 0 10px;line-height:1.5">Collega questa lista a un amico: la vedrà tra le sue liste come <b>“Lista ${esc(handle(me())||"@tuonome")}”</b> e potrà usarla nelle sue ricerche.</p>`:""}
+      <button class="btn ghost" data-a="peopleSheet" style="margin-top:8px">＋ Collega a una persona</button></div>
+    <h2>${isRw?"Aggiungi un film già visto":"Aggiungi un film"}</h2>
     <div class="section">
       <input type="text" id="listSearch" placeholder="Cerca un film…" autocomplete="off" enterkeyhint="search">
       <div class="hint">Scrivi quello che vuoi: un titolo anche a metà (“padri”), un attore o regista (“DiCaprio”), oppure una descrizione (“horror con fantasmi anni 80”).</div>
       <div id="sugg" style="margin-top:6px"></div>
-      <details style="margin-top:10px"><summary class="muted" style="cursor:pointer">Non lo trovi? Aggiungilo a mano</summary>
+      ${isRw?"":`<details style="margin-top:10px"><summary class="muted" style="cursor:pointer">Non lo trovi? Aggiungilo a mano</summary>
         <div class="stack" style="margin-top:8px">
           <input type="text" id="mTitle" placeholder="Titolo">
           <div class="grid2"><select id="mGenre">${GENRES.map(g=>`<option value="${g.id}">${esc(g.name)}</option>`).join("")}</select>
           <input type="number" id="mDur" placeholder="Durata (min)" min="1"></div>
           <button class="btn ghost" data-a="addManual">+ Aggiungi</button>
-        </div></details>
-    </div>
+        </div></details>`}
+    </div>`:""}
     <h2>Film (${items.length})</h2>
-    <div class="section">${items.length?items.map(it=>itemRow(it,{mem,shared,canDel:it.added_by===me().id||isOwner})).join(""):`<div class="empty">Ancora nessun film. Cercane uno qui sopra.</div>`}</div>
-    ${linked.length?`<h2>Dalle liste collegate (${linked.length})</h2><div class="section">${linked.map(it=>itemRow(it,{mem,shared,canDel:false})).join("")}</div>`:""}
-    <div class="stack" style="margin-top:18px">
-      ${items.length+linked.length?`<button class="btn ghost" data-a="copySheet">📤 Copia questi film in un'altra lista${star}</button>`:""}
-      ${isOwner?`<button class="btn danger" data-a="deleteList">Elimina lista</button>`:`<button class="btn danger" data-a="leaveList">Esci dalla lista</button>`}</div>`;
-  $("#listSearch").oninput=doSearch;
+    <div class="section">${items.length?items.map(it=>itemRow(it,{canEdit:mine,isRewatch:isRw})).join("")
+      :`<div class="empty">${isRw?"Ancora nessun film visto. Segnali scorrendo le carte in 🃏 Scopri.":"Ancora nessun film."}</div>`}</div>
+    <div class="stack" style="margin-top:18px">${mine?(l.type==="custom"?`<button class="btn danger" data-a="deleteList">Elimina lista</button>`:"")
+      :`<button class="btn danger" data-a="leaveList">Togli dalle mie liste</button>`}</div>`;
+  if(mine) $("#listSearch").oninput=doSearch;
 }
 // ricerca unica: titolo + persona + descrizione in parallelo, risultati raggruppati
 const doSearch=debounce(async()=>{
@@ -1299,7 +1392,7 @@ function renderProfile(){
         <div class="muted">${guest?"Profilo ospite":`<b style="color:var(--text)">${esc(handle(u))}</b> <span data-a="usernameSheet" style="cursor:pointer;color:#bcd0ff">modifica</span>`}</div>
         <div class="muted">${esc(u.email||"")}${u.email?" · ":""}${loginLbl}</div>
         <div style="margin-top:6px">${p.premium?`<span class="pill gold">⭐ Premium</span>`:`<span class="pill">Piano gratuito</span>`}</div></div></div>
-    ${guest?`<div class="banner" data-a="upgradeSheet" style="margin-top:12px">👤 Stai usando l'app senza account. Crea un account per salvare i dati e condividere liste.</div>`:""}
+    ${guest?`<div class="banner" data-a="upgradeSheet" style="margin-top:12px">👤 Stai usando l'app senza account. Crea un account per salvare i dati, collegare liste e giocare in classifica.</div>`:""}
 
     <h2>I miei abbonamenti</h2>
     <div class="section"><div class="chips">${metaOk?provList.map(g=>chip(`${logoHtml(g)}${esc(g.name)}`,g.ids.some(id=>p.providerIds.includes(id)),`data-a="prov" data-name="${esc(g.name)}"`,"plat")).join(""):`<span class="muted">Caricamento…</span>`}</div>
@@ -1308,12 +1401,12 @@ function renderProfile(){
     <h2>Generi preferiti</h2>
     <div class="section"><div class="chips">${GENRES.map(g=>chip(`${GENRE_EMOJI[g.id]||"🎬"} ${esc(g.name)}`,p.favGenres.includes(g.id),`data-a="favGenre" data-id="${g.id}"`)).join("")}</div>
       <p class="muted" style="margin:10px 0 0">Servono a proporti più spesso film di questi generi. Anche i tuoi 👍/👎 contano (${Ratings.mine().length} voti finora).</p>
-      ${Dismissed.count()?`<p class="muted" style="margin:8px 0 0">🙈 ${Dismissed.count()} film segnati “non mi interessa” · <span class="link" data-a="restoreDismissed">ripristina</span></p>`:""}</div>
+      ${Dismissed.count()?`<p class="muted" style="margin:8px 0 0">🙈 ${Dismissed.count()} film esclusi (“non mi interessa”) · <span class="link" data-a="restoreDismissed">ripristina</span></p>`:""}</div>
 
     <h2>Abbonamento</h2>
     <div class="section">${p.premium
-      ?`<p style="margin:0 0 10px">⭐ Sei Premium: niente pubblicità, liste illimitate, liste collegate.</p><button class="btn ghost" data-a="cancelPremium">Annulla Premium (simulato)</button>`
-      :`<p style="margin:0 0 10px">Togli la pubblicità, crea liste illimitate e collega le tue liste.</p><button class="btn" data-a="premium">⭐ Passa a Premium</button>`}</div>
+      ?`<p style="margin:0 0 10px">⭐ Sei Premium: niente pubblicità, trailer e liste illimitate.</p><button class="btn ghost" data-a="cancelPremium">Annulla Premium (simulato)</button>`
+      :`<p style="margin:0 0 10px">Togli la pubblicità, guarda i trailer e crea liste illimitate.</p><button class="btn" data-a="premium">⭐ Passa a Premium</button>`}</div>
 
     <h2>Account</h2>
     <div class="section stack">
@@ -1323,7 +1416,7 @@ function renderProfile(){
 
     <h2>🧪 Prova multi-utente</h2>
     <div class="section">
-      <p class="muted" style="margin:0 0 10px;line-height:1.5">Solo nel prototipo: crea un secondo utente su questo dispositivo per provare le liste condivise (es. tu e il/la partner).</p>
+      <p class="muted" style="margin:0 0 10px;line-height:1.5">Solo nel prototipo: crea un secondo utente su questo dispositivo per provare i collegamenti delle liste e la classifica del quiz.</p>
       ${others.map(o=>`<div class="item">${avatar(o)}<div class="info"><div class="t">${esc(o.name)}</div><div class="muted">${esc(handle(o)||"ospite")}</div></div><button class="btn ghost sm" data-a="switchUser" data-id="${o.id}">Entra</button></div>`).join("")}
       <button class="btn ghost" data-a="newUser" style="margin-top:10px">＋ Crea un altro utente</button>
     </div>
@@ -1348,23 +1441,23 @@ function openSheet(html){ $("#sheet").innerHTML=html; $("#sheetBg").classList.ad
 function closeSheet(){ $("#sheetBg").classList.remove("on"); }
 $("#sheetBg").addEventListener("click",e=>{ if(e.target.id==="sheetBg") closeSheet(); });
 function needAccount(){ if(me().provider!=="guest") return false;
-  openSheet(`<h3>Serve un account</h3><p class="muted">Per condividere liste con altre persone devi avere un account.</p>
+  openSheet(`<h3>Serve un account</h3><p class="muted">Per collegare le liste ad altre persone devi avere un account.</p>
     <button class="btn" data-a="upgradeSheet">Crea account</button>`); return true; }
-function overLimit(){ if(prof().premium || Lists.mine().length<FREE_MAX_LISTS) return false;
-  openPremium(`Con il piano gratuito puoi avere al massimo ${FREE_MAX_LISTS} liste.`); return true; }
+function overLimit(){ if(prof().premium || Lists.owned().filter(l=>l.type!=="rewatch").length<FREE_MAX_LISTS) return false;
+  openPremium(`Con il piano gratuito puoi avere al massimo ${FREE_MAX_LISTS} liste (Rewatch esclusa).`); return true; }
 function openPremium(reason){
   openSheet(`<h3>⭐ CosaGuardo Premium</h3>${reason?`<p class="muted">${esc(reason)}</p>`:""}
-    <div class="feat">🚫 Nessuna pubblicità</div><div class="feat">📋 Liste illimitate (gratis: ${FREE_MAX_LISTS})</div><div class="feat">🔗 Collega e copia le liste</div><div class="feat">❤️ Sostieni lo sviluppo dell'app</div>
+    <div class="feat">🚫 Nessuna pubblicità</div><div class="feat">🎬 Trailer di ogni film</div><div class="feat">📋 Liste illimitate (gratis: ${FREE_MAX_LISTS})</div><div class="feat">❤️ Sostieni lo sviluppo dell'app</div>
     <div class="stack" style="margin-top:12px">
       <button class="btn" data-a="buyPremium"><span class="price"><span>Annuale</span><span>19,99 € / anno</span></span></button>
       <button class="btn ghost" data-a="buyPremium"><span class="price"><span>Mensile</span><span>2,49 € / mese</span></span></button>
     </div><p class="muted" style="text-align:center">Prototipo: nessun pagamento reale.</p>`);
 }
 function openSaveSheet(){
-  const f=current;
+  const f=current, lists=Lists.owned().filter(l=>l.type!=="rewatch");
   openSheet(`<h3>Salva in…</h3><p class="muted">${esc(f.title)}</p>
-    ${Lists.mine().map(l=>`<div class="opt ${Lists.has(l.id,f.id)?"on":""}" data-a="toggleSave" data-id="${l.id}">
-      <span class="lic">${LIST_TYPES[l.type].icon}</span><div style="flex:1"><b>${esc(l.name)}</b><div class="muted">${LIST_TYPES[l.type].label}</div></div>
+    ${lists.map(l=>`<div class="opt ${Lists.has(l.id,f.id)?"on":""}" data-a="toggleSave" data-id="${l.id}">
+      <span class="lic">${LIST_TYPES[l.type].icon}</span><div style="flex:1"><b>${esc(l.name)}</b><div class="muted">${Lists.items(l.id).length} film</div></div>
       <span>${Lists.has(l.id,f.id)?"✓":""}</span></div>`).join("")}
     <button class="btn ghost" data-a="backDetail" style="margin-top:12px">Fatto</button>`);
 }
@@ -1374,24 +1467,39 @@ function openRate(f){
     <button class="btn ghost" data-a="rate" data-v="-1" style="font-size:22px">👎</button></div>
     <button class="btn ghost" data-a="rate" data-v="0" style="margin-top:8px">Salta</button>`);
 }
-let newListType="couple";
+// nuova lista: nome (con suggerimenti) + collegamento facoltativo a un @utente
+let nlShareWith=null;
 function openNewList(){
   openSheet(`<h3>Nuova lista</h3>
-    <input type="text" id="nlName" placeholder="Nome (es. Film con Giulia)" style="margin:8px 0">
-    ${Object.entries(LIST_TYPES).map(([k,t])=>`<div class="opt ${k===newListType?"on":""}" data-a="nlType" data-id="${k}"><span class="lic">${t.icon}</span><div><b>${t.label}</b><div class="muted">${t.desc}</div></div></div>`).join("")}
+    <input type="text" id="nlName" placeholder="Nome della lista" style="margin:8px 0">
+    <div class="chips sm">${LIST_SUGGESTIONS.map(s=>chip(esc(s),false,`data-a="nlSuggest" data-name="${esc(s)}"`)).join("")}</div>
+    <div class="flabel" style="margin-top:18px">🔗 Collegamento (facoltativo)</div>
+    <p class="muted" style="margin:0 0 8px;line-height:1.5">Vuoi condividerla subito con qualcuno? Cerca il suo @nomeutente: riceverà un invito e, se accetta, la vedrà come “Lista ${esc(handle(me())||"@tuonome")}”.</p>
+    <input type="text" id="nlPeople" placeholder="@nomeutente" autocomplete="off" autocapitalize="none" spellcheck="false">
+    <div id="nlPeopleRes"></div>
     <button class="btn" data-a="createList" style="margin-top:14px">Crea lista</button>`);
+  $("#nlPeople").oninput=renderNlPeople;
 }
-
+function renderNlPeople(){
+  const el=$("#nlPeopleRes"); if(!el) return;
+  if(nlShareWith){ const u=userById(nlShareWith);
+    el.innerHTML=`<div class="item">${avatar(u)}<div class="info"><div class="t">${esc(u?.name)}</div><div class="muted">${esc(handle(u))} · riceverà l'invito</div></div><button class="icon" data-a="nlPick" data-id="">✕</button></div>`; return; }
+  const q=$("#nlPeople").value, res=Users.search(q);
+  el.innerHTML = q.trim().length<2 ? "" : res.length ? res.map(u=>`<div class="item">${avatar(u)}<div class="info"><div class="t">${esc(u.name)}</div><div class="muted">${esc(handle(u))}</div></div>
+      <button class="btn sm" data-a="nlPick" data-id="${u.id}">Scegli</button></div>`).join("")
+    : `<p class="muted">Nessun utente con questo nome. Dopo aver creato la lista potrai mandargli il link di iscrizione.</p>`;
+}
+// collegamento da dentro una lista
 function renderPeopleRes(){
   const el=$("#peopleRes"); if(!el) return; const q=$("#peopleQ").value;
   const res=Users.search(q), pend=Invites.forList(openListId);
   el.innerHTML = q.trim().length<2 ? "" : res.length ? res.map(u=>{
-    const member=Lists.members(openListId).some(m=>m.user_id===u.id), invited=pend.some(i=>i.to_user===u.id);
+    const has=Lists.members(openListId).some(m=>m.user_id===u.id), invited=pend.some(i=>i.to_user===u.id);
     return `<div class="item">${avatar(u)}<div class="info"><div class="t">${esc(u.name)}</div><div class="muted">${esc(handle(u))}</div></div>
-      ${member?`<span class="muted">nella lista</span>`:invited?`<span class="muted">invitato ✓</span>`:`<button class="btn sm" data-a="inviteUser" data-id="${u.id}">Invita</button>`}</div>`; }).join("")
+      ${has?`<span class="muted">già collegata</span>`:invited?`<span class="muted">invito inviato ✓</span>`:`<button class="btn sm" data-a="inviteUser" data-id="${u.id}">Collega</button>`}</div>`; }).join("")
     : `<p class="muted">Nessun utente con questo nome utente. Mandagli il link di iscrizione qui sotto.</p>`;
 }
-const maskEmail = e => e ? e.replace(/^(.)(.*)(@.*)$/,(m,a,b,c)=>a+"•".repeat(Math.min(b.length,6))+c) : "";
+
 
 /* =====================================================================
    12. ONBOARDING (primo avvio)
@@ -1405,25 +1513,35 @@ function consumeInvite(){
   const l=Lists.byCode(code); if(!l) return toast("Invito non valido o scaduto");
   if(Lists.isMember(l.id)){ openListId=l.id; renderAll(); goTo("v-lists"); return; }
   if(me().provider==="guest") return needAccount();
-  openSheet(`<h3>${LIST_TYPES[l.type].icon} ${esc(l.name)}</h3><p><b>${esc(userName(l.owner_id))}</b> ti ha invitato in questa lista.</p>
-    <button class="btn" data-a="joinLink" data-code="${l.invite_code}">Unisciti</button><button class="btn ghost" data-a="closeSheet" style="margin-top:8px">Non ora</button>`);
+  const o=userById(l.owner_id);
+  openSheet(`<h3>🔗 ${esc(l.name)}</h3><p><b>${esc(handle(o)||o?.name)}</b> vuole collegarti questa lista (${Lists.items(l.id).length} film). La vedrai tra le tue liste come “Lista ${esc(handle(o))}”.</p>
+    <button class="btn" data-a="joinLink" data-code="${l.invite_code}">Aggiungi alle mie liste</button><button class="btn ghost" data-a="closeSheet" style="margin-top:8px">Non ora</button>`);
 }
 const ONB_STEPS=["welcome","auth","avatar","platforms","genres","seen","done"];
 function startOnboarding(step){ onb={step,method:null,seenTiles:null}; renderOnb(); $("#onb").classList.add("on"); }
 function endOnboarding(){ onb=null; $("#onb").classList.remove("on"); renderAll(); goTo("v-pick"); }
+const avatarPreview = () => { const a=avatarOf(me());
+  return `${avatar(me(),"lg")}<div style="margin-top:6px;font-weight:600">${a?esc(a.name):esc(me().name)}</div>${a?`<div class="muted">${esc(a.actor?a.actor+" · ":"")}${esc(a.film)}</div>`:""}`; };
+const avatarFoot = () => `<button class="btn" data-a="onbGo" data-step="platforms">${me().avatar?"Continua":"Salta per ora"}</button>`;
+function seenFoot(){
+  const marked=onb.seenTiles.filter(f=>Seen.has(f.id)).length;
+  return `<button class="btn" data-a="onbGo" data-step="done" ${marked?"":"disabled"}>${marked?`Continua (${marked} segnat${marked>1?"i":"o"})`:"Tocca i film che hai visto"}</button>
+    <button class="btn ghost" data-a="onbGo" data-step="done" style="margin-top:8px">⏭ Lo faccio dopo</button>
+    <p class="muted" style="text-align:center;margin:10px 0 0;line-height:1.5">Potrai farlo quando vuoi nella sezione <b>🃏 Scopri</b>, scorrendo le carte dei film.</p>`;
+}
 async function renderOnb(){
   const el=$("#onb"), s=onb.step, idx=ONB_STEPS.indexOf(s);
   const dots=`<div class="dots">${ONB_STEPS.slice(1,-1).map((x,i)=>`<i class="${i+1===idx?"on":""}"></i>`).join("")}</div>`;
   let body="", foot="";
   if(s==="welcome"){
-    const il=pendingInvite && Lists.byCode(pendingInvite);
-    body=`${il?`<div class="fu" style="margin-top:10px">${avatar(userById(il.owner_id))}<div class="info"><b>${esc(userName(il.owner_id))}</b> ti ha invitato nella lista <b>${LIST_TYPES[il.type].icon} ${esc(il.name)}</b>. Registrati per entrare.</div></div>`:""}
+    const il=pendingInvite && Lists.byCode(pendingInvite), io=il&&userById(il.owner_id);
+    body=`${il?`<div class="fu" style="margin-top:10px">${avatar(io)}<div class="info"><b>${esc(handle(io)||io?.name)}</b> vuole collegarti la sua lista <b>“${esc(il.name)}”</b>. Registrati per vederla.</div></div>`:""}
       <div class="hero-emoji">🍿</div><div class="logo">Cosa<span>Guardo</span></div>
       <p style="text-align:center;font-size:18px;color:var(--muted);line-height:1.4;margin:14px 10px">Basta mezz'ore a scorrere cataloghi.<br>Scegli il mood, al film pensiamo noi.</p>
       <div class="section stack" style="margin-top:30px">
         <div class="feat">📺 Solo film delle piattaforme che hai</div>
-        <div class="feat">💑 Liste condivise con partner e amici</div>
-        <div class="feat">🎲 Un titolo, subito. Niente indecisione.</div></div>`;
+        <div class="feat">🃏 Scorri le carte e scopri cosa vedere</div>
+        <div class="feat">🏆 Cine-quiz ogni giorno, classifica ogni settimana</div></div>`;
     foot=`<button class="btn" data-a="onbGo" data-step="auth">Inizia</button>`;
   }
   if(s==="auth" && !onb.method){
@@ -1445,16 +1563,16 @@ async function renderOnb(){
       <div class="stack" style="margin-top:16px">
         <input type="text" id="oName" placeholder="Come ti chiami?" autocomplete="given-name">
         <div><input type="text" id="oUser" placeholder="@nomeutente" autocomplete="off" autocapitalize="none" spellcheck="false">
-          <div class="hint" id="oUserMsg">Serve ai tuoi amici per trovarti e invitarti nelle liste.</div></div>
+          <div class="hint" id="oUserMsg">Serve ai tuoi amici per trovarti e collegarti le loro liste.</div></div>
         ${m==="email"?`<input type="email" id="oEmail" placeholder="Email"><input type="password" placeholder="Password (min. 8 caratteri)" id="oPwd">`:""}
       </div>`;
     foot=`<button class="btn" data-a="onbAuth">Continua</button><button class="btn ghost" data-a="onbMethod" data-m="" style="margin-top:8px">Indietro</button>`;
   }
   if(s==="avatar"){
-    body=`${dots}<h2 class="big">Scegli il tuo personaggio</h2><p class="muted">Sarà la tua immagine del profilo: la vedranno gli amici nelle liste condivise.</p>
-      <div style="text-align:center;margin:14px 0 4px">${avatar(me(),"lg")}<div style="margin-top:6px;font-weight:600">${esc(avatarOf(me())?.name||me().name)}</div></div>
+    body=`${dots}<h2 class="big">Scegli il tuo personaggio</h2><p class="muted">Sarà la tua immagine del profilo: la vedranno gli amici nelle liste e in classifica.</p>
+      <div style="text-align:center;margin:14px 0 4px" id="avPrev">${avatarPreview()}</div>
       ${avatarGrid(me().avatar)}`;
-    foot=`<button class="btn" data-a="onbGo" data-step="platforms">${me().avatar?"Continua":"Salta per ora"}</button>`;
+    foot=avatarFoot();
   }
   if(s==="platforms"){
     const p=prof();
@@ -1475,263 +1593,448 @@ async function renderOnb(){
         onb.seenTiles=d.results.slice(0,12).map(normalize); }catch(e){ onb.seenTiles=[]; }
       return renderOnb();
     }
-    body=`${dots}<h2 class="big">Hai già visto qualcuno di questi?</h2><p class="muted">Tocca quelli che hai visto: non te li proporremo.</p>
+    body=`${dots}<h2 class="big">Hai già visto qualcuno di questi?</h2><p class="muted">Tocca quelli che hai visto: non te li proporremo e finiranno nella tua lista Rewatch.</p>
       <div class="tiles" style="margin-top:14px">${onb.seenTiles.map(f=>`<div class="tile ${Seen.has(f.id)?"on":""}" data-a="onbSeen" data-id="${f.id}" style="background:${gradient(f.title)}">
         ${f.poster?`<img src="${img(f.poster,"w185")}" alt="" onerror="this.remove()">`:""}<span>${f.poster?"":esc(f.title)}</span></div>`).join("")||`<p class="muted">Nessun film da mostrare.</p>`}</div>`;
-    const marked=onb.seenTiles.filter(f=>Seen.has(f.id)).length;
-    foot=`<button class="btn" data-a="onbGo" data-step="done" ${marked?"":"disabled"}>${marked?`Continua (${marked} segnat${marked>1?"i":"o"})`:"Tocca i film che hai visto"}</button>
-      <button class="btn ghost" data-a="onbGo" data-step="done" style="margin-top:8px">⏭ Lo faccio dopo</button>
-      <p class="muted" style="text-align:center;margin:10px 0 0;line-height:1.5">Potrai farlo quando vuoi nella sezione <b>🃏 Scopri → 👀 Già visti?</b>, scorrendo le carte dei film.</p>`;
+    foot=seenFoot();
   }
   if(s==="done"){
     body=`<div class="hero-emoji">🎉</div><h2 class="big" style="text-align:center">Tutto pronto, ${esc(me().name)}!</h2>
-      <p style="text-align:center;color:var(--muted);line-height:1.5">In <b>🔍 Cerca</b> scegli i filtri o descrivi cosa ti va: vedrai l'elenco dei film, oppure premi <b>🎲 A caso</b>.<br><br>In <b>🃏 Scopri</b> scorri le carte per segnare i film già visti e riempire la tua lista.<br><br>Vuoi decidere in due? Vai su <b>Liste</b> e crea una lista <b>Coppia</b>.</p>`;
+      <p style="text-align:center;color:var(--muted);line-height:1.6">In <b>🔍 Cerca</b> scegli filtri o descrivi cosa ti va, poi premi <b>🎲 Sorprendimi</b> o guarda tutti i film.<br><br>In <b>🃏 Scopri</b> scorri le carte: quelli già visti vanno in Rewatch, con un doppio tap ❤️ li salvi.<br><br>In <b>🏆 Game</b> ogni giorno c'è il cine-quiz con la classifica della settimana.</p>`;
     foot=`<button class="btn" data-a="onbFinish">Andiamo</button>`;
   }
   el.innerHTML=`<div class="wrap"><div class="body">${body}</div><div class="onbfoot">${foot}</div></div>`;
   el.scrollTop=0;
 }
 
+/* ---- Domande del cine-quiz: la prima risposta di "a" è quella giusta (le opzioni vengono mescolate) ----
+   c = categoria · e = emoji da indovinare · p = locandina (numero del film demo) · t = secondi (default 15, vero/falso 10) */
+const QCAT = {quote:"💬 Chi l'ha detto?",emoji:"😀 Indovina dalle emoji",poster:"🖼️ Locandina misteriosa",cast:"🎭 Chi è?",dir:"🎬 Dietro la macchina da presa",
+  odd:"🕵️ Trova l'intruso",oscar:"🏆 Notte degli Oscar",music:"🎵 Colonne sonore",year:"📅 Macchina del tempo",tf:"❓ Vero o falso",num:"🔢 Numeri da film",ita:"🍝 Cinema italiano"};
+const QUIZ = [
+  {c:"quote",q:"“Gli farò un'offerta che non potrà rifiutare.”",a:["Il Padrino","Scarface","Quei bravi ragazzi","C'era una volta in America"]},
+  {c:"quote",q:"“Houston, abbiamo un problema.”",a:["Apollo 13","Gravity","Armageddon","Sopravvissuto – The Martian"]},
+  {c:"quote",q:"“Sono il re del mondo!”",a:["Titanic","Il Re Leone","Il gladiatore","Il grande Gatsby"]},
+  {c:"quote",q:"“Buongiorno, principessa!”",a:["La vita è bella","Nuovo Cinema Paradiso","Il postino","Pane e tulipani"]},
+  {c:"quote",q:"“La prima regola del Fight Club è: non parlate mai del Fight Club.”",a:["Fight Club","Snatch","Trainspotting","American Psycho"]},
+  {c:"quote",q:"“Vedo la gente morta.”",a:["Il sesto senso","The Others","Shining","L'esorcista"]},
+  {c:"quote",q:"“Al mio segnale, scatenate l'inferno!”",a:["Il gladiatore","Braveheart","300","Troy"]},
+  {c:"quote",q:"“Perché così serio?”",a:["Il cavaliere oscuro","Joker","Suicide Squad","Batman (1989)"]},
+  {c:"quote",q:"“Hasta la vista, baby.”",a:["Terminator 2 – Il giorno del giudizio","Predator","Robocop","Die Hard"]},
+  {c:"quote",q:"“Nessuno mette Baby in un angolo.”",a:["Dirty Dancing","Flashdance","Grease","Footloose"]},
+  {c:"quote",q:"“Domani è un altro giorno.”",a:["Via col vento","Casablanca","Colazione da Tiffany","Vacanze romane"]},
+  {c:"quote",q:"“Verso l'infinito e oltre!”",a:["Toy Story","Gli Incredibili","WALL·E","Lightyear"]},
+  {c:"quote",q:"“Nessuno è perfetto.”",a:["A qualcuno piace caldo","Quando la moglie è in vacanza","Sabrina","Colazione da Tiffany"]},
+  {c:"quote",q:"“Io ne ho viste cose che voi umani non potreste immaginarvi…”",a:["Blade Runner","Alien","2001: Odissea nello spazio","Matrix"]},
+  {c:"quote",q:"“Che la Forza sia con te.”",a:["Guerre stellari","Star Trek","Dune","Avatar"]},
+  {c:"quote",q:"“Il mio nome è Bond. James Bond.”",a:["Agente 007 – Licenza di uccidere","Mission: Impossible","Kingsman","The Bourne Identity"]},
+  {c:"emoji",q:"Che film è?",e:"🦁👑🌅",a:["Il Re Leone","Madagascar","Il libro della giungla","Zootropolis"]},
+  {c:"emoji",q:"Che film è?",e:"🚢🧊💔",a:["Titanic","Poseidon","Pirati dei Caraibi","Il grande blu"]},
+  {c:"emoji",q:"Che film è?",e:"🐠🔍🌊",a:["Alla ricerca di Nemo","La sirenetta","Shark Tale","Oceania"]},
+  {c:"emoji",q:"Che film è?",e:"🦖🏝️🚙",a:["Jurassic Park","King Kong","Godzilla","Il mondo perduto (1925)"]},
+  {c:"emoji",q:"Che film è?",e:"👽📞🏠",a:["E.T. l'extra-terrestre","Incontri ravvicinati del terzo tipo","Men in Black","Independence Day"]},
+  {c:"emoji",q:"Che film è?",e:"🦈🏖️😱",a:["Lo squalo","Paradise Beach","Abyss","Piranha"]},
+  {c:"emoji",q:"Che film è?",e:"🎈🏠👴",a:["Up","Coco","Ratatouille","Il castello errante di Howl"]},
+  {c:"emoji",q:"Che film è?",e:"💊🐇🕶️",a:["Matrix","Alice in Wonderland","Inception","Tron"]},
+  {c:"emoji",q:"Che film è?",e:"🐀👨‍🍳🍲",a:["Ratatouille","Chef – La ricetta perfetta","Piovono polpette","Il grande chef"]},
+  {c:"emoji",q:"Che film è?",e:"👨‍🔬🚗⚡⏰",a:["Ritorno al futuro","Herbie il maggiolino tutto matto","Fast & Furious","Interstellar"]},
+  {c:"emoji",q:"Che film è?",e:"🍫🏭🎩",a:["La fabbrica di cioccolato","Chocolat","Mary Poppins","Hugo Cabret"]},
+  {c:"emoji",q:"Che film è?",e:"🏹🔥👧",a:["Hunger Games","Maleficent","Robin Hood","Divergent"]},
+  {c:"emoji",q:"Che film è?",e:"🧊❄️👸⛄",a:["Frozen","La Bella e la Bestia","Rapunzel","Cenerentola"]},
+  {c:"emoji",q:"Che film è?",e:"🤡🃏🪜",a:["Joker","It","Il cavaliere oscuro","Saw"]},
+  {c:"poster",q:"Di che film è questa locandina?",p:9,a:["Il Padrino","Scarface","Casinò","Quei bravi ragazzi"]},
+  {c:"poster",q:"Di che film è questa locandina?",p:1,a:["Inception","Tenet","Interstellar","Shutter Island"]},
+  {c:"poster",q:"Di che film è questa locandina?",p:5,a:["La La Land","Whiplash","Moulin Rouge!","A Star Is Born"]},
+  {c:"poster",q:"Di che film è questa locandina?",p:10,a:["Pulp Fiction","Le iene","Jackie Brown","Kill Bill"]},
+  {c:"poster",q:"Di che film è questa locandina?",p:15,a:["Dune","Star Wars","Avatar","Mad Max: Fury Road"]},
+  {c:"poster",q:"Di che film è questa locandina?",p:30,a:["Titanic","Pearl Harbor","Il grande Gatsby","Romeo + Giulietta"]},
+  {c:"poster",q:"Di che film è questa locandina?",p:32,a:["Joker","Il cavaliere oscuro","Taxi Driver","Birdman"]},
+  {c:"poster",q:"Di che film è questa locandina?",p:33,a:["Barbie","Povere creature!","Il diavolo veste Prada","La La Land"]},
+  {c:"poster",q:"Di che film è questa locandina?",p:28,a:["Shrek","Hotel Transylvania","Cattivissimo me","Madagascar"]},
+  {c:"poster",q:"Di che film è questa locandina?",p:17,a:["Mad Max: Fury Road","Dune","Fast & Furious","Waterworld"]},
+  {c:"cast",q:"Chi interpreta Jack Sparrow in “Pirati dei Caraibi”?",a:["Johnny Depp","Orlando Bloom","Brad Pitt","Keanu Reeves"]},
+  {c:"cast",q:"Chi interpreta il Joker ne “Il cavaliere oscuro” (2008)?",a:["Heath Ledger","Joaquin Phoenix","Jared Leto","Jack Nicholson"]},
+  {c:"cast",q:"In “Pulp Fiction”, chi interpreta Mia Wallace?",a:["Uma Thurman","Charlize Theron","Nicole Kidman","Julia Roberts"]},
+  {c:"cast",q:"Chi interpreta Ellen Ripley in “Alien”?",a:["Sigourney Weaver","Jodie Foster","Linda Hamilton","Meryl Streep"]},
+  {c:"cast",q:"Chi interpreta Neo in “Matrix”?",a:["Keanu Reeves","Laurence Fishburne","Will Smith","Hugo Weaving"]},
+  {c:"cast",q:"Chi interpreta Massimo Decimo Meridio ne “Il gladiatore”?",a:["Russell Crowe","Gerard Butler","Joaquin Phoenix","Mel Gibson"]},
+  {c:"cast",q:"Chi interpreta Holly Golightly in “Colazione da Tiffany”?",a:["Audrey Hepburn","Marilyn Monroe","Grace Kelly","Sophia Loren"]},
+  {c:"cast",q:"Chi interpreta Tony Stark / Iron Man nei film Marvel?",a:["Robert Downey Jr.","Chris Evans","Chris Hemsworth","Mark Ruffalo"]},
+  {c:"dir",q:"Chi ha diretto “Pulp Fiction”?",a:["Quentin Tarantino","Martin Scorsese","Guy Ritchie","Robert Rodriguez"]},
+  {c:"dir",q:"Chi ha diretto “Jurassic Park”?",a:["Steven Spielberg","James Cameron","George Lucas","Ridley Scott"]},
+  {c:"dir",q:"Chi ha diretto “Shining”?",a:["Stanley Kubrick","Alfred Hitchcock","John Carpenter","Brian De Palma"]},
+  {c:"dir",q:"Chi ha diretto “Psycho” (1960)?",a:["Alfred Hitchcock","Orson Welles","Billy Wilder","Stanley Kubrick"]},
+  {c:"dir",q:"Chi ha diretto “Parasite”?",a:["Bong Joon-ho","Park Chan-wook","Hirokazu Kore-eda","Ang Lee"]},
+  {c:"dir",q:"Chi ha diretto “Titanic”?",a:["James Cameron","Steven Spielberg","Michael Bay","Ron Howard"]},
+  {c:"odd",q:"Quale di questi film NON è diretto da Christopher Nolan?",a:["Arrival","Memento","Dunkirk","Interstellar"]},
+  {c:"odd",q:"Quale di questi film NON è diretto da Steven Spielberg?",a:["Avatar","E.T. l'extra-terrestre","Lo squalo","Jurassic Park"]},
+  {c:"odd",q:"Quale di questi film NON è diretto da Quentin Tarantino?",a:["Fight Club","Kill Bill","Django Unchained","Bastardi senza gloria"]},
+  {c:"odd",q:"Quale di questi NON è un film Pixar?",a:["Shrek","Toy Story","Up","Coco"]},
+  {c:"odd",q:"Quale di questi NON è un film di Hayao Miyazaki?",a:["Akira","La città incantata","Il mio vicino Totoro","Princess Mononoke"]},
+  {c:"oscar",q:"Quale film ha vinto l'Oscar come miglior film nel 2020?",a:["Parasite","1917","Joker","C'era una volta a… Hollywood"]},
+  {c:"oscar",q:"Quale film ha vinto l'Oscar come miglior film nel 2024?",a:["Oppenheimer","Povere creature!","Barbie","Killers of the Flower Moon"]},
+  {c:"oscar",q:"Quanti Oscar ha vinto “Titanic”?",a:["11","8","9","14"]},
+  {c:"oscar",q:"Per quale film Roberto Benigni ha vinto l'Oscar come miglior attore?",a:["La vita è bella","Johnny Stecchino","Il mostro","Pinocchio"]},
+  {c:"oscar",q:"Con quale film Leonardo DiCaprio ha vinto il suo primo Oscar?",a:["Revenant – Redivivo","The Wolf of Wall Street","Titanic","The Aviator"]},
+  {c:"music",q:"Chi ha composto le musiche de “Il buono, il brutto, il cattivo”?",a:["Ennio Morricone","Nino Rota","Hans Zimmer","John Williams"]},
+  {c:"music",q:"Chi ha composto il tema di “Guerre stellari”?",a:["John Williams","Hans Zimmer","Danny Elfman","Howard Shore"]},
+  {c:"music",q:"Chi ha composto la colonna sonora di “Inception”?",a:["Hans Zimmer","Ennio Morricone","Alexandre Desplat","Ludwig Göransson"]},
+  {c:"music",q:"Chi canta “My Heart Will Go On” di “Titanic”?",a:["Céline Dion","Whitney Houston","Mariah Carey","Adele"]},
+  {c:"year",q:"In che anno è uscito “Matrix”?",a:["1999","1997","2001","2003"]},
+  {c:"year",q:"In che anno è uscito “Il Padrino”?",a:["1972","1968","1976","1980"]},
+  {c:"year",q:"Quale di questi film è uscito per primo?",a:["Lo squalo","Guerre stellari","Alien","E.T. l'extra-terrestre"]},
+  {c:"year",q:"Quale di questi film d'animazione è uscito per primo?",a:["Toy Story","Shrek","Alla ricerca di Nemo","Up"]},
+  {c:"tf",q:"“Toy Story” è stato il primo lungometraggio interamente animato al computer.",a:["Vero","Falso"]},
+  {c:"tf",q:"“Psycho” di Hitchcock (1960) è un film a colori.",a:["Falso","Vero"]},
+  {c:"tf",q:"In “Titanic”, Jack sopravvive al naufragio.",a:["Falso","Vero"]},
+  {c:"tf",q:"In “Ritorno al futuro”, la macchina del tempo è una DeLorean.",a:["Vero","Falso"]},
+  {c:"tf",q:"Sean Connery è stato il primo James Bond al cinema.",a:["Vero","Falso"]},
+  {c:"tf",q:"“Pinocchio” della Disney è uscito prima di “Biancaneve e i sette nani”.",a:["Falso","Vero"]},
+  {c:"tf",q:"Gollum, nella trilogia de “Il Signore degli Anelli”, è interpretato da Andy Serkis.",a:["Vero","Falso"]},
+  {c:"num",q:"A quante miglia orarie deve arrivare la DeLorean per viaggiare nel tempo?",a:["88","66","100","121"]},
+  {c:"num",q:"Quanti sono i membri della Compagnia dell'Anello?",a:["9","7","8","12"]},
+  {c:"num",q:"Da quale binario parte l'Espresso per Hogwarts?",a:["9 ¾","7 ½","10 ¼","3 ¾"]},
+  {c:"num",q:"Quanti film compongono la saga principale di Harry Potter?",a:["8","7","6","9"]},
+  {c:"ita",q:"Chi ha diretto “Nuovo Cinema Paradiso”?",a:["Giuseppe Tornatore","Gabriele Salvatores","Paolo Sorrentino","Nanni Moretti"]},
+  {c:"ita",q:"In quale fontana fa il bagno Anita Ekberg ne “La dolce vita”?",a:["Fontana di Trevi","Fontana dei Quattro Fiumi","Fontana della Barcaccia","Fontana del Tritone"]},
+  {c:"ita",q:"Chi ha dato il volto al ragionier Ugo Fantozzi?",a:["Paolo Villaggio","Lino Banfi","Renato Pozzetto","Massimo Boldi"]},
+  {c:"ita",q:"Chi ha diretto “La grande bellezza”?",a:["Paolo Sorrentino","Matteo Garrone","Luca Guadagnino","Giuseppe Tornatore"]},
+  {c:"ita",q:"Chi ha diretto “Ladri di biciclette”?",a:["Vittorio De Sica","Roberto Rossellini","Federico Fellini","Luchino Visconti"]},
+  {c:"ita",q:"Chi ha diretto “Perfetti sconosciuti”?",a:["Paolo Genovese","Gabriele Muccino","Ferzan Özpetek","Carlo Verdone"]},
+];
+// domande bonus della domenica (valgono doppio): un po' più difficili
+const QBONUS = [
+  {c:"oscar",q:"Qual è stato il primo film d'animazione candidato all'Oscar come miglior film?",a:["La Bella e la Bestia","Biancaneve e i sette nani","Toy Story","Il Re Leone"]},
+  {c:"oscar",q:"Quale film italiano ha vinto l'Oscar per il miglior film straniero nel 2014?",a:["La grande bellezza","Il divo","Gomorra","Habemus Papam"]},
+  {c:"tf",q:"“La vita è bella” ha vinto 3 premi Oscar.",a:["Vero","Falso"]},
+  {c:"tf",q:"“Il mago di Oz” (1939) è in parte in bianco e nero (seppia) e in parte a colori.",a:["Vero","Falso"]},
+  {c:"oscar",q:"Quale di questi film NON ha vinto 11 Oscar?",a:["Via col vento","Ben-Hur","Titanic","Il Signore degli Anelli – Il ritorno del re"]},
+  {c:"oscar",q:"Quale film ha vinto l'Oscar come miglior film nel 2023?",a:["Everything Everywhere All at Once","Top Gun: Maverick","Gli spiriti dell'isola","Elvis"]},
+  {c:"ita",q:"Quale film di Giuseppe Tornatore ha vinto l'Oscar per il miglior film straniero?",a:["Nuovo Cinema Paradiso","La leggenda del pianista sull'oceano","Malèna","La migliore offerta"]},
+];
+
 /* =====================================================================
    13. AZIONI (tutti i click passano da qui)
    ===================================================================== */
 function save(){ DB.save(); }
-function renderAll(){ if(!me()) return; renderHeader(); renderPick(); renderDiscover(); renderLists(); renderProfile(); }
+function renderAll(){ if(!me()) return; renderHeader(); renderPick(); renderDiscover(); renderQuiz(); renderLists(); renderProfile(); }
 
 /* =====================================================================
-   12b. SCOPRI – due giochi a carte
-   1) "Già visti?"  → tutto il catalogo, dai film più conosciuti:  → visto   ← non visto   ↓ non mi interessa
-   2) "Ti interessa?" → prima quelli che hai detto di non aver visto, poi i più popolari sulle tue piattaforme:
-                        → in lista   ← non ora   ↓ non mi interessa
+   12b. SCOPRI – carte "Già visto?" (si apre direttamente toccando la scheda)
+   ← sinistra: già visto (va in Rewatch)   → destra: non visto
+   ↓ giù o ✕: escludi (non mi interessa)   doppio tap: ❤️ nella mia lista
+   Ogni film analizzato non viene più riproposto.
    ===================================================================== */
-const GAMES = {
-  seen:{icon:"👀",bg:"linear-gradient(135deg,#2d5cff,#1b6b7b)",title:"Già visti?",q:"Hai già visto questo film?",
-    desc:"Scorri i film più famosi e segna quelli che hai già visto: non te li riproporremo.",
-    r:{lbl:"Visto",stamp:"Visto",icon:"✓"}, l:{lbl:"Non visto",stamp:"Non visto",icon:"✕"}, d:{lbl:"Non mi interessa",stamp:"Non mi interessa",icon:"↓"}},
-  want:{icon:"❤️",bg:"linear-gradient(135deg,#ff5a5f,#ffb347)",title:"Ti interessa?",q:"Lo vorresti vedere?",
-    desc:"Tra i film che non hai visto: quelli che ti interessano finiscono dritti nella tua lista.",
-    r:{lbl:"In lista",stamp:"In lista!",icon:"♥"}, l:{lbl:"Non ora",stamp:"Non ora",icon:"✕"}, d:{lbl:"Non mi interessa",stamp:"Non mi interessa",icon:"↓"}},
-};
+const SW = {l:{verdict:"seen",stamp:"Già visto"}, r:{verdict:"not_seen",stamp:"Non visto"}, d:{verdict:"dismiss",stamp:"Escludi"}, h:{verdict:"want",stamp:"❤️ In lista"}};
 const Swipes = {
-  mine(game){ const me=Auth.current().id; return D().swipes.filter(x=>x.user_id===me&&(!game||x.game===game)); },
-  has(game,movieId){ return Swipes.mine(game).some(x=>x.movie_id===movieId); },
-  add(game,movie,verdict){ D().swipes.push({user_id:Auth.current().id,game,movie_id:movie.id,verdict,movie:liteMovie(movie),at:Date.now()}); DB.save(); },
-  removeLast(game){ const me=Auth.current().id; for(let i=D().swipes.length-1;i>=0;i--){ const x=D().swipes[i]; if(x.user_id===me&&x.game===game){ D().swipes.splice(i,1); DB.save(); return x; } } return null; },
-  count(game,verdict){ return Swipes.mine(game).filter(x=>x.verdict===verdict).length; },
+  mine(){ const me=Auth.current().id; return D().swipes.filter(x=>x.user_id===me); },
+  has(movieId){ return Swipes.mine().some(x=>x.movie_id===movieId); },
+  add(movie,verdict){ D().swipes.push({user_id:Auth.current().id,game:"seen",movie_id:movie.id,verdict,movie:liteMovie(movie),at:Date.now()}); DB.save(); },
+  removeLast(){ const me=Auth.current().id; for(let i=D().swipes.length-1;i>=0;i--){ if(D().swipes[i].user_id===me){ return D().swipes.splice(i,1)[0]; } } return null; },
+  count(verdict){ return Swipes.mine().filter(x=>x.verdict===verdict).length; },
 };
-const personalList = () => Lists.mine().find(x=>x.type==="personal"&&x.owner_id===me().id) || Lists.create("La mia lista","personal");
+let G=null; // mazzo di carte dell'utente corrente
+const inAnyList = id => Lists.owned().some(l=>Lists.has(l.id,id));
+const deckOk = m => !Swipes.has(m.id) && !Seen.has(m.id) && !Dismissed.has(m.id) && !inAnyList(m.id);
 function renderDiscover(){
-  const v=$("#v-discover"); if(!v) return;
-  v.innerHTML=`<h2>🃏 Scopri</h2>
-    <p class="muted" style="margin:-4px 0 14px;line-height:1.5">Due giochi veloci per insegnare all'app i tuoi gusti: una carta alla volta, scorri con il dito.</p>
-    ${Object.entries(GAMES).map(([k,g])=>`<div class="gcard" data-a="gameOpen" data-id="${k}"><div class="gic" style="background:${g.bg}">${g.icon}</div>
-      <div style="flex:1"><div class="t">${g.title}</div><div class="muted" style="line-height:1.4">${g.desc}</div>
-      <div class="muted" style="margin-top:6px;color:#bcd0ff">${k==="seen"?`✓ ${Seen.ids().length} visti segnati`:`♥ ${Swipes.count("want","want")} aggiunti alla lista`} · ${Dismissed.count()} che non ti interessano</div></div>
-      <span style="font-size:22px">›</span></div>`).join("")}
-    <p class="muted" style="font-size:12px;line-height:1.5">I film che segni con “non mi interessa” non compariranno più nelle ricerche. Puoi ripristinarli dal Profilo.</p>`;
-}
-let G=null; // stato del gioco aperto
-async function gameOpen(game){
-  G={game,deck:[],page:0,done:false,loading:false,history:[]};
-  $("#game").classList.add("on"); renderGame();
-  if(!prof().tutorials?.[game]) showTutorial();
-  await refillDeck();
-}
-function gameClose(){ $("#game").classList.remove("on"); G=null; renderAll(); }
-const inAnyList = id => Lists.mine().some(l=>Lists.has(l.id,id));
-function deckOk(m){ const g=G.game;
-  if(Swipes.has(g,m.id) || Dismissed.has(m.id)) return false;
-  if(g==="seen") return !Seen.has(m.id);
-  return !Seen.has(m.id) && !inAnyList(m.id);
+  if(!me()) return;
+  if(!G){ G={deck:[],page:prof().scopriPage||0,done:false,loading:false,history:[]}; refillDeck(); }
+  renderGame();
 }
 async function refillDeck(){
-  if(!G || G.loading || G.done) return; G.loading=true;
+  if(!G || G.loading || G.done) return; G.loading=true; const g=G;
   try{
-    if(G.game==="want" && G.page===0){ // prima i "non visti" del gioco 1
-      const notSeen=Swipes.mine("seen").filter(x=>x.verdict==="not_seen").map(x=>x.movie).filter(m=>deckOk(m)&&!G.deck.some(d=>d.id===m.id));
-      G.deck.push(...notSeen);
-    }
     let tries=0;
-    while(G && G.deck.length<8 && !G.done && tries<6){
-      tries++; G.page++;
-      const q={language:LANG,include_adult:false,page:G.page};
-      if(G.game==="seen") Object.assign(q,{sort_by:"vote_count.desc"});
-      else Object.assign(q,{sort_by:"popularity.desc","vote_count.gte":200},prof().providerIds.length?{watch_region:REGION,with_watch_providers:prof().providerIds.join("|"),with_watch_monetization_types:"flatrate"}:{});
-      const d=await api("/discover/movie",q);
-      if(!G) return;
-      G.deck.push(...d.results.map(normalize).filter(m=>deckOk(m)&&!G.deck.some(x=>x.id===m.id)));
-      if(G.page>=Math.min(d.total_pages,500)) G.done=true;
+    while(g===G && g.deck.length<8 && !g.done && tries<8){
+      tries++; g.page++;
+      const d=await api("/discover/movie",{language:LANG,include_adult:false,sort_by:"vote_count.desc",page:g.page});
+      if(g!==G) return;
+      g.deck.push(...d.results.map(normalize).filter(m=>deckOk(m)&&!g.deck.some(x=>x.id===m.id)));
+      prof().scopriPage=Math.max(0,g.page-2); save();
+      if(g.page>=Math.min(d.total_pages,500)) g.done=true;
     }
   }catch(e){ toast(apiErrorMsg(e)); }
-  if(G){ G.loading=false; renderGame(); }
+  if(g===G){ g.loading=false; renderGame(); }
 }
 function cardHtml(m,back){
   return `<div class="scard ${back?"back":""}" style="background:${gradient(m.title)}" ${back?"":`id="topCard"`}>
     <div class="ph">${emojiFor(m)}</div>
     ${m.poster?`<img src="${img(m.poster,"w500")}" alt="" onerror="this.remove()">`:""}
-    ${back?"":`<span class="stamp r" id="stR">${GAMES[G.game].r.stamp}</span><span class="stamp l" id="stL">${GAMES[G.game].l.stamp}</span><span class="stamp d" id="stD">${GAMES[G.game].d.stamp}</span>`}
+    ${back?"":`<span class="stamp r" id="stR">${SW.r.stamp}</span><span class="stamp l" id="stL">${SW.l.stamp}</span><span class="stamp d" id="stD">${SW.d.stamp}</span>`}
     <div class="cap"><h3>${esc(m.title)}</h3><div class="muted">${[m.year,(m.genre_ids||[]).map(genreName).filter(Boolean).slice(0,2).join(", "),m.vote?`⭐ ${m.vote.toFixed(1)}`:""].filter(Boolean).join(" · ")}</div></div>
   </div>`;
 }
 function renderGame(){
-  if(!G) return; const g=GAMES[G.game], el=$("#game"), tut=el.querySelector(".tut");
+  const v=$("#v-discover"); if(!G||!v) return; const tut=v.querySelector(".tut");
   const top=G.deck[0], next=G.deck[1];
-  const stat=G.game==="seen"?`✓ ${Seen.ids().length} visti`:`♥ ${Swipes.count("want","want")} in lista`;
-  el.innerHTML=`<div class="ghead"><button class="icon" data-a="gameClose" title="Chiudi">✕</button><b>${g.icon} ${g.title}</b><button class="icon" data-a="gameHelp" title="Come funziona">?</button></div>
-    <div class="gq">${g.q}</div>
+  v.innerHTML=`<div class="gwrap">
+    <div class="ghead"><b>👀 L'hai già visto?</b><button class="icon" data-a="gameHelp" title="Come funziona">?</button></div>
+    <div class="gq">👈 già visto · non visto 👉 · doppio tap ❤️</div>
     <div class="gstack">${top?(next?cardHtml(next,true):"")+cardHtml(top,false)
-      :`<div class="empty" style="padding-top:80px">${G.loading?`<div class="spinner"></div>Preparo le carte…`:`🎉 Hai finito le carte!<br>Torna più tardi per nuovi film.`}</div>`}</div>
-    <div class="gbtns">
-      <button data-a="swipe" data-dir="l" ${top?"":"disabled"}>${g.l.icon}<small>${g.l.lbl}</small></button>
-      <button class="gd" data-a="swipe" data-dir="d" ${top?"":"disabled"}>${g.d.icon}<small>${g.d.lbl}</small></button>
-      <button class="gr" data-a="swipe" data-dir="r" ${top?"":"disabled"}>${g.r.icon}<small>${g.r.lbl}</small></button>
+      :`<div class="empty" style="padding-top:80px">${G.loading?`<div class="spinner"></div>Preparo le carte…`:`🎉 Hai visto tutte le carte!<br>Torna più tardi per nuovi film.`}</div>`}</div>
+    <div class="gbtns g4">
+      <button data-a="swipe" data-dir="l" ${top?"":"disabled"}>👈<small>Già visto</small></button>
+      <button class="gd" data-a="swipe" data-dir="d" ${top?"":"disabled"}>✕<small>Escludi</small></button>
+      <button class="gh" data-a="swipe" data-dir="h" ${top?"":"disabled"}>❤️<small>In lista</small></button>
+      <button data-a="swipe" data-dir="r" ${top?"":"disabled"}>👉<small>Non visto</small></button>
     </div>
-    <div class="gfoot"><span>${stat}</span><span class="link" data-a="undo" style="${G.history.length?"":"opacity:.35;pointer-events:none"}">↩️ Annulla</span></div>`;
-  if(tut) el.appendChild(tut);
+    <div class="gfoot"><span>✓ ${Seen.ids().length} visti · ❤️ ${Swipes.count("want")} salvati</span><span class="link" data-a="undo" style="${G.history.length?"":"opacity:.35;pointer-events:none"}">↩️ Annulla</span></div>
+  </div>`;
+  if(tut) v.querySelector(".gwrap").appendChild(tut);
   if(top) bindDrag($("#topCard"));
 }
 function bindDrag(card){
-  let sx=0,sy=0,dx=0,dy=0,drag=false;
+  let sx=0,sy=0,dx=0,dy=0,drag=false,lastTap=0;
   const st={r:$("#stR"),l:$("#stL"),d:$("#stD")};
   const dirOf=()=> dy>110&&dy>Math.abs(dx) ? "d" : dx>100 ? "r" : dx<-100 ? "l" : null;
+  const reset=()=>{ card.style.transition="transform .25s"; card.style.transform=""; Object.values(st).forEach(x=>x.style.opacity=0); };
   card.addEventListener("pointerdown",e=>{ drag=true; sx=e.clientX; sy=e.clientY; dx=dy=0; card.setPointerCapture(e.pointerId); card.style.transition="none"; });
   card.addEventListener("pointermove",e=>{ if(!drag) return; dx=e.clientX-sx; dy=e.clientY-sy;
     card.style.transform=`translate(${dx}px,${dy}px) rotate(${dx/18}deg)`;
     st.r.style.opacity=Math.max(0,Math.min(1,dx/110)); st.l.style.opacity=Math.max(0,Math.min(1,-dx/110));
     st.d.style.opacity=dy>Math.abs(dx)?Math.max(0,Math.min(1,dy/130)):0; });
-  const end=()=>{ if(!drag) return; drag=false; const d=dirOf();
-    if(d) flyOut(d); else { card.style.transition="transform .25s"; card.style.transform=""; Object.values(st).forEach(x=>x.style.opacity=0); } };
+  const end=()=>{ if(!drag) return; drag=false;
+    if(Math.abs(dx)<8 && Math.abs(dy)<8){ reset(); const now=Date.now(); if(now-lastTap<350){ lastTap=0; flyOut("h"); } else lastTap=now; return; }
+    const d=dirOf(); if(d) flyOut(d); else reset(); };
   card.addEventListener("pointerup",end); card.addEventListener("pointercancel",end);
 }
 function flyOut(dir){
-  const card=$("#topCard"); if(!card||!G) return;
+  const card=$("#topCard"); if(!card||!G||card.dataset.out) return; card.dataset.out=1;
+  if(dir==="h"){ const h=document.createElement("div"); h.className="heartpop"; h.textContent="❤️"; card.appendChild(h);
+    setTimeout(()=>{ card.style.transition="transform .3s ease-in"; card.style.transform="translate(0,-130%) scale(.9)"; },380);
+    return setTimeout(()=>commitSwipe(dir),640); }
   const st={r:"#stR",l:"#stL",d:"#stD"}[dir]; $(st).style.opacity=1;
   card.style.transition="transform .3s ease-in";
   card.style.transform=dir==="r"?"translate(140%,-10%) rotate(25deg)":dir==="l"?"translate(-140%,-10%) rotate(-25deg)":"translate(0,130%)";
   setTimeout(()=>commitSwipe(dir),260);
 }
 function commitSwipe(dir){
-  if(!G) return; const m=G.deck.shift(); if(!m) return; const g=G.game;
-  const verdict={seen:{r:"seen",l:"not_seen",d:"dismiss"},want:{r:"want",l:"skip",d:"dismiss"}}[g][dir];
-  Swipes.add(g,m,verdict);
-  if(verdict==="seen") Seen.set(m.id,true);
+  if(!G) return; const m=G.deck.shift(); if(!m) return; const verdict=SW[dir].verdict;
+  Swipes.add(m,verdict);
+  if(verdict==="seen") Seen.set(m.id,true,m);
   if(verdict==="dismiss") Dismissed.set(m.id,true);
-  if(verdict==="want") Lists.add(personalList().id,m);
+  if(verdict==="want") Lists.add(Lists.personal().id,m);
   G.history.push({m,verdict});
+  if(verdict==="want") toast(`❤️ “${m.title}” salvato nella tua lista`);
   renderGame();
   if(G.deck.length<5) refillDeck();
 }
 function undoSwipe(){
   if(!G||!G.history.length) return; const {m,verdict}=G.history.pop();
-  Swipes.removeLast(G.game);
+  Swipes.removeLast();
   if(verdict==="seen") Seen.set(m.id,false);
   if(verdict==="dismiss") Dismissed.set(m.id,false);
-  if(verdict==="want") Lists.removeItem(personalList().id,m.id);
+  if(verdict==="want") Lists.removeItem(Lists.personal().id,m.id);
   G.deck.unshift(m); renderGame();
 }
 function showTutorial(){
-  const g=GAMES[G.game], t=document.createElement("div"); t.className="tut";
-  t.innerHTML=`<h3>${g.icon} ${g.title}</h3><div class="muted">${g.q} Rispondi con un gesto:</div>
+  const w=$("#v-discover .gwrap"); if(!w || w.querySelector(".tut")) return;
+  const t=document.createElement("div"); t.className="tut";
+  t.innerHTML=`<h3>👀 L'hai già visto?</h3><div class="muted">Ti mostriamo i film più famosi, uno alla volta. Rispondi con un gesto:</div>
     <div class="demo">🎬</div>
-    <div class="rowt"><b>👉</b><div><b style="font-size:15px;width:auto">Destra</b> · ${g.r.lbl}</div></div>
-    <div class="rowt"><b>👈</b><div><b style="font-size:15px;width:auto">Sinistra</b> · ${g.l.lbl}</div></div>
-    <div class="rowt"><b>👇</b><div><b style="font-size:15px;width:auto">Giù</b> · ${g.d.lbl} <span class="muted">(non te lo proporremo più)</span></div></div>
-    <p class="muted" style="margin:14px 0 18px">Se preferisci, usa i pulsanti sotto la carta. Sbagliato? C'è sempre “↩️ Annulla”.</p>
+    <div class="rowt"><b>👈</b><div><b style="font-size:15px;width:auto">Sinistra</b> · L'ho già visto <span class="muted">(finisce nella lista Rewatch)</span></div></div>
+    <div class="rowt"><b>👉</b><div><b style="font-size:15px;width:auto">Destra</b> · Non l'ho visto</div></div>
+    <div class="rowt"><b>👇</b><div><b style="font-size:15px;width:auto">Giù o ✕</b> · Escludi <span class="muted">(non te lo proporremo più)</span></div></div>
+    <div class="rowt"><b>❤️</b><div><b style="font-size:15px;width:auto">Doppio tap</b> · Mi interessa: va nella tua lista</div></div>
+    <p class="muted" style="margin:14px 0 18px">Ogni film compare una volta sola. Sbagliato? C'è sempre “↩️ Annulla”.</p>
     <button class="btn" data-a="tutDone" style="max-width:330px">Ho capito, iniziamo!</button>`;
-  $("#game").appendChild(t);
+  w.appendChild(t);
 }
+
+/* =====================================================================
+   12c. GAME – Cine-quiz del giorno
+   Ogni giorno da 1 a 5 domande (uguali per tutti), 15 secondi ciascuna (10 per vero/falso).
+   Punti: 100 + 10 per ogni secondo rimasto. La domenica c'è una domanda bonus che vale doppio.
+   I punti si sommano dal lunedì alla domenica: a fine settimana c'è la classifica finale.
+   In produzione: domande e classifica sul server (niente trucchi) e notifiche
+   "nuove domande!" / "classifica finale".
+   ===================================================================== */
+function seeded(str){ let h=1779033703^str.length; for(let i=0;i<str.length;i++){ h=Math.imul(h^str.charCodeAt(i),3432918353); h=h<<13|h>>>19; }
+  return ()=>{ h=Math.imul(h^h>>>16,2246822507); h=Math.imul(h^h>>>13,3266489909); h^=h>>>16; return (h>>>0)/4294967296; }; }
+function shuffled(arr,rnd){ const a=arr.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(rnd()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+const dayKey=(d=new Date())=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+const parseDay=k=>{ const [y,m,d]=k.split("-").map(Number); return new Date(y,m-1,d); };
+function weekStart(d=new Date()){ const x=new Date(d.getFullYear(),d.getMonth(),d.getDate()); x.setDate(x.getDate()-(x.getDay()+6)%7); return x; }
+const weekKey=(d=new Date())=>dayKey(weekStart(d));
+const isLastDay=(d=new Date())=>d.getDay()===0;
+const questionsCount=(d=new Date())=>1+Math.floor(seeded("n"+dayKey(d))()*5);
+function dailyQuestions(d=new Date()){
+  const wk=weekKey(d), di=(d.getDay()+6)%7, n=questionsCount(d);
+  const order=shuffled(QUIZ.map((_,i)=>i),seeded("w"+wk));          // stessa sequenza per tutti, nessuna ripetizione nella settimana
+  const qs=order.slice(di*5,di*5+n).map(i=>({...QUIZ[i],idx:i}));
+  if(isLastDay(d)){ const b=shuffled(QBONUS.map((_,i)=>i),seeded("b"+wk))[0]; qs.push({...QBONUS[b],idx:"b"+b,bonus:true}); }
+  return qs.map((q,k)=>({...q,opts:shuffled(q.a,seeded(dayKey(d)+":"+k))}));
+}
+const qTime = q => q.t || (q.c==="tf"?10:15);
+const Quiz = {
+  rec(day=dayKey(),userId=me().id){ return D().quiz.find(r=>r.user_id===userId&&r.day===day); },
+  weekPoints(userId,wk){ return D().quiz.filter(r=>r.user_id===userId&&r.week===wk).reduce((s,r)=>s+r.points,0); },
+};
+// prototipo: giocatori simulati per vedere una classifica "viva"
+const BOTS=["cinefilo88","popcornqueen","nolanfan","la.dolce.vita","darthvale","mr.tarantino","ghibli.girl","sofa.critic"];
+function botPoints(name,wk,upto){
+  let s=0; const start=parseDay(wk), skill=0.35+seeded(name)()*0.5;
+  for(let i=0;i<7;i++){ const d=new Date(start); d.setDate(d.getDate()+i); if(dayKey(d)>upto) break;
+    const r=seeded(name+dayKey(d)); if(r()<0.25) continue;
+    const n=questionsCount(d)+(isLastDay(d)?1:0);
+    for(let k=0;k<n;k++) if(r()<skill) s+=(100+10*Math.floor(r()*14))*(isLastDay(d)&&k===n-1?2:1); }
+  return s;
+}
+function leaderboard(wk,upto){
+  const rows=D().users.filter(u=>u.provider!=="guest"||u.id===me().id).map(u=>({id:u.id,user:u,name:handle(u)||u.name,pts:Quiz.weekPoints(u.id,wk)}))
+    .filter(r=>r.pts>0||r.id===me().id);
+  BOTS.forEach(b=>rows.push({id:"bot_"+b,name:"@"+b,bot:true,pts:botPoints(b,wk,upto)}));
+  return rows.sort((a,b)=>b.pts-a.pts||(a.id===me().id?-1:1));
+}
+function lbHtml(rows,limit=10){
+  const mePos=rows.findIndex(r=>r.id===me().id), medal=["🥇","🥈","🥉"];
+  const show=rows.slice(0,limit); if(mePos>=limit) show.push(rows[mePos]);
+  return show.map(r=>{ const pos=rows.indexOf(r);
+    return `<div class="item ${r.id===me().id?"me":""}"><span class="pos">${medal[pos]||pos+1}</span>${r.user?avatar(r.user):`<span class="av" style="background:hsl(${hue(r.name)} 45% 40%)">${esc(r.name[1].toUpperCase())}</span>`}
+      <div class="info"><div class="t">${esc(r.name)}${r.id===me().id?" (tu)":""}</div></div><span class="pts">${r.pts.toLocaleString("it-IT")}</span></div>`; }).join("");
+}
+let QZ=null; // partita in corso
+function renderQuiz(){
+  const v=$("#v-quiz"); if(!v||!me()) return;
+  if(QZ) return renderQuestion();
+  const today=dayKey(), wk=weekKey(), rec=Quiz.rec();
+  if(rec && !rec.done){ rec.done=true; save(); }            // partita interrotta: valgono solo le risposte già date
+  const qs=dailyQuestions(), lb=leaderboard(wk,today), pos=lb.findIndex(r=>r.id===me().id)+1, myPts=Quiz.weekPoints(me().id,wk);
+  const daysLeft=6-((new Date().getDay()+6)%7);
+  const prevStart=weekStart(); prevStart.setDate(prevStart.getDate()-7); const prevEnd=new Date(prevStart); prevEnd.setDate(prevEnd.getDate()+6);
+  const plb=leaderboard(dayKey(prevStart),dayKey(prevEnd)), pme=plb.findIndex(r=>r.id===me().id)+1;
+  const ok=rec?rec.answers.filter(a=>a.ok).length:0;
+  v.innerHTML=`
+    <div class="qhero"><div class="big">🎬</div><h2>Cine-quiz del giorno</h2>
+      ${rec?`<div style="font-size:16px">Oggi hai fatto <b>${rec.points} punti</b></div><div style="color:#e0d6ff;margin-top:4px">${ok} rispost${ok===1?"a":"e"} giust${ok===1?"a":"e"} su ${rec.total}</div>
+             <div style="color:#e0d6ff;margin-top:10px;font-size:13px">${daysLeft?"Nuove domande domani 🍿":"Stanotte a mezzanotte la classifica diventa definitiva!"}</div>`
+           :`<div style="font-size:16px">Oggi: <b>${qs.length} domand${qs.length>1?"e":"a"}</b> sul cinema</div>
+             <div style="color:#e0d6ff;margin-top:4px;font-size:13px">Hai pochi secondi per ognuna: più sei veloce, più punti fai</div>
+             ${isLastDay()?`<div class="qflag">⭐ Oggi c'è la domanda BONUS che vale doppio!</div>`:""}
+             <button class="btn white" data-a="quizStart" style="margin-top:14px">▶ Gioca</button>`}
+      <div class="qstat"><div><b>${myPts.toLocaleString("it-IT")}</b>punti settimana</div><div><b>${pos?"#"+pos:"–"}</b>in classifica</div><div><b>${daysLeft}</b>${daysLeft===1?"giorno":"giorni"} alla fine</div></div>
+    </div>
+    <h2>🏆 Classifica della settimana</h2><div class="section lb">${lbHtml(lb)}</div>
+    <h2>🥇 Podio della settimana scorsa</h2><div class="section lb">${lbHtml(plb,3)}</div>
+    ${pme>3?`<p class="muted">La settimana scorsa sei arrivato/a ${pme}°.</p>`:""}
+    <p class="muted" style="line-height:1.5;margin-top:14px"><b>Come funziona</b> · Ogni giorno da 1 a 5 domande, uguali per tutti. Ogni risposta giusta vale 100 punti più 10 per ogni secondo che ti avanza. I punti si sommano dal lunedì alla domenica; la domenica c'è una domanda bonus che vale doppio. Si gioca una volta al giorno: se esci a metà, valgono solo le risposte date.</p>
+    <p class="muted" style="font-size:12px">Prototipo: in classifica ci sono anche giocatori simulati.</p>`;
+}
+function quizStart(){
+  if(Quiz.rec()) return renderQuiz();
+  const qs=dailyQuestions();
+  const rec={user_id:me().id,day:dayKey(),week:weekKey(),answers:[],points:0,total:qs.length,done:false};
+  D().quiz.push(rec); save();
+  QZ={qs,i:0,rec,t0:0,timer:null}; nextQuestion();
+}
+function nextQuestion(){
+  if(QZ.i>=QZ.qs.length) return finishQuiz();
+  QZ.t0=Date.now(); renderQuestion(); clearInterval(QZ.timer); QZ.timer=setInterval(quizTick,100);
+}
+function quizTick(){
+  if(!QZ) return; const q=QZ.qs[QZ.i], T=qTime(q)*1000, left=Math.max(0,T-(Date.now()-QZ.t0));
+  const bar=$("#qbar"); if(bar) bar.style.width=(left/T*100)+"%";
+  const s=$("#qsec"); if(s) s.textContent=Math.ceil(left/1000);
+  const im=$("#qimg"); if(im) im.style.filter=`blur(${(3+17*left/T).toFixed(1)}px)`;   // la locandina si schiarisce col tempo
+  if(left<=0) quizAnswer(-1);
+}
+function quizAnswer(k){
+  if(!QZ) return; clearInterval(QZ.timer);
+  const q=QZ.qs[QZ.i], left=Math.max(0,qTime(q)-(Date.now()-QZ.t0)/1000), ok=k>=0 && q.opts[k]===q.a[0];
+  const pts=ok?(100+10*Math.floor(left))*(q.bonus?2:1):0;
+  QZ.rec.answers.push({q:q.idx,ok,pts}); QZ.rec.points+=pts; save();
+  QZ.i++; nextQuestion();
+}
+function finishQuiz(){ clearInterval(QZ.timer); QZ.rec.done=true; save(); QZ=null; renderQuiz(); }
+function stopQuiz(){ if(QZ){ clearInterval(QZ.timer); QZ=null; } }
+function renderQuestion(){
+  const q=QZ.qs[QZ.i], T=qTime(q);
+  $("#v-quiz").innerHTML=`<div class="qbox">
+    <div class="qtop"><span>Domanda ${QZ.i+1} di ${QZ.qs.length}</span><span>⏱ <b id="qsec">${T}</b> s</span></div>
+    <div class="qbar"><i id="qbar"></i></div>
+    <div>${q.bonus?`<span class="qcat qbonus">⭐ BONUS · vale doppio</span> `:""}<span class="qcat">${QCAT[q.c]}</span></div>
+    <p class="qq">${esc(q.q)}</p>
+    ${q.e?`<div class="qemoji">${q.e}</div>`:""}
+    ${q.p&&DEMO_POSTERS[q.p]?`<div class="qposter"><img id="qimg" src="${img(DEMO_POSTERS[q.p][0],"w342")}" alt="" style="filter:blur(20px)"></div>`:""}
+    <div class="qopts">${q.opts.map((o,k)=>`<button class="qopt" data-a="qAns" data-k="${k}">${esc(o)}</button>`).join("")}</div>
+  </div>`;
+}
+
 function goTo(view){
   document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("on",x.dataset.view===view));
   document.querySelectorAll(".view").forEach(v=>v.classList.toggle("on",v.id===view));
   window.scrollTo(0,0);
+  if(view==="v-discover" && me() && !prof().tutorials?.scopri) showTutorial();
 }
 const A = {
   goto:d=>{ if(d.view==="v-lists") openListId=null; renderAll(); goTo(d.view); },
-  // --- filtri
+  // --- cerca
   src:d=>{ F().sources=toggle(F().sources,d.id); save(); renderPick(); },
   genre:d=>{ F().genres=toggle(F().genres,+d.id); save(); renderPick(); },
   mood:d=>{ F().moods=toggle(F().moods,d.id); save(); renderPick(); },
   pick:()=>doPick(),
-  gameOpen:d=>gameOpen(d.id),
-  gameClose:()=>gameClose(),
-  gameHelp:()=>showTutorial(),
-  tutDone:(d,el)=>{ prof().tutorials={...(prof().tutorials||{}),[G.game]:true}; save(); el.closest(".tut").remove(); },
-  swipe:d=>flyOut(d.dir),
-  undo:()=>undoSwipe(),
-  restoreDismissed:()=>{ if(confirm("Rimettere in gioco tutti i film che avevi segnato come “non mi interessa”?")){ Dismissed.clear(); renderAll(); toast("Film ripristinati"); } },
-  clearDesc:()=>{ prof().descCrit=null; save(); $("#descBox").value=""; renderPick(); },
-  showResults:()=>{ renderResults(); ($("#resTop")||$("#results")).scrollIntoView({behavior:"smooth",block:"start"}); },
+  search:()=>runSearch(),
+  clearDesc:()=>{ $("#descBox").value=""; prof().descCrit=null; save(); renderDescOut(); renderPick(); $("#descBox").focus(); },
   moreResults:()=>loadResults(false),
   openDetail:d=>openDetail(d.id),
   resetFilters:()=>{ Object.assign(F(),{genres:[],moods:[],maxDur:0,era:"all",years:null,minRating:0}); prof().descCrit=null; $("#descBox").value=""; save(); renderPick(); },
   backDetail:()=>showDetail(current,currentRandom),
-  // --- risultato
+  restoreDismissed:()=>{ if(confirm("Rimettere in gioco tutti i film che avevi escluso?")){ Dismissed.clear(); renderAll(); toast("Film ripristinati"); } },
+  // --- scheda film
   saveSheet:()=>openSaveSheet(),
   toggleSave:d=>{ Lists.has(d.id,current.id)?Lists.removeItem(d.id,current.id):Lists.add(d.id,current); openSaveSheet(); renderLists(); },
-  seenCurrent:()=>{ Seen.set(current.id,true); onbRateNext=currentRandom; openRate(current); },
+  seenCurrent:()=>{ Seen.set(current.id,true,current); if(C().hideSeen) dropFromResults(current.id); onbRateNext=currentRandom; openRate(current); },
+  notInterested:()=>{ Dismissed.set(current.id,true); dropFromResults(current.id); toast("🙈 Non te lo proporremo più");
+    if(currentRandom) doPick(); else closeSheet(); },
+  trailer:()=>{ if(!prof().premium) return openPremium("Il trailer dei film è una funzione Premium.");
+    window.open(trailerUrl(current),"_blank","noopener"); },
   rate:d=>{ const v=+d.v; if(v) Ratings.set(current,v); closeSheet(); toast(v?"Grazie! Terremo conto del tuo voto":"Segnato come visto"); renderAll(); if(onbRateNext) doPick(); },
   watchIt:()=>{ prof().lastPick={movie:liteMovie(current),at:Date.now(),chosen:true,done:false}; DB.save();
     showDetail(current,currentRandom); toast("🍿 Buona visione! Poi dimmi com'era"); },
-  fuSeen:()=>{ const lp=prof().lastPick; lp.done=true; Seen.set(lp.movie.id,true); current=lp.movie; onbRateNext=false; renderAll(); openRate(lp.movie); },
-  fuLater:()=>{ const lp=prof().lastPick; lp.done=true; DB.save();
-    const l=Lists.mine().find(x=>x.type==="personal"&&x.owner_id===me().id);
-    if(l){ Lists.add(l.id,lp.movie); toast(`Salvato in “${l.name}”`); renderAll(); } else { current=lp.movie; renderAll(); openSaveSheet(); } },
+  fuSeen:()=>{ const lp=prof().lastPick; lp.done=true; Seen.set(lp.movie.id,true,lp.movie); current=lp.movie; onbRateNext=false; renderAll(); openRate(lp.movie); },
+  fuLater:()=>{ const lp=prof().lastPick; lp.done=true; Lists.add(Lists.personal().id,lp.movie); toast("Salvato in “La mia lista”"); renderAll(); },
   fuNo:()=>{ prof().lastPick.done=true; DB.save(); renderFollowUp(); },
   reopen:()=>{ sessionStart=Date.now()+1; clearResults(); current=null; renderAll(); goTo("v-pick"); toast("App riaperta (simulazione)"); },
-  // --- ricerca descrittiva
-  example:(d,el)=>{ $("#descBox").value=el.textContent; A.describe(); },
-  describe:async()=>{
-    const t=$("#descBox").value.trim(); if(!t) return A.clearDesc();
-    const btn=$("#descBtn"); btn.disabled=true; btn.textContent="…"; $("#descBox").blur();
-    try{
-      const r=await parseQuery(t);
-      if(!r.labels.length){ $("#descOut").innerHTML=understoodHtml(r); return; }
-      prof().descCrit={...r,text:t}; save(); renderPick();
-      setTimeout(()=>A.showResults(),400);
-    }catch(e){ $("#descOut").innerHTML=`<div class="hint">${esc(apiErrorMsg(e))}</div>`; }
-    finally{ btn.disabled=false; btn.textContent="OK"; }
-  },
+  // --- scopri
+  gameHelp:()=>showTutorial(),
+  tutDone:(d,el)=>{ prof().tutorials={...(prof().tutorials||{}),scopri:true}; save(); el.closest(".tut").remove(); },
+  swipe:d=>flyOut(d.dir),
+  undo:()=>undoSwipe(),
+  // --- game
+  quizStart:()=>quizStart(),
+  qAns:d=>quizAnswer(+d.k),
   // --- liste
-  newList:()=>{ if(overLimit()) return; newListType="couple"; openNewList(); },
-  nlType:d=>{ const name=$("#nlName").value; newListType=d.id; openNewList(); $("#nlName").value=name; },
+  newList:()=>{ if(overLimit()) return; nlShareWith=null; openNewList(); },
+  nlSuggest:d=>{ $("#nlName").value=d.name; },
+  nlPick:d=>{ nlShareWith=d.id||null; if(!nlShareWith) $("#nlPeople").value=""; $("#nlPeople").style.display=nlShareWith?"none":""; renderNlPeople(); },
   createList:()=>{
-    const name=$("#nlName").value.trim()||({personal:"La mia lista",couple:"Noi due",friends:"Serata film"}[newListType]);
-    if(newListType!=="personal" && needAccount()) return;
-    const l=Lists.create(name,newListType); closeSheet(); openListId=l.id; renderAll(); toast("Lista creata");
-  },
-  // --- persone e inviti
+    const name=$("#nlName").value.trim(); if(!name) return toast("Dai un nome alla lista");
+    if(nlShareWith && needAccount()) return;
+    const l=Lists.create(name,"custom");
+    if(nlShareWith){ Invites.send(l.id,nlShareWith); toast(`Lista creata · invito inviato a ${handle(userById(nlShareWith))}`); } else toast("Lista creata");
+    nlShareWith=null; closeSheet(); openListId=l.id; renderAll(); },
+  renameSheet:()=>{ openSheet(`<h3>✏️ Rinomina lista</h3><input type="text" id="rnName" value="${esc(Lists.get(openListId).name)}" style="margin:10px 0">
+      <button class="btn" data-a="doRename">Salva</button>`); const i=$("#rnName"); i.focus(); i.select(); },
+  doRename:()=>{ const n=$("#rnName").value.trim(); if(!n) return toast("Il nome non può essere vuoto"); Lists.rename(openListId,n); closeSheet(); renderAll(); toast("Lista rinominata"); },
   peopleSheet:()=>{ if(needAccount()) return;
-    openSheet(`<h3>Aggiungi alla lista</h3><p class="muted">Cerca il suo <b>@nomeutente</b>: riceverà un invito da accettare.</p>
+    openSheet(`<h3>🔗 Collega “${esc(Lists.get(openListId).name)}”</h3><p class="muted">Cerca il suo <b>@nomeutente</b>: riceverà un invito e, se accetta, vedrà la lista come “Lista ${esc(handle(me()))}”.</p>
       <input type="text" id="peopleQ" placeholder="@nomeutente" autocomplete="off" autocapitalize="none" spellcheck="false" style="margin:8px 0">
       <div id="peopleRes"></div>
       <h2 style="margin-top:18px">Non è ancora su CosaGuardo?</h2>
       <button class="btn" data-a="shareSignup">📤 Mandagli il link di iscrizione</button>
-      <p class="muted" style="font-size:12px">Chi si registra dal link entra subito nella lista.</p>
+      <p class="muted" style="font-size:12px">Chi si registra dal link si ritrova subito la tua lista.</p>
       <button class="btn ghost" data-a="simLink" style="margin-top:6px">🧪 Prototipo: apri il link come nuovo utente</button>`);
     $("#peopleQ").oninput=renderPeopleRes; $("#peopleQ").focus(); },
-  inviteUser:d=>{ const r=Invites.send(openListId,d.id); toast(r.error||`Invito inviato a ${userName(d.id)}`); renderPeopleRes(); renderLists(); },
+  inviteUser:d=>{ const r=Invites.send(openListId,d.id); toast(r.error||`Invito inviato a ${handle(userById(d.id))}`); renderPeopleRes(); renderLists(); },
   cancelInv:d=>{ Invites.cancel(d.id); renderLists(); },
-  acceptInv:d=>{ const r=Invites.accept(d.id); toast(r.error||`Sei entrato in “${r.list.name}”`); if(!r.error){ openListId=r.list.id; } renderAll(); },
+  unshare:d=>{ if(confirm(`Scollegare la lista da ${userName(d.id)}? Non la vedrà più.`)){ Lists.unshare(openListId,d.id); renderAll(); } },
+  acceptInv:d=>{ const r=Invites.accept(d.id); toast(r.error||`Ora hai “${listLabel(r.list)}”`); if(!r.error) openListId=r.list.id; renderAll(); },
   declineInv:d=>{ Invites.decline(d.id); renderAll(); },
-  shareSignup:async()=>{ const l=Lists.get(openListId), link=`https://cosaguardo.app/invito/${l.invite_code}`;
-    const text=`${me().name} ti invita su CosaGuardo nella lista “${l.name}”: scegliamo insieme cosa guardare! ${link}`;
+  shareSignup:async()=>{ const l=Lists.get(openListId), link=`https://cosaguardo.app/invito/${Lists.ensureCode(l.id)}`;
+    const text=`${me().name} vuole condividere con te la sua lista di film “${l.name}” su CosaGuardo: ${link}`;
     try{ if(navigator.share) await navigator.share({title:"CosaGuardo",text,url:link}); else { await navigator.clipboard.writeText(text); toast("Link copiato negli appunti"); } }
     catch(e){ toast("Link: "+link); } },
-  simLink:()=>{ pendingInvite=Lists.get(openListId).invite_code; closeSheet(); Auth.logout(); current=null; openListId=null; clearResults(); startOnboarding("welcome"); },
-  // --- liste collegate e copia (Premium)
-  linkSheet:()=>{ if(!prof().premium) return openPremium("Collegare le liste è una funzione Premium.");
-    const mine=Lists.mine().filter(x=>x.type==="personal"&&x.id!==openListId), linked=Lists.links(openListId).map(x=>x.linked_list_id);
-    openSheet(`<h3>Collega una tua lista</h3><p class="muted">I film della lista scelta compariranno anche in “${esc(Lists.get(openListId).name)}” e potrete pescarli insieme. Non vengono copiati: se aggiungi un film alla tua lista, compare anche qui.</p>
-      ${mine.map(x=>`<div class="opt ${linked.includes(x.id)?"on":""}" data-a="${linked.includes(x.id)?"unlink":"doLink"}" data-id="${x.id}"><span class="lic">📋</span>
-        <div style="flex:1"><b>${esc(x.name)}</b><div class="muted">${Lists.items(x.id).length} film</div></div><span>${linked.includes(x.id)?"✓":""}</span></div>`).join("")||`<p class="muted">Non hai liste personali da collegare.</p>`}
-      <button class="btn ghost" data-a="closeSheet" style="margin-top:12px">Fatto</button>`); },
-  doLink:d=>{ Lists.link(openListId,d.id); toast("Lista collegata"); A.linkSheet(); renderAll(); },
-  unlink:d=>{ Lists.unlink(openListId,d.id); toast("Lista scollegata"); if($("#sheetBg").classList.contains("on")) A.linkSheet(); renderAll(); },
-  copySheet:()=>{ if(!prof().premium) return openPremium("Copiare le liste è una funzione Premium.");
-    const targets=Lists.mine().filter(x=>x.id!==openListId);
-    openSheet(`<h3>Copia in…</h3><p class="muted">Copia i film di “${esc(Lists.get(openListId).name)}” in un'altra lista. I film già presenti non vengono duplicati.</p>
-      ${targets.map(x=>`<div class="opt" data-a="doCopy" data-id="${x.id}"><span class="lic">${LIST_TYPES[x.type].icon}</span><div style="flex:1"><b>${esc(x.name)}</b><div class="muted">${LIST_TYPES[x.type].label} · ${Lists.items(x.id).length} film</div></div></div>`).join("")||`<p class="muted">Crea prima un'altra lista.</p>`}`); },
-  doCopy:d=>{ const n=Lists.copy(openListId,d.id); closeSheet(); toast(n?`${n} film copiati in “${Lists.get(d.id).name}”`:"Erano già tutti presenti"); renderAll(); },
+  simLink:()=>{ pendingInvite=Lists.ensureCode(openListId); closeSheet(); Auth.logout(); current=null; openListId=null; G=null; stopQuiz(); clearResults(); startOnboarding("welcome"); },
   openList:d=>{ openListId=d.id; searchResults=[]; searchSections=[]; renderLists(); window.scrollTo(0,0); },
   closeList:()=>{ openListId=null; renderLists(); },
   addSearch:async (d,el)=>{ el.disabled=true; let f=searchResults.find(x=>x.id===+d.id);
@@ -1740,11 +2043,12 @@ const A = {
   addManual:()=>{ const t=$("#mTitle").value.trim(); if(!t) return toast("Inserisci un titolo");
     Lists.add(openListId,{custom:true,id:"c_"+Date.now(),title:t,year:null,poster:null,backdrop:null,genre_ids:[+$("#mGenre").value],vote:null,runtime:+$("#mDur").value||null});
     renderLists(); toast("Aggiunto"); },
-  toggleSeen:d=>{ const id=isNaN(+d.id)?d.id:+d.id; const on=!Seen.has(id); Seen.set(id,on); renderAll();
-    if(on){ const it=D().list_items.find(i=>i.movie.id===id); if(it&&!it.movie.custom){ current=it.movie; onbRateNext=false; openRate(it.movie);} } },
+  toggleSeen:d=>{ const id=isNaN(+d.id)?d.id:+d.id, it=Lists.items(openListId).find(i=>i.movie.id===id), on=!Seen.has(id);
+    Seen.set(id,on,it?.movie); renderAll();
+    if(on && it && !it.movie.custom){ current=it.movie; onbRateNext=false; openRate(it.movie); } },
   delItem:d=>{ const id=isNaN(+d.id)?d.id:+d.id; Lists.removeItem(openListId,id); renderAll(); },
-  leaveList:()=>{ if(confirm("Uscire da questa lista?")){ Lists.leave(openListId); openListId=null; renderAll(); } },
-  deleteList:()=>{ const n=Lists.members(openListId).length; if(confirm(n>1?"Eliminare la lista per tutti i membri?":"Eliminare questa lista?")){ Lists.remove(openListId); openListId=null; renderAll(); toast("Lista eliminata"); } },
+  leaveList:()=>{ if(confirm("Togliere questa lista dalle tue liste?")){ Lists.leave(openListId); openListId=null; renderAll(); } },
+  deleteList:()=>{ const n=Lists.viewers(openListId).length; if(confirm(n?"Eliminare la lista? Sparirà anche a chi l'hai collegata.":"Eliminare questa lista?")){ Lists.remove(openListId); openListId=null; renderAll(); toast("Lista eliminata"); } },
   // --- profilo
   prov:d=>{ const g=PROVIDERS.find(p=>p.name===d.name), p=prof(), on=g.ids.some(id=>p.providerIds.includes(id));
     p.providerIds=on?p.providerIds.filter(id=>!g.ids.includes(id)):[...p.providerIds,...g.ids]; save();
@@ -1765,22 +2069,24 @@ const A = {
     if(Auth.byEmail(e)) return toast("Email già registrata");
     Auth.upgradeGuest(n,e,un); closeSheet(); renderAll(); toast("Account creato"); },
   avatarSheet:()=>openSheet(`<h3>Il tuo personaggio</h3><p class="muted">Scegli l'immagine del profilo.</p>${avatarGrid(me().avatar)}`),
-  setAvatar:d=>{ me().avatar=d.id; DB.save(); if(onb){ renderOnb(); } else { closeSheet(); renderAll(); toast(`Ora sei ${avatarOf(me()).name}`); } },
-  usernameSheet:()=>{ openSheet(`<h3>Il tuo nome utente</h3><p class="muted">È come ti trovano gli amici per invitarti nelle liste.</p>
+  setAvatar:(d,el)=>{ me().avatar=d.id; DB.save();
+    if(onb){ document.querySelectorAll("#onb .avopt").forEach(x=>x.classList.toggle("on",x===el)); $("#avPrev").innerHTML=avatarPreview(); $("#onb .onbfoot").innerHTML=avatarFoot(); }
+    else { closeSheet(); renderAll(); toast(`Ora sei ${avatarOf(me()).name}`); } },
+  usernameSheet:()=>{ openSheet(`<h3>Il tuo nome utente</h3><p class="muted">È come ti trovano gli amici per collegarti le loro liste.</p>
       <input type="text" id="eUser" value="${esc(me().username||"")}" autocomplete="off" autocapitalize="none" spellcheck="false" style="margin:8px 0">
       <div class="hint" id="eUserMsg"></div><button class="btn" data-a="saveUsername" style="margin-top:10px">Salva</button>`); },
   saveUsername:()=>{ const un=Usernames.norm($("#eUser").value), err=Usernames.error(un,me().id); if(err) return toast(err);
     Auth.setUsername(un); closeSheet(); renderAll(); toast("Nome utente aggiornato: @"+un); },
-  logout:()=>{ Auth.logout(); current=null; clearResults(); startOnboarding("auth"); },
-  deleteAccount:()=>{ if(!confirm("Eliminare definitivamente l'account e tutti i tuoi dati? Le liste condivise resteranno agli altri membri, senza i film che hai aggiunto tu.")) return;
-    Auth.deleteAccount(); current=null; clearResults(); toast("Account eliminato"); startOnboarding("welcome"); },
-  switchUser:d=>{ Auth.login(d.id); current=null; recent=[]; clearResults(); openListId=null;
+  logout:()=>{ Auth.logout(); current=null; G=null; stopQuiz(); clearResults(); startOnboarding("auth"); },
+  deleteAccount:()=>{ if(!confirm("Eliminare definitivamente l'account e tutti i tuoi dati? Le liste che hai collegato spariranno anche agli altri.")) return;
+    Auth.deleteAccount(); current=null; G=null; stopQuiz(); clearResults(); toast("Account eliminato"); startOnboarding("welcome"); },
+  switchUser:d=>{ Auth.login(d.id); current=null; recent=[]; G=null; stopQuiz(); clearResults(); openListId=null;
     if(onb && prof().onboarded){ endOnboarding(); consumeInvite(); } else if(!prof().onboarded){ startOnboarding("platforms"); } else { renderAll(); goTo("v-pick"); }
     toast("Ciao "+me().name+"!"); },
-  newUser:()=>{ Auth.logout(); current=null; clearResults(); startOnboarding("auth"); },
+  newUser:()=>{ Auth.logout(); current=null; G=null; stopQuiz(); clearResults(); startOnboarding("auth"); },
   saveKey:async()=>{ localStorage.setItem(DEV_KEY,$("#apiKey").value.trim()); await reconnect(true); },
   clearKey:async()=>{ localStorage.removeItem(DEV_KEY); await reconnect(true); },
-  resetAll:()=>{ if(confirm("Cancellare utenti, liste e dati del prototipo?")){ localStorage.removeItem(DB_KEY); DB.load(); current=null; clearResults(); startOnboarding("welcome"); } },
+  resetAll:()=>{ if(confirm("Cancellare utenti, liste e dati del prototipo?")){ localStorage.removeItem(DB_KEY); DB.load(); current=null; G=null; stopQuiz(); clearResults(); startOnboarding("welcome"); } },
   closeSheet:()=>closeSheet(),
   // --- onboarding
   onbGo:d=>{ onb.step=d.step; renderOnb(); },
@@ -1799,11 +2105,13 @@ const A = {
       const err=Usernames.error(username); if(err) return toast(err); }
     Auth.signUp({name,email,provider:onb.method,username}); onb.step="avatar"; onb.method=null; renderOnb();
   },
-  onbSeen:d=>{ const id=+d.id; Seen.set(id,!Seen.has(id)); renderOnb(); },
+  // tocco su una locandina: si aggiorna solo quella (lo schermo non si sposta)
+  onbSeen:(d,el)=>{ const id=+d.id, f=onb.seenTiles.find(x=>x.id===id), on=!Seen.has(id);
+    Seen.set(id,on,f); el.classList.toggle("on",on); $("#onb .onbfoot").innerHTML=seenFoot(); },
   onbFinish:()=>{ prof().onboarded=true; save(); endOnboarding();
     if(pendingInvite){ const r=Lists.joinByLink(pendingInvite); pendingInvite=null;
-      if(r.list){ openListId=r.list.id; renderAll(); goTo("v-lists"); toast(r.error||`Sei entrato in “${r.list.name}”`); } else toast(r.error); } },
-  joinLink:d=>{ const r=Lists.joinByLink(d.code); closeSheet(); toast(r.error||`Sei entrato in “${r.list.name}”`); if(r.list){ openListId=r.list.id; renderAll(); goTo("v-lists"); } },
+      if(r.list){ openListId=r.list.id; renderAll(); goTo("v-lists"); toast(r.error||`Ora hai “${listLabel(r.list)}”`); } else toast(r.error); } },
+  joinLink:d=>{ const r=Lists.joinByLink(d.code); closeSheet(); toast(r.error||`Ora hai “${listLabel(r.list)}”`); if(r.list){ openListId=r.list.id; renderAll(); goTo("v-lists"); } },
 };
 let onbRateNext=true;
 document.addEventListener("click",e=>{
@@ -1811,12 +2119,13 @@ document.addEventListener("click",e=>{
   const fn=A[el.dataset.a]; if(!fn) return;
   fn(el.dataset,el,e);
 });
-// input dei filtri
-document.addEventListener("keydown",e=>{ if(!G || $("#game .tut")) return;
-  const d={ArrowRight:"r",ArrowLeft:"l",ArrowDown:"d"}[e.key]; if(d){ e.preventDefault(); flyOut(d); } });
+// frecce da tastiera per le carte di Scopri (utile da computer)
+document.addEventListener("keydown",e=>{ if(!G || !$("#v-discover").classList.contains("on") || $("#v-discover .tut") || /INPUT|TEXTAREA/.test(document.activeElement?.tagName)) return;
+  const d={ArrowRight:"r",ArrowLeft:"l",ArrowDown:"d",ArrowUp:"h"}[e.key]; if(d){ e.preventDefault(); flyOut(d); } });
 let userEdited=false;
 document.addEventListener("input",e=>{
   const id=e.target.id;
+  if(id==="descBox") renderDescOut();
   if(id==="oName"||id==="uName"){ const f=$(id==="oName"?"#oUser":"#uUser"); if(f && !userEdited){ f.value=e.target.value.trim()?Usernames.suggest(e.target.value):""; checkUser(f); } }
   if(id==="oUser"||id==="uUser"||id==="eUser"){ userEdited=true; checkUser(e.target); }
 });
@@ -1826,7 +2135,7 @@ function checkUser(input){
   const err=Usernames.error(un,input.id==="eUser"?me()?.id:undefined);
   msg.innerHTML = err ? `<span style="color:#ff8a8d">✕ ${esc(err)}</span>` : `<span style="color:var(--ok)">✓ @${esc(un)} è disponibile</span>`;
 }
-$("#descBox").addEventListener("keydown",e=>{ if(e.key==="Enter") A.describe(); });
+$("#descBox").addEventListener("keydown",e=>{ if(e.key==="Enter"){ $("#descBox").blur(); runSearch(); } });
 $("#fDuration").onchange=e=>{ F().maxDur=+e.target.value; save(); renderPick(); };
 $("#fEra").onchange=e=>{ F().era=e.target.value; save(); renderPick(); };
 $("#fRating").onchange=e=>{ F().minRating=+e.target.value; save(); renderPick(); };
@@ -1835,7 +2144,7 @@ $("#fPopular").onchange=e=>{ F().popular=e.target.checked; save(); renderPick();
 $("#fOnlyAvail").onchange=e=>{ F().onlyAvail=e.target.checked; save(); renderPick(); };
 
 async function reconnect(verbose){
-  memo.clear(); metaOk=false; if(me()) clearResults();
+  memo.clear(); metaOk=false; G=null; if(me()) clearResults();
   connInfo=null;
   try{ await loadMeta(); if(verbose) toast(isDemo()?"Uso il catalogo demo":"✅ Connesso a TMDB"); }
   catch(e){ GENRES=BASE_GENRES; connInfo=diagnose(e); if(verbose) toast("❌ "+connInfo.title); }
