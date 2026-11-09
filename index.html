@@ -149,6 +149,37 @@
   .price{display:flex;justify-content:space-between;align-items:center}
   .attrib{font-size:12px;color:var(--muted);line-height:1.5;margin-top:16px}
   .profhead{display:flex;gap:14px;align-items:center}
+  .gcard{display:flex;gap:14px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;margin-bottom:12px;cursor:pointer}
+  .gcard .gic{width:58px;height:58px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:30px;flex:none}
+  .gcard .t{font-weight:700;font-size:17px}
+  .game{position:fixed;inset:0;background:var(--bg);z-index:25;display:none;flex-direction:column;user-select:none}
+  .game.on{display:flex}
+  .ghead{display:flex;align-items:center;justify-content:space-between;padding:14px 16px 6px;max-width:560px;width:100%;margin:0 auto}
+  .ghead b{font-size:17px}
+  .gq{text-align:center;color:var(--muted);font-size:14px;margin:0 16px 8px}
+  .gstack{position:relative;flex:1;max-width:400px;width:calc(100% - 40px);margin:6px auto 10px;min-height:280px}
+  .scard{position:absolute;inset:0;border-radius:22px;overflow:hidden;background-size:cover;background-position:center;box-shadow:0 12px 40px rgba(0,0,0,.5);touch-action:none;cursor:grab;will-change:transform}
+  .scard.back{transform:scale(.95) translateY(10px);filter:brightness(.6)}
+  .scard .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:90px}
+  .scard img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
+  .scard .cap{position:absolute;left:0;right:0;bottom:0;padding:60px 18px 18px;background:linear-gradient(transparent,rgba(0,0,0,.92))}
+  .scard .cap h3{margin:0;font-size:24px;line-height:1.15}
+  .scard .cap .muted{color:#cfd3db}
+  .stamp{position:absolute;top:26px;padding:6px 12px;border:4px solid;border-radius:10px;font-weight:900;font-size:22px;letter-spacing:1px;opacity:0;text-transform:uppercase;background:rgba(0,0,0,.35)}
+  .stamp.r{left:20px;color:var(--ok);border-color:var(--ok);transform:rotate(-14deg)}
+  .stamp.l{right:20px;color:#c9ced8;border-color:#c9ced8;transform:rotate(14deg)}
+  .stamp.d{left:50%;top:auto;bottom:150px;transform:translateX(-50%);color:#ff6b6e;border-color:#ff6b6e;white-space:nowrap}
+  .gbtns{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;max-width:400px;width:calc(100% - 40px);margin:0 auto}
+  .gbtns button{border:1px solid var(--line);background:var(--card2);color:var(--text);border-radius:16px;padding:10px 4px;cursor:pointer;font-size:24px}
+  .gbtns button small{display:block;font-size:11px;color:var(--muted);margin-top:2px}
+  .gbtns .gr{border-color:#2f6b52}.gbtns .gd{border-color:#6b2a2c}
+  .gfoot{display:flex;justify-content:space-between;align-items:center;max-width:400px;width:calc(100% - 40px);margin:10px auto calc(14px + env(safe-area-inset-bottom));font-size:13px;color:var(--muted)}
+  .tut{position:absolute;inset:0;background:rgba(10,11,14,.94);z-index:3;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center}
+  .tut h3{font-size:22px;margin:0 0 6px}
+  .tut .demo{width:150px;height:210px;border-radius:16px;background:linear-gradient(135deg,#3b2b6b,#1b6b7b);margin:18px auto;display:flex;align-items:center;justify-content:center;font-size:54px;animation:tutsw 4.5s ease-in-out infinite}
+  @keyframes tutsw{0%,10%{transform:none}20%,28%{transform:translateX(70px) rotate(10deg)}38%,46%{transform:none}56%,64%{transform:translateX(-70px) rotate(-10deg)}74%,82%{transform:translateY(60px)}92%,100%{transform:none}}
+  .tut .rowt{display:flex;gap:12px;align-items:center;text-align:left;margin:6px 0;font-size:15px;max-width:330px;width:100%}
+  .tut .rowt b{font-size:24px;width:34px;text-align:center;flex:none}
   .srcrow{display:flex;align-items:center;gap:8px;margin:2px 0 12px}
   .srcrow .muted{flex:none}
   .hscroll{display:flex;gap:8px;overflow-x:auto;padding:2px 0 6px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
@@ -204,20 +235,12 @@
   <section id="v-pick" class="view on">
     <div id="setupBanner"></div>
     <div id="followUp"></div>
-    <div class="srcrow"><span class="muted">Da dove:</span><div class="hscroll" id="srcChips"></div></div>
-
-    <div class="seg" id="modeSeg">
-      <button data-a="mode" data-id="desc">✨ Descrivi</button>
-      <button data-a="mode" data-id="filters">⚙️ Filtri</button>
-    </div>
-
-    <div class="section" id="modeDesc">
-      <div class="ask"><input type="text" id="descBox" placeholder="Es. un horror coi fantasmi sotto le 2 ore" autocomplete="off" enterkeyhint="search">
-        <button class="btn" data-a="describe" id="descBtn">Cerca</button></div>
-      <div id="descOut"></div>
-    </div>
-
     <div class="section" id="modeFilters">
+      <div class="flabel">✨ Descrivi cosa ti va <span style="text-transform:none;letter-spacing:0">(facoltativo)</span></div>
+      <div class="ask"><input type="text" id="descBox" placeholder="Es. qualcosa che mi faccia dire “ma che sto guardando?”" autocomplete="off" enterkeyhint="search">
+        <button class="btn" data-a="describe" id="descBtn">OK</button></div>
+      <div id="descOut"></div>
+      <div class="flabel">Da dove</div><div class="hscroll" id="srcChips"></div>
       <div class="flabel">Genere</div><div class="hscroll" id="genreChips"></div>
       <div class="flabel">Mood</div><div class="hscroll" id="moodChips"></div>
       <div class="grid3">
@@ -248,6 +271,7 @@
   </section>
 
   <!-- ===================== LISTE ===================== -->
+  <section id="v-discover" class="view"></section>
   <section id="v-lists" class="view"></section>
 
   <!-- ===================== PROFILO ===================== -->
@@ -256,11 +280,13 @@
 
 <nav><div class="in">
   <button data-a="goto" data-view="v-pick" class="on"><b>🔍</b>Cerca</button>
+  <button data-a="goto" data-view="v-discover"><b>🃏</b>Scopri</button>
   <button data-a="goto" data-view="v-lists"><b>📋<span class="badge" id="invBadge"></span></b>Liste</button>
   <button data-a="goto" data-view="v-profile"><b>👤</b>Profilo</button>
 </div></nav>
 
 <div class="onb" id="onb"></div>
+<div class="game" id="game"></div>
 <div class="loader" id="loader"></div>
 <div class="sheet-bg" id="sheetBg"><div class="sheet" id="sheet"></div></div>
 <div class="toast" id="toast"></div>
@@ -405,7 +431,7 @@ function mockApi(path, q){
 const DB_KEY = "cosaguardo_db_v3", DEV_KEY = "cosaguardo_dev";
 const DB = {
   data:null,
-  empty(){ return {users:[],profiles:{},lists:[],list_members:[],list_items:[],list_invites:[],list_links:[],seen:[],ratings:[],session:null}; },
+  empty(){ return {users:[],profiles:{},lists:[],list_members:[],list_items:[],list_invites:[],list_links:[],seen:[],ratings:[],dismissed:[],swipes:[],session:null}; },
   load(){ try{ this.data=JSON.parse(localStorage.getItem(DB_KEY)); }catch(e){} if(!this.data) this.data=this.empty();
     for(const [k,v] of Object.entries(this.empty())) if(!(k in this.data)) this.data[k]=v;
     for(const u of this.data.users) if(!u.username && u.provider!=="guest") u.username=Usernames.suggest(u.name); },
@@ -531,6 +557,14 @@ const Users = {
 const handle = u => u?.username ? "@"+u.username : "";
 // nome lista leggibile anche per chi non ne è il proprietario ("La mia lista di Marco")
 const listLabel = l => l.type==="personal" && l.owner_id!==Auth.current()?.id ? `${l.name} di ${userName(l.owner_id)}` : l.name;
+// film segnati "non mi interessa": non vengono più proposti
+const Dismissed = {
+  has(movieId){ const me=Auth.current(); return !!me && D().dismissed.some(x=>x.user_id===me.id&&x.movie_id===movieId); },
+  set(movieId,on){ const me=Auth.current().id; D().dismissed=D().dismissed.filter(x=>!(x.user_id===me&&x.movie_id===movieId));
+    if(on) D().dismissed.push({user_id:me,movie_id:movieId,at:Date.now()}); DB.save(); },
+  count(){ const me=Auth.current().id; return D().dismissed.filter(x=>x.user_id===me).length; },
+  clear(){ const me=Auth.current().id; D().dismissed=D().dismissed.filter(x=>x.user_id!==me); DB.save(); },
+};
 const Seen = {
   has(movieId,userId=Auth.current().id){ return D().seen.some(s=>s.user_id===userId&&s.movie_id===movieId); },
   set(movieId,on){ const me=Auth.current().id; D().seen=D().seen.filter(s=>!(s.user_id===me&&s.movie_id===movieId)); if(on) D().seen.push({user_id:me,movie_id:movieId,at:Date.now()}); DB.save(); },
@@ -675,13 +709,57 @@ const NL_KEYWORDS = [ // italiano → parola chiave TMDB (in inglese)
   ["olocausto","holocaust"],["seconda guerra mondiale","world war ii"],["povert\\w*|pover[io]","poverty"],["classi sociali|ricchi e poveri","class differences"],
   ["cucina|chef|cuoc\\w*","chef"],["adolescen\\w*|crescita|diventare grand\\w*","coming of age"],["viaggio|viaggi","journey"],["famiglia","family"],
 ];
+// Concetti: cosa l'utente "vuole provare", detto a parole sue. Ogni concetto ha
+// - frasi/parole che lo attivano (anche slang),
+// - parole chiave TMDB verificate (id reali),
+// - film di riferimento scelti come li descrive la critica (SEED_FILMS),
+// - generi da escludere per togliere rumore.
+// In produzione questo lavoro lo farà un modello AI che legge recensioni e critiche.
+const CONCEPTS = {
+  wtf:{label:"🤯 Spiazzanti, “ma che sto guardando?”",
+    re:"che cazzo|che cavolo|che diavolo|che minchia|wtf|ma che sto|cosa sto guardando|cosa sto vedendo|assurd\\w*|stran[oiae]|stramb\\w*|foll[ei]|fuori di testa|bizzarr\\w*|surreal\\w*|psichedelic\\w*|trip|mind ?fuck|senza senso|cervellotic\\w*|mi esplod\\w*|mi frigg\\w*|non ci capisc\\w*|non capire niente|allucinant\\w*|visionari\\w*|oniric\\w*|weird|fuori dagli schemi|sperimental\\w*|fuori di zucca|disagio",
+    kw:[9887,374835,214655,362567,3307,312814,362252,184392], not:[10751,16], demo:[18,1,11,12,37]},
+  twist:{label:"🔄 Colpi di scena",
+    re:"colp[oi] di scena|finale a sorpresa|finale inaspettat\\w*|twist|non te l'aspetti|non me l'aspettavo|ribaltament\\w*|spiazz\\w*|sorprend\\w*|fregat\\w*",
+    kw:[275311,326438,174089,157171], not:[10751], demo:[4,1,11,24,23]},
+  feelgood:{label:"☀️ Feel good",
+    re:"feel ?good|tirarmi su|tiri su|buon umore|sorrider\\w*|positiv\\w*|coccol\\w*|scald\\w* il cuore|cuore caldo|ottimist\\w*|allegr\\w*|mi metta di buon",
+    kw:[383896,319357,275276], not:[27,53,10752], demo:[36,13,16,40,28,19]},
+  cry:{label:"😢 Da piangere",
+    re:"pianger\\w*|piango|lacrim\\w*|strappalacrime|fazzolett\\w*|commuov\\w*|commoss\\w*|struggent\\w*|straziant\\w*|distrutt\\w* emotivamente",
+    kw:[156924,346048], demo:[25,40,7,30,19]},
+  disturbing:{label:"😵 Disturbanti",
+    re:"disturbant\\w*|malat[oi]|pervers\\w*|inquietant\\w*|traumatizz\\w*|lasci\\w* il segno|scioccant\\w*|shock|crud[oi]|gore|splatter|viscerale|incubi",
+    kw:[361070,283085,10292], not:[10751,16], demo:[12,32,41,11]},
+  tension:{label:"😰 Ansia e tensione",
+    re:"ansi[ae]|tension\\w*|fiato sospeso|angosc\\w*|cardiopalma|sulle spine|claustrofob\\w*|mangiarmi le unghie|teso",
+    kw:[277551,280263,227951,12565], not:[10751,16], demo:[35,38,22,4]},
+  think:{label:"🧠 Fanno pensare",
+    re:"far(mi)? pensare|riflettere|filosof\\w*|intelligent\\w*|profond\\w*|esistenzial\\w*|cervello acceso|che mi faccia pensare|mi lasci domande",
+    kw:[490,181324,4565], demo:[3,1,14,25]},
+  cult:{label:"🍿 Trash e cult",
+    re:"trash|così brutt\\w*|brutto ma bello|cult|b.?movie|kitsch|camp|da ridere per quanto",
+    kw:[323812,383390,374649,207506], demo:[33,21]},
+  timeloop:{label:"🔁 Loop temporali",
+    re:"loop|stesso giorno|rivive\\w*|si ripete|ricomincia\\w*|anello temporale",
+    kw:[10854,366519], demo:[6]},
+  epic:{label:"⚔️ Epici",
+    re:"epic[oiae]|kolossal|grandios\\w*|maestos\\w*|battaglie",
+    kw:[377433,188270], demo:[27,29,42,15,14]},
+};
+const SEED_FILMS = {"wtf":[[1018,"Mulholland Drive","2001","/zQKnbazscP54i6iKHfdgYdmDsLv.jpg",[53,18,9648],7.8],[985,"Eraserhead - La mente che cancella","1977","/dDFEyNocDqewbAu3T47KS9HWxWB.jpg",[27,878],7.3],[492,"Essere John Malkovich","1999","/paR1quNU2HSq8gjvl2el0QHnncw.jpg",[35,18,14],7.4],[181886,"Enemy","2014","/vf40tyDRKZsBmaLsYeopzfFLzLx.jpg",[53,9648],6.8],[381283,"Madre!","2017","/tWpBFPud4gNumdYWAb4pulhVOw1.jpg",[27,9648],6.9],[545611,"Everything Everywhere All at Once","2022","/4YF4QREw9vUjJSvzypd5uvpDxcT.jpg",[28,12,878],7.7],[141,"Donnie Darko","2001","/lnjeGgoi6VjEweIPRmxLIORcfwK.jpg",[14,18,9648],7.8],[8327,"La montagna sacra","1973","/vUSbKUvSRVvfZgGaHE8IyDSxGJb.jpg",[18],7.5],[347031,"Swiss Army Man - Un amico multiuso","2016","/qbqaNlxbscdPS0aNsLD0zcBCTWo.jpg",[35,18,10749,14,12],6.9],[4960,"Synecdoche, New York","2008","/5UwdhrjXhUgsiDhe1dpS9z4yj7q.jpg",[18],7.5],[34647,"Enter the Void","2010","/8wDYwDgyZcUyuxXBmeIq9qo98bm.jpg",[14,18],7.3],[14337,"Primer","2004","/xEoq2WmDzpzxhkHEsmOYOg6BPg6.jpg",[878,18,53],6.7],[300668,"Annientamento","2018","/uBw48lpspzCRSCVjwZ8Y41fseK0.jpg",[878,27],6.5],[97370,"Under the Skin","2014","/oprBHn0WAuQBVn3gYdFlARyDXPo.jpg",[53,878,18],6.1],[254320,"The Lobster","2015","/8vW5UY7ksIphLTqEUj46ly5Wclh.jpg",[35,18,10749],7.0],[638,"Strade perdute","1997","/4JgQDufKuQ66hPyCvtKVI6UUEP0.jpg",[18,53,9648],7.6],[798286,"Beau ha paura","2023","/xixQ5abpEF0qyvuTcRsND0tmwsv.jpg",[35,12,14],6.7],[38810,"Dogtooth","2009","/vInCRfJLpQ05OCgwjj01zyZdOHe.jpg",[18],7.0],[45649,"Rubber","2010","/qo353Eg6vCoibKfIYc2geL1tP3P.jpg",[35,18,14,27,9648],5.9],[68,"Brazil","1985","/oyF7GCllibKOR346S1lPzVaspT7.jpg",[35,878],7.7],[2742,"Il pasto nudo","1991","/m7Wbyq6EywWH5OCptm6YbjBT6s3.jpg",[80,18],7.0],[21484,"Possession","1981","/kib6SwPVsuGTSjB8hsNOdxBQeo.jpg",[27],7.3],[220289,"Coherence - Oltre lo spazio tempo","2014","/dDuNvc3KwBVAyJESFSenIFFnfr3.jpg",[53,878],7.2],[26466,"Triangle","2009","/yUD8ycP4pXo5T9viEyxEMMtGwqR.jpg",[27],6.9],[4977,"Paprika - Sognando un sogno","2006","/njcUCjf6qbBXnYtGIrPJ7hgXWJ3.jpg",[16,878,53],7.8],[103328,"Holy Motors","2012","/ySZIi7sxQ6OTETlK1qjA1efNozP.jpg",[18,14],7.0],[424781,"Sorry to Bother You","2018","/peTl1V04E9ppvhgvNmSX0r2ALqO.jpg",[14,878,35],6.8],[792307,"Povere creature!","2023","/8rwQrD5PBr290AaePDC9kd61dnD.jpg",[878,10749,35],7.6],[399057,"Il sacrificio del cervo sacro","2017","/mdg9vj8czoycz2emXOaqRsJrjll.jpg",[18,53,9648],7.0],[41428,"Tetsuo - The Iron Man","1989","/bwxZhH96ackHaC6keW5w36FbZA0.jpg",[27,878],7.0]],"twist":[[745,"The Sixth Sense - Il sesto senso","1999","/1Dth4Jbh7FzPguUIddmK43deTCy.jpg",[9648,53,18],8.0],[629,"I soliti sospetti","1995","/niMggxAW9Ig34cGL0ZITSNcjoeO.jpg",[18,80,53],8.2],[550,"Fight Club","1999","/rtNLQ8HbPElzEfrHjrzSr07prKT.jpg",[18,53],8.4],[11324,"Shutter Island","2010","/kgPRqDDr5RFkIly6CJrBPHYs2qS.jpg",[18,53,9648],8.2],[77,"Memento","2000","/eyVdGf0QUnw1SBr1IMvZJj5kk6M.jpg",[9648,53],8.2],[1124,"The Prestige","2006","/1GjRCeZoE251tWkYc3erwjpdBpU.jpg",[18,9648,878],8.2],[807,"Seven","1995","/1XHq0Z7BkjeQ9J5CLmWD0xX0DuB.jpg",[80,9648,53],8.4],[210577,"L'amore bugiardo - Gone Girl","2014","/6VHGi1nlslwztqGOCrlQlNvell2.jpg",[9648,53,18],7.9],[670,"Old Boy","2003","/bVL3wpVhjmkWdG2jWj1cv9L8pjR.jpg",[53,9648],8.2],[1933,"The Others","2001","/qG80oTSpuh4kDcZqkMM0T2bB7z4.jpg",[27,9648,53],7.6],[411088,"Contrattempo","2017","/jeDX0eAYbDsAP0hTuGrhZQWjoGW.jpg",[18,9648,53],8.1],[146233,"Prisoners","2013","/h1rj4wTATjxeqFMtEOuZyk1czis.jpg",[18,53,80],8.1],[329865,"Arrival","2016","/ssAmTJia73UR2tHeTJDXgCH6FG1.jpg",[18,878,9648],7.6],[496243,"Parasite","2019","/mMM8kcfspicib7AmPTvf97Rarwn.jpg",[35,53,18],8.5],[206487,"Predestination","2014","/6EiTMMILFtJpf6d0rsJOMf0fvP0.jpg",[878,53],7.4],[2832,"Identità","2003","/q8O3je67f3X7fZb47U8HHUexHW1.jpg",[9648,53],7.2],[1592,"Schegge di paura","1996","/rUMCzqmCD37YlDvVK6T44DP0zXw.jpg",[80,18,53],7.7],[21208,"Orphan","2009","/c2p1rVsCgqOu7zN6ihh0GjPsbDu.jpg",[27,53],7.0]],"feelgood":[[77338,"Quasi amici - Intouchables","2011","/ILg0AoyUlY5gpXGcMXNZS95FMG.jpg",[18,35],8.3],[13,"Forrest Gump","1994","/gsbmOBQKIzO3q57pITk9Ol4urV2.jpg",[35,18,10749],8.5],[194,"Il favoloso mondo di Amélie","2001","/ugVnbzXJugaI83XHIvBNMsXnC35.jpg",[35,10749],7.9],[346648,"Paddington 2","2017","/q9KCM3yuAPJX3ANaUfEWThQY7Oa.jpg",[12,35,10751],7.5],[773,"Little Miss Sunshine","2006","/8hDJ0q76dW65SU6sYO3q5J4qbPU.jpg",[35,18],7.7],[490132,"Green Book","2018","/gyjBcyimXedn0GANgagmfmcNU44.jpg",[18,35,36],8.2],[11631,"Mamma Mia!","2008","/iHQyTBxUcgUWE3q7kyb97DSJqy9.jpg",[35,10749],7.0],[369557,"Sing Street","2016","/pjLzfbOQDOKSOa9JdfzpB3C8fTN.jpg",[10749,18,10402,35],7.9],[212778,"Chef - La ricetta perfetta","2014","/vXjFOhoPBzqmghgyj3uhw6VK6qw.jpg",[35],7.1],[122906,"Questione di tempo","2013","/3d8p9ZttmLS0HFl3F4RlgP8GzJT.jpg",[18,10749,14],7.9],[120467,"Grand Budapest Hotel","2014","/tY8gmrOOzhJxfBLQNOxjbuSR52b.jpg",[35,18],8.0],[509,"Notting Hill","1999","/6GDBcpQNtRAKHajRoeBj10pMNIX.jpg",[10749,35],7.3],[1584,"School of Rock","2003","/wMR7jnZ4WjozimKS25Iyf6Ox2gp.jpg",[35,10751,10402],7.1],[116745,"I sogni segreti di Walter Mitty","2013","/aBaLgOfwIbQCVq2honGloFOuj3r.jpg",[12,35,18,14],7.2],[776503,"CODA - I segni del cuore","2021","/t1E8EQPNVMUYenp3mn7vs2nBvnh.jpg",[18,10402,10749],7.9],[14160,"Up","2009","/j3Ga41uc0y3W8KbKjSfPHQiZYVn.jpg",[16,35,10751,12],8.0]],"cry":[[423,"Il pianista","2002","/zK3KyPLAQl0IRIToIaQsMxm0aR3.jpg",[18,10752],8.4],[11036,"Le pagine della nostra vita","2004","/pu5Q3YuYgSkfkVIdkChJVZjAaI5.jpg",[10749,18],7.9],[354912,"Coco","2017","/l5qUox5uroubMi8sihD9RGPbcwO.jpg",[10751,16,10402,12],8.2],[28178,"Hachiko - Il tuo migliore amico","2009","/ag59RClKGBa60Ymbcucr73394yV.jpg",[18,10751],8.0],[424,"Schindler's List","1993","/9SiPeJ9Wf2MoUdzUskaw5OrRV4V.jpg",[18,36,10752],8.6],[637,"La vita è bella","1997","/fuzbu9hFSDskrwjVKvcEUzp4DDH.jpg",[35,18],8.4],[497,"Il miglio verde","1999","/kptqTcldosy8JPf75JT16oTYUMB.jpg",[14,18,80],8.5],[222935,"Colpa delle stelle","2014","/28GUybHH7sNCi1iBn3lMndvdV8c.jpg",[10749,18],7.6],[334541,"Manchester by the Sea","2016","/jEmX3NNU54Nkqcn5GDXF43RBXJ1.jpg",[18],7.5],[14574,"Il bambino con il pigiama a righe","2008","/kLmD4vZNbvPoxPrZgSbPlQqrLrF.jpg",[18,10752,36],7.8],[965150,"Aftersun","2022","/evKz85EKouVbIr51zy5fOtpNRPg.jpg",[18],7.7],[12477,"La tomba delle lucciole","1988","/kwXG1DSpciHsBvcBojqMqGkU7pe.jpg",[16,18,10752],8.4],[70,"Million Dollar Baby","2004","/3ehWHEKe54gTpYoTZ19q2qRCCyH.jpg",[18],8.0],[14306,"Io & Marley","2008","/tiSQW9HjOxUFXqlprb8MM8mmXgn.jpg",[35,10751],7.2]],"disturbing":[[641,"Requiem for a Dream","2000","/3E8RFYisnqy93251alK66bbGNpE.jpg",[18],8.0],[933260,"The Substance","2024","/cWuloBih4I1Odambw67TQRuPmFl.jpg",[27,878],7.1],[44214,"Il cigno nero","2010","/dywocnQY2FhEpDeV56Vl3yHw0oy.jpg",[18,53,27],7.7],[530385,"Midsommar - Il villaggio dei dannati","2019","/rzgPP3PCFou1VP4EE4fZ9jEd1J1.jpg",[27,18,9648],7.1],[493922,"Hereditary - Le radici del male","2018","/rNL0qZZCgeeYAPamh69r7BSYQnh.jpg",[27,9648,53],7.3],[9539,"Martyrs","2008","/1xZK6g1M6a7xlk8j7mSzls1qxz3.jpg",[27,18,53],7.3],[10234,"Funny Games","1997","/n6NJWxSSTqBb69T3iTKVkvBMoBA.jpg",[18,27,53],7.3],[11075,"Audition","2000","/A61sCUVVFw4XGnbY1Hj72VBOlh3.jpg",[27,18],7.1],[979,"Irréversible","2002","/97NsFlbvlMS2RGibXWhA9p41a9S.jpg",[18,53,80],7.2],[393519,"Raw - Una cruda verità","2017","/6BViRx2FVv4JC1dPHMm9DwLOWWz.jpg",[27,18],7.0],[21484,"Possession","1981","/kib6SwPVsuGTSjB8hsNOdxBQeo.jpg",[27],7.3],[399057,"Il sacrificio del cervo sacro","2017","/mdg9vj8czoycz2emXOaqRsJrjll.jpg",[18,53,9648],7.0],[17609,"Antichrist","2009","/1npvm5xly8UdxWiG5Gh1GB8Ay15.jpg",[18,27,53],6.6],[176,"Saw - L'enigmista","2004","/Af6pA1gRXRCySgmONk4OufQQVOR.jpg",[27,9648,80],7.4],[73861,"A Serbian Film","2010","/qT312t40YmlOSsOXOoOLDCvRbPx.jpg",[80,27,53],5.4]],"tension":[[473033,"Diamanti grezzi","2019","/eX85odLydC12I99Mgi50EZppv1T.jpg",[18,53,80],7.2],[244786,"Whiplash","2014","/jQwkXN38AGrK2s3LJqxZow1Ic7z.jpg",[18,10402,53],8.4],[26388,"Buried - Sepolto","2010","/aeH8ErePjybUjrdBcglhYvgXkiJ.jpg",[53],6.6],[486947,"Il colpevole - The Guilty","2018","/mkEFPvw8l6gtQy1L2oJGhOMO67b.jpg",[53,18,80],7.3],[273481,"Sicario","2015","/6jWfuZSOdFSUvMpE2SsOFNpg1EU.jpg",[28,80,53],7.4],[146233,"Prisoners","2013","/h1rj4wTATjxeqFMtEOuZyk1czis.jpg",[18,53,80],8.1],[4547,"Panic Room","2002","/hANYbvfwxmkC9E4yY6YyJxYxlSJ.jpg",[80,18,53],6.8],[6977,"Non è un paese per vecchi","2007","/2zbXKL34bwaZ2gBygwoDE8DXHs7.jpg",[80,53,37],7.9],[313922,"Green Room","2016","/xk7fPBaOG8P38yLrfCGXuVXbbvB.jpg",[27,80,53],6.7],[300669,"Man in the Dark","2016","/5EG1C1mrak2WsP3xcluRQ74ZbDl.jpg",[27,53],7.0],[49047,"Gravity","2013","/4pRXqT7wQmoH5sH6Z4WYmbAFG4t.jpg",[878,53,18],7.2],[429200,"Good Time","2017","/qYPDDIWh8KUeOQFwx7QCJnc9t73.jpg",[80,53,18],7.2],[567,"La finestra sul cortile","1954","/92VbMKvjFvy1EZbdukMJft8iMXV.jpg",[53,9648,18],8.3]],"think":[[329865,"Arrival","2016","/ssAmTJia73UR2tHeTJDXgCH6FG1.jpg",[18,878,9648],7.6],[62,"2001: Odissea nello spazio","1968","/uvSRVMXGHaCeYAj2pCYNdC31b2u.jpg",[878,9648,12],8.0],[152601,"Lei","2013","/ptoIaqRBgyBVMKXRG2V2afFqDut.jpg",[10749,878,18],7.8],[157336,"Interstellar","2014","/bMKiLh0mES4Uiococ240lbbTGXQ.jpg",[12,18,878],8.5],[603,"Matrix","1999","/3vmTUXJHlKkvenf8G35dr5HlTEh.jpg",[28,878],8.3],[264660,"Ex Machina","2015","/qRFWr87YE1ENrmW8iEoHfcNjaPz.jpg",[18,878],7.6],[37165,"The Truman Show","1998","/vniJPHHUpjdVPTSGxn6b3z93nyK.jpg",[35,18],8.2],[38,"Se mi lasci ti cancello","2004","/uDuAYpBfFQvFMnlt2w8xUUZiWrr.jpg",[878,18,10749],8.1],[782,"Gattaca - La porta dell'universo","1997","/t7mjUkvfsN8uqAFnbLyMH0pAN8w.jpg",[878,18],7.6],[1398,"Stalker","1979","/8hu3TGZ7inYfu2R1vIqEAffNZmF.jpg",[878,18],8.1],[593,"Solaris","1972","/35qz0324aNUOfvU9OCWG3zedKqR.jpg",[18,878,9648],7.8],[78,"Blade Runner","1982","/2mPclQ5v9YK0eqCefvav3YsYPYI.jpg",[878,18,53],7.9],[9693,"I figli degli uomini","2006","/hPEBF75kXW4mnJnxT9YRvmwNuKp.jpg",[878,53,28],7.6],[27205,"Inception","2010","/5QHWgqaBxZI1eM5e3YhyKzY5o3z.jpg",[28,878,80],8.4]],"cult":[[17473,"The Room","2003","/9QscHN4pXj6Ja1k7e1ZT4vWDGnr.jpg",[18,10749],4.0],[10513,"Plan 9 from Outer Space","1957","/bmicZi7PvlnZ9rZqp6QXN2Db0pT.jpg",[878,27],4.2],[205321,"Sharknado","2013","/atEmHkVFTSGRYt2PeCiziQqbZnI.jpg",[28,35,27,878,10770],3.9],[26914,"Troll 2","1990","/eFth6zw4PEInzr2Y64mYVN1zbBi.jpg",[27,14],3.9],[36685,"The Rocky Horror Picture Show","1975","/5ycpwyUkYBwm2VFoE3TkP3OtuFw.jpg",[35,878,27],7.4],[3604,"Flash Gordon","1980","/8bgzzWqVdMEaFWv0UCapKvSoxDJ.jpg",[878,12,28,10751],6.3],[10802,"Showgirls","1995","/pI0SkMbWRQlSMNZ9KqTdR8gkHAN.jpg",[18],5.6],[40016,"Birdemic: Shock and Terror","2010","/gqmcAVNNUosB55RliecFYnkWT4M.jpg",[10749,27,53],2.2],[6978,"Grosso guaio a Chinatown","1986","/vuubw3idZXgUJeXMWBDS8ZsGtEL.jpg",[28,12,35,14],7.2],[765,"La casa 2","1987","/d6LxTnrQkGunn3MBXx2htWl2rlP.jpg",[27,35,14],7.5]],"timeloop":[[137,"Ricomincio da capo","1993","/z2SbvgkmsVdZSbCgVN4O2EVXLnb.jpg",[10749,14,35],7.6],[137113,"Edge of Tomorrow - Senza domani","2014","/AbzpU4ookiyWFmiq1bTZwjNl7Y1.jpg",[28,878],7.6],[587792,"Palm Springs - Vivi come se non ci fosse un domani","2020","/r7IaymIe18TWpQcNyKjw0yUbBGe.jpg",[35,10749,878],7.3],[45612,"Source Code","2011","/cPjreWNgAdhGFN8rfNb6KIzpmjj.jpg",[53,878,9648],7.3],[440021,"Auguri per la tua morte","2017","/ftRl3seZpRmfGS43UmyakntnOC5.jpg",[35,27,9648],6.7],[26466,"Triangle","2009","/yUD8ycP4pXo5T9viEyxEMMtGwqR.jpg",[27],6.9],[397837,"Prima di domani","2017","/mm3znKqsYE0RtckceHqB3EYhgin.jpg",[18,14],7.0],[104,"Lola corre","1998","/jEpAnOSYoeBenZovHOghJecnzHr.jpg",[28,18,53],7.3],[59967,"Looper - In fuga dal passato","2012","/trz8LeAJXpJTSq0xm131HA9Unbw.jpg",[28,53,878],6.9]],"epic":[[122,"Il Signore degli Anelli - Il ritorno del re","2003","/eCua9No8HqVxGajDQrG8mvRCtJM.jpg",[12,14,28],8.5],[98,"Il gladiatore","2000","/euOKjQaV1QXtzLyNZAa1PMHGJlJ.jpg",[28,18,12],8.2],[197,"Braveheart - Cuore impavido","1995","/gZvvrgehgqYNy12Z2sP333nn5Nw.jpg",[36,18,10752],7.9],[693134,"Dune - Parte due","2024","/nhdQxDCI64rMgypYZpsF7UvbdJA.jpg",[878,12],8.1],[947,"Lawrence d'Arabia","1962","/sZITQe4lSbhLuG8Q9FjcT0iKnQk.jpg",[12,36,10752],8.0],[665,"Ben-Hur","1959","/4pHkQ4rY44zbgXh9grnqn0UzUgr.jpg",[36,18,12],7.9],[1495,"Le crociate - Kingdom of Heaven","2005","/eBANLMsnquFkKzf28l93SunsksU.jpg",[18,28,12,36,10752],7.1],[616,"L'ultimo samurai","2003","/hHYbOZVogfOIVg4FEF2Hs2UUNHs.jpg",[18,28,10752],7.6],[652,"Troy","2004","/6n8BiphW9fvqC6biB0RMfblqi43.jpg",[28,12],7.2],[1271,"300","2007","/p5mkzoF4xSaDhAB4oCNBHHojjqn.jpg",[28,12,10752],7.2]]};
+// film di riferimento di un concetto, nel formato dell'app
+function conceptSeeds(id){
+  if(isDemo()) return (CONCEPTS[id].demo||[]).map(n=>DEMO.find(m=>m.id===DEMO_BASE+n)).filter(Boolean).map(m=>normalize(m));
+  return (SEED_FILMS[id]||[]).map(([id,title,year,poster,genre_ids,vote])=>({id,title,year,poster,backdrop:null,genre_ids,vote,overview:"",runtime:null}));
+}
 const NL_NUM = {un:1,uno:1,una:1,due:2,tre:3,quattro:4};
 const NL_DECADES = {sessanta:60,settanta:70,ottanta:80,novanta:90,duemila:0};
 const NL_STOP = new Set("un una uno il lo la i gli le che e ed non ma per in a al da di del della con dove film ore ora minuti anni piu più meno qualcosa tipo come sotto sopra stasera nello nella nei negli nel sul sulla col coi tra fra senza molto bello bella brutto paura".split(" "));
 const rx = p => new RegExp(`(^|[^a-zà-ù])(${p})(?![a-zà-ù])`,"i");
 
 async function parseQuery(text){
-  const out={genres:[],moods:[],maxDur:0,era:null,years:null,yearsLabel:null,minRating:null,keywords:[],people:[],labels:[]};
+  const out={genres:[],moods:[],maxDur:0,era:null,years:null,yearsLabel:null,minRating:null,keywords:[],people:[],concepts:[],labels:[]};
   let t=" "+text.trim()+" ";
   // 1) persone: "con Tom Hanks", "di Nolan Christopher", "diretto da ...", "regia di ..."
   const pr=/(?:\bcon|\bcoi|\bdi|\bda|diretto da|regia di|interpretato da|protagonista)\s+(?=([A-Za-zÀ-ÿ'.-]+(?:\s+[A-Za-zÀ-ÿ'.-]+){0,2}))/gi;
@@ -723,7 +801,10 @@ async function parseQuery(text){
       if(k && !out.keywords.some(x=>x.id===k.id)) out.keywords.push({id:k.id,name:hit[2],en});
     }catch(e){}
   }
+  // 7) concetti (cosa vuoi provare guardandolo)
+  for(const [id,c] of Object.entries(CONCEPTS)) if(rx(c.re).test(low)) out.concepts.push(id);
   // etichette "Ho capito"
+  out.concepts.forEach(id=>out.labels.push(CONCEPTS[id].label));
   out.genres.forEach(g=>out.labels.push(`${GENRE_EMOJI[g]||"🎬"} ${genreName(g)}`));
   out.moods.forEach(x=>out.labels.push(MOODS[x].label));
   out.keywords.forEach(k=>out.labels.push(`🏷 ${k.name}`));
@@ -739,7 +820,11 @@ function parsedToParams(r){
   const p={language:LANG,sort_by:"popularity.desc",include_adult:false,"vote_count.gte":50};
   if(r.genres.length) p.with_genres=r.genres.join(",");
   else if(r.moods.length) p.with_genres=[...new Set(r.moods.flatMap(m=>MOODS[m].g))].join("|");
-  if(r.keywords.length) p.with_keywords=r.keywords.map(k=>k.id).join("|");
+  const kw=[...r.keywords.map(k=>k.id),...(isDemo()?[]:(r.concepts||[]).flatMap(c=>CONCEPTS[c].kw))];
+  if(kw.length) p.with_keywords=[...new Set(kw)].join("|");
+  const notG=[...new Set((r.concepts||[]).flatMap(c=>CONCEPTS[c].not||[]))].filter(g=>!r.genres.includes(g));
+  if(notG.length) p.without_genres=notG.join(",");
+  if((r.concepts||[]).length){ p.sort_by="vote_count.desc"; if(isDemo()&&!kw.length&&!r.genres.length) return null; }
   const cast=r.people.filter(x=>x.role==="cast"), crew=r.people.filter(x=>x.role==="crew");
   if(cast.length) p.with_cast=cast.map(x=>x.id).join("|");
   if(crew.length) p.with_crew=crew.map(x=>x.id).join("|");
@@ -750,21 +835,23 @@ function parsedToParams(r){
   else if(r.era==="classic") p["primary_release_date.lte"]="1999-12-31";
   return p;
 }
-const understoodHtml = r => r.labels.length
-  ? `<div class="understood"><span class="muted">Ho capito:</span>${r.labels.map(l=>`<span class="tag">${esc(l)}</span>`).join("")}</div>`
-  : `<div class="hint">🤔 Non ho capito bene. Prova a indicare un genere (horror, commedia…), un tema (fantasmi, spazio, mafia…), una durata (“max 2 ore”), un periodo (“anni 90”) o un attore (“con Tom Hanks”).</div>`;
+const understoodHtml = (r,clearable) => r.labels.length
+  ? `<div class="understood"><span class="muted">Ho capito:</span>${r.labels.map(l=>`<span class="tag">${esc(l)}</span>`).join("")}${clearable?`<span class="link" data-a="clearDesc">✕ togli</span>`:""}</div>`
+  : `<div class="hint">🤔 Non ho capito bene. Prova a dire cosa vuoi provare (“qualcosa che mi faccia piangere”, “roba assurda”, “con un finale a sorpresa”), un genere, un tema (fantasmi, spazio, mafia…), una durata (“max 2 ore”), un periodo (“anni 90”) o un attore (“con Tom Hanks”).</div>`;
 
 /* =====================================================================
    6. MOTORE DI SCELTA
    ===================================================================== */
-// criteri attivi: quelli della modalità "Descrivi" oppure quelli della modalità "Filtri".
-// Fonti e opzioni (piattaforme/liste, già visti, solo disponibili) sono in comune.
-const C = () => { const f=F(), p=prof();
-  if(p.searchMode!=="desc") return {...f,keywords:[],people:[]};
-  const d=p.descCrit||{};
-  return {...clone(DEFAULT_FILTERS),sources:f.sources,hideSeen:f.hideSeen,popular:f.popular,onlyAvail:f.onlyAvail,
-    genres:d.genres||[],moods:d.moods||[],maxDur:d.maxDur||0,era:d.years?"custom":(d.era||"all"),years:d.years||null,
-    minRating:d.minRating??0,keywords:d.keywords||[],people:d.people||[]}; };
+// criteri attivi = filtri scelti + quello che si è capito dalla descrizione (campo "Descrivi")
+const C = () => { const f=F(), d=prof().descCrit;
+  if(!d) return {...f,keywords:[],people:[],concepts:[]};
+  const u=(a,b)=>[...new Set([...(a||[]),...(b||[])])];
+  const era=f.era!=="all"?f.era:(d.years?"custom":(d.era||"all"));
+  return {...f,genres:u(f.genres,d.genres),moods:u(f.moods,d.moods),
+    maxDur:f.maxDur&&d.maxDur?Math.min(f.maxDur,d.maxDur):(f.maxDur||d.maxDur||0),
+    era,years:era==="custom"?(f.era==="custom"?f.years:d.years):null,
+    minRating:Math.max(f.minRating||0,d.minRating||0),
+    keywords:d.keywords||[],people:d.people||[],concepts:d.concepts||[]}; };
 const moodGenres = () => [...new Set(C().moods.flatMap(m=>MOODS[m].g))];
 const moodExcluded = () => { const inc=new Set([...moodGenres(),...C().genres]);
   return [...new Set(C().moods.flatMap(m=>MOODS[m].not||[]))].filter(g=>!inc.has(g)); };
@@ -779,7 +866,11 @@ function discoverParams(){
     "vote_average.gte":f.minRating||null,"vote_count.gte":f.popular?MIN_VOTES:20};
   if(f.genres.length) p.with_genres=f.genres.join("|"); else if(f.moods.length) p.with_genres=moodGenres().join("|");
   const not=moodExcluded(); if(not.length) p.without_genres=not.join(",");
-  if(f.keywords.length) p.with_keywords=f.keywords.map(k=>k.id).join("|");
+  const kw=[...f.keywords.map(k=>k.id),...(isDemo()?[]:f.concepts.flatMap(c=>CONCEPTS[c].kw))];
+  if(kw.length) p.with_keywords=[...new Set(kw)].join("|");
+  if(f.concepts.length){ p.sort_by="vote_count.desc";
+    const notG=f.concepts.flatMap(c=>CONCEPTS[c].not||[]).filter(g=>!f.genres.includes(g));
+    p.without_genres=[...new Set([...(p.without_genres?p.without_genres.split(","):[]).map(Number),...notG])].join(",")||undefined; }
   const cast=f.people.filter(x=>x.role==="cast"), crew=f.people.filter(x=>x.role==="crew");
   if(cast.length) p.with_cast=cast.map(x=>x.id).join("|");
   if(crew.length) p.with_crew=crew.map(x=>x.id).join("|");
@@ -797,6 +888,7 @@ function movieMatches(m){
   if(m.year && to && m.year>to.slice(0,4)) return false;
   if(m.vote!=null && !m.custom && m.vote<f.minRating) return false;
   if(f.hideSeen && Seen.has(m.id)) return false;
+  if(Dismissed.has(m.id)) return false;
   return true;
 }
 const activeListIds = () => C().sources.filter(s=>s!=="platforms" && Lists.isMember(s));
@@ -832,7 +924,7 @@ async function pickFromPlatforms(){
   for(let a=0;a<6;a++){
     const page=a===0?1+Math.floor(Math.random()*maxPage):1+Math.floor(Math.random()*Math.min(maxPage,a*3));
     const data=page===1?first:await api("/discover/movie",{...p,page});
-    const cand=data.results.filter(m=>!recent.includes(m.id)&&!(C().hideSeen&&Seen.has(m.id))&&moodOk(m.genre_ids||[])).map(normalize);
+    const cand=data.results.filter(m=>!recent.includes(m.id)&&!(C().hideSeen&&Seen.has(m.id))&&!Dismissed.has(m.id)&&moodOk(m.genre_ids||[])).map(normalize);
     if(cand.length){ const f=weighted(cand); remember(f.id,first.total_results); return await details(f); }
   }
   recent=[]; return null;
@@ -848,6 +940,8 @@ async function pickFromLists(pool){
   return null;
 }
 async function pick(){
+  const sd=R.items.filter(f=>f.seed&&!recent.includes(f.id)&&!(C().hideSeen&&Seen.has(f.id))&&!Dismissed.has(f.id));
+  if(sd.length && R.key===resultsKey() && Math.random()<0.6){ const f=weighted(sd); remember(f.id,sd.length*2); return await details(f); }
   const usePlat=C().sources.includes("platforms"), pool=listPool();
   const listFirst=pool.length && (!usePlat || Math.random()<0.5);
   if(listFirst){ const r=await pickFromLists(pool); if(r) return r; }
@@ -888,20 +982,15 @@ function renderHeader(){
   pill.className="pill "+(prof().premium?"gold":(!isDemo()&&metaOk?"ok":""));
 }
 function renderPick(){
-  const f=F(), p=prof(), mode=p.searchMode==="desc"?"desc":"filters";
+  const f=F(), p=prof();
   f.sources=f.sources.filter(s=>s==="platforms"||Lists.isMember(s));
   $("#setupBanner").innerHTML = !p.providerIds.length ? `<div class="banner" data-a="goto" data-view="v-profile">📺 Non hai ancora indicato le tue piattaforme. Tocca qui.</div>` : "";
   $("#srcChips").innerHTML = chip("📺 Piattaforme",f.sources.includes("platforms"),`data-a="src" data-id="platforms"`,"src")
     + Lists.mine().map(l=>chip(`${LIST_TYPES[l.type].icon} ${esc(l.name)}`,f.sources.includes(l.id),`data-a="src" data-id="${l.id}"`,"src")).join("");
-  document.querySelectorAll("#modeSeg button").forEach(b=>b.classList.toggle("on",b.dataset.id===mode));
-  $("#modeDesc").style.display=mode==="desc"?"":"none";
-  $("#modeFilters").style.display=mode==="filters"?"":"none";
-  if(mode==="desc"){
-    const d=p.descCrit;
-    if(d && $("#descBox").value==="" ) $("#descBox").value=d.text||"";
-    $("#descOut").innerHTML = d ? understoodHtml(d)
-      : `<div class="hint">Prova: <i data-a="example">una commedia romantica anni 90</i> · <i data-a="example">qualcosa con Leonardo DiCaprio sotto le 3 ore</i> · <i data-a="example">fantascienza nello spazio, bello</i></div>`;
-  }
+  const d=p.descCrit;
+  if(d && document.activeElement!==$("#descBox")) $("#descBox").value=d.text||"";
+  $("#descOut").innerHTML = d ? understoodHtml(d,true)
+    : `<div class="hint">Scrivi come vuoi: <i data-a="example">roba che mi faccia dire che cazzo sto guardando</i> · <i data-a="example">un film per piangere</i> · <i data-a="example">horror coi fantasmi sotto le 2 ore</i></div>`;
   $("#genreChips").innerHTML=GENRES.map(g=>chip(`${GENRE_EMOJI[g.id]||"🎬"} ${esc(g.name)}`,f.genres.includes(g.id),`data-a="genre" data-id="${g.id}"`)).join("");
   $("#moodChips").innerHTML=Object.entries(MOODS).map(([k,v])=>chip(v.label,f.moods.includes(k),`data-a="mood" data-id="${k}"`)).join("");
   setOption("#fDuration",f.maxDur,f.maxDur?`< ${fmtDur(f.maxDur)}`:"");
@@ -909,7 +998,7 @@ function renderPick(){
   setOption("#fRating",f.minRating,`${f.minRating}+`);
   $("#fOnlyAvail").checked=f.onlyAvail; $("#fHideSeen").checked=f.hideSeen; $("#fPopular").checked=f.popular;
   renderFollowUp();
-  if(mode==="desc" && !p.descCrit){ R.key=null; renderResults(); } else refreshResults();
+  refreshResults();
 }
 function setOption(sel,val,label){ // aggiunge un'opzione "personalizzata" se il valore non è tra quelle standard
   const el=$(sel); [...el.options].filter(o=>o.dataset.custom).forEach(o=>o.remove());
@@ -919,16 +1008,26 @@ function setOption(sel,val,label){ // aggiunge un'opzione "personalizzata" se il
 
 /* ---- Elenco risultati: prima i film delle liste scelte, poi quelli delle piattaforme (per popolarità) ---- */
 let R={key:null,items:[],listCount:0,page:0,totalPages:0,platTotal:0,loading:false,error:null};
-const resultsKey = () => JSON.stringify([devKey(),prof().searchMode,C(),discoverParams(),Seen.ids().length,activeListIds().map(id=>Lists.allItems(id).length),prof().providerIds]);
+const resultsKey = () => JSON.stringify([devKey(),Dismissed.count(),C(),discoverParams(),Seen.ids().length,activeListIds().map(id=>Lists.allItems(id).length),prof().providerIds]);
 function clearResults(){ R={key:null,items:[],listCount:0,page:0,totalPages:0,platTotal:0,loading:false,error:null}; $("#results").innerHTML=""; }
 const refreshResults=debounce(async()=>{ if(!me()) return; const k=resultsKey(); if(k===R.key){ renderResults(); return; } await loadResults(true); },300);
 async function loadResults(reset){
-  const c=C();
+  const c=C(), k0=reset?resultsKey():R.key;
   if(reset){
     R={key:resultsKey(),items:[],listCount:0,page:0,totalPages:1,platTotal:0,loading:true,error:null}; renderResults();
     let li=listPool().map(e=>({...e.movie,origin:{lists:e.lists,addedBy:e.addedBy}}));
     if(c.onlyAvail){ const det=await Promise.all(li.slice(0,40).map(m=>details(m).catch(()=>null))); li=li.filter((m,i)=>det[i]&&availableToMe(det[i])); }
     R.items=li; R.listCount=li.length;
+    // film di riferimento dei concetti descritti: solo se rispettano i filtri e (se si pesca dalle piattaforme) sono disponibili
+    if(c.concepts.length && c.sources.includes("platforms") && prof().providerIds.length){
+      let seeds=c.concepts.flatMap(conceptSeeds).filter(m=>!R.items.some(x=>x.id===m.id)&&movieMatches(m));
+      seeds=seeds.filter((m,i)=>seeds.findIndex(x=>x.id===m.id)===i).slice(0,30);
+      const det=await Promise.all(seeds.map(m=>details(m).catch(()=>null)));
+      const ok=seeds.map((m,i)=>det[i]&&availableToMe(det[i])?{...normalize({...det[i],genre_ids:m.genre_ids,poster_path:det[i].poster,backdrop_path:det[i].backdrop,release_date:(det[i].year||"")+"-01-01",vote_average:det[i].vote}),seed:true}:null).filter(Boolean)
+        .filter(m=>movieMatches(m));
+      if(k0!==R.key) return;
+      R.items.push(...ok); R.seedCount=ok.length;
+    }
   }
   const k=R.key;
   if(c.sources.includes("platforms") && prof().providerIds.length && R.page<R.totalPages){
@@ -937,18 +1036,18 @@ async function loadResults(reset){
       const d=await api("/discover/movie",{...discoverParams(),page:R.page+1});
       if(k!==R.key) return;
       R.page=d.page; R.totalPages=Math.min(d.total_pages,500); R.platTotal=d.total_results;
-      const have=new Set(R.items.map(m=>m.id));
-      R.items.push(...d.results.filter(m=>!have.has(m.id)&&!(c.hideSeen&&Seen.has(m.id))&&moodOk(m.genre_ids||[])).map(normalize));
+      const have=new Set(R.items.map(m=>m.id)), seedIds=new Set(R.items.filter(m=>m.seed).map(m=>m.id));
+      R.dup=(R.dup||0)+d.results.filter(m=>seedIds.has(m.id)).length;
+      R.items.push(...d.results.filter(m=>!have.has(m.id)&&!(c.hideSeen&&Seen.has(m.id))&&!Dismissed.has(m.id)&&moodOk(m.genre_ids||[])).map(normalize));
     }catch(e){ R.error=apiErrorMsg(e); }
   } else if(reset) R.totalPages=0;
   R.loading=false; renderResults();
 }
 function renderResults(){
   const el=$("#results"), c=C(), btn=$("#showBtn");
-  const total=R.listCount+(R.platTotal||0);
+  const total=R.listCount+(R.seedCount||0)+(R.platTotal||0)-(R.dup||0);
   btn.textContent = R.loading&&!R.items.length ? "🔍 Cerco…" : `🔍 Mostra ${total.toLocaleString("it-IT")} film`;
   if(!c.sources.length){ el.innerHTML=`<div class="empty">Seleziona almeno una fonte in “Da dove”.</div>`; return; }
-  if(prof().searchMode==="desc" && !prof().descCrit){ el.innerHTML=`<div class="empty">Descrivi cosa ti va di vedere e premi “Cerca”.</div>`; btn.textContent="🔍 Mostra film"; return; }
   if(R.error && !R.items.length){ el.innerHTML=`<div class="empty">${esc(R.error)}</div>`; return; }
   if(!R.items.length){
     if(R.loading){ el.innerHTML=`<div class="empty">Cerco…</div>`; return; }
@@ -966,10 +1065,11 @@ function renderResults(){
     <div class="info"><div class="t">${esc(f.title)}</div>
       <div class="muted">${[f.year,fmtDur(f.runtime),f.vote?`⭐ ${f.vote.toFixed(1)}`:"",(f.genre_ids||[]).map(genreName).filter(Boolean).slice(0,2).join(", ")].filter(Boolean).join(" · ")}</div>
       ${f.origin?`<div class="origin-mini">📋 ${f.origin.lists.map(esc).join(" · ")}</div>`:""}</div><span class="muted">›</span></div>`;
-  const lists=R.items.filter(f=>f.origin), plats=R.items.filter(f=>!f.origin);
+  const lists=R.items.filter(f=>f.origin), seeds=R.items.filter(f=>f.seed), plats=R.items.filter(f=>!f.origin&&!f.seed);
   el.innerHTML=`<div class="reshead" id="resTop"><b>${total.toLocaleString("it-IT")} film</b><button class="btn sm" data-a="pick">🎲 Pesca a caso</button></div>
     ${lists.length?`<div class="ressub">Dalle tue liste</div><div class="section">${lists.map(row).join("")}</div>`:""}
-    ${plats.length?`<div class="ressub">Sulle tue piattaforme</div><div class="section">${plats.map(row).join("")}</div>`:""}
+    ${seeds.length?`<div class="ressub">✨ I più vicini a quello che hai descritto</div><div class="section">${seeds.map(row).join("")}</div>`:""}
+    ${plats.length?`<div class="ressub">${seeds.length?"Altri sulle tue piattaforme":"Sulle tue piattaforme"}</div><div class="section">${plats.map(row).join("")}</div>`:""}
     ${R.page<R.totalPages?`<button class="btn ghost" data-a="moreResults" style="margin-top:10px" ${R.loading?"disabled":""}>${R.loading?"Carico…":"Carica altri"}</button>`:""}`;
 }
 
@@ -1158,8 +1258,10 @@ const doSearch=debounce(async()=>{
       tasks.push(api("/discover/movie",{language:LANG,sort_by:"popularity.desc",include_adult:false,[dir?"with_crew":"with_cast"]:person.id})
         .then(r=>({head:`${dir?"🎬 Film diretti da":"🎭 Film con"} ${esc(person.name)}`,list:r.results})).catch(()=>null)); }
     const useDesc=parsed && parsed.labels.length && !(person && parsed.people.length===parsed.labels.length);
-    if(useDesc) tasks.push(api("/discover/movie",parsedToParams(parsed))
-      .then(r=>({head:`✨ Ho capito: ${parsed.labels.map(esc).join(" · ")}`,list:r.results})).catch(()=>null));
+    const seedList=useDesc?(parsed.concepts||[]).flatMap(conceptSeeds):[];
+    const dp=useDesc?parsedToParams(parsed):null;
+    if(useDesc) tasks.push((dp?api("/discover/movie",dp).then(r=>r.results).catch(()=>[]):Promise.resolve([]))
+      .then(list=>({head:`✨ Ho capito: ${parsed.labels.map(esc).join(" · ")}`,list:[...seedList.map(m=>({id:m.id,title:m.title,release_date:m.year?m.year+"-01-01":"",poster_path:m.poster,genre_ids:m.genre_ids,vote_average:m.vote})),...list]})));
     const extra=(await Promise.all(tasks)).filter(Boolean);
     if(q!==$("#listSearch")?.value.trim()) return;
     // titoli: prima quelli conosciuti; quelli senza voti solo se non c'è altro
@@ -1201,7 +1303,8 @@ function renderProfile(){
 
     <h2>Generi preferiti</h2>
     <div class="section"><div class="chips">${GENRES.map(g=>chip(`${GENRE_EMOJI[g.id]||"🎬"} ${esc(g.name)}`,p.favGenres.includes(g.id),`data-a="favGenre" data-id="${g.id}"`)).join("")}</div>
-      <p class="muted" style="margin:10px 0 0">Servono a proporti più spesso film di questi generi. Anche i tuoi 👍/👎 contano (${Ratings.mine().length} voti finora).</p></div>
+      <p class="muted" style="margin:10px 0 0">Servono a proporti più spesso film di questi generi. Anche i tuoi 👍/👎 contano (${Ratings.mine().length} voti finora).</p>
+      ${Dismissed.count()?`<p class="muted" style="margin:8px 0 0">🙈 ${Dismissed.count()} film segnati “non mi interessa” · <span class="link" data-a="restoreDismissed">ripristina</span></p>`:""}</div>
 
     <h2>Abbonamento</h2>
     <div class="section">${p.premium
@@ -1368,14 +1471,14 @@ async function renderOnb(){
         onb.seenTiles=d.results.slice(0,12).map(normalize); }catch(e){ onb.seenTiles=[]; }
       return renderOnb();
     }
-    body=`${dots}<h2 class="big">Hai già visto qualcuno di questi?</h2><p class="muted">Tocca quelli che hai visto: non te li proporremo.</p>
+    body=`${dots}<h2 class="big">Hai già visto qualcuno di questi?</h2><p class="muted">Tocca quelli che hai visto: non te li proporremo. Potrai segnarne altri quando vuoi nella scheda <b>🃏 Scopri</b>.</p>
       <div class="tiles" style="margin-top:14px">${onb.seenTiles.map(f=>`<div class="tile ${Seen.has(f.id)?"on":""}" data-a="onbSeen" data-id="${f.id}" style="background:${gradient(f.title)}">
         ${f.poster?`<img src="${img(f.poster,"w185")}" alt="" onerror="this.remove()">`:""}<span>${f.poster?"":esc(f.title)}</span></div>`).join("")||`<p class="muted">Nessun film da mostrare.</p>`}</div>`;
     foot=`<button class="btn" data-a="onbGo" data-step="done">Continua</button>`;
   }
   if(s==="done"){
     body=`<div class="hero-emoji">🎉</div><h2 class="big" style="text-align:center">Tutto pronto, ${esc(me().name)}!</h2>
-      <p style="text-align:center;color:var(--muted);line-height:1.5">Scegli genere e mood, poi tocca <b>“Scegli un film per me”</b>.<br><br>Vuoi decidere in due? Vai su <b>Liste</b> e crea una lista <b>Coppia</b>.</p>`;
+      <p style="text-align:center;color:var(--muted);line-height:1.5">In <b>🔍 Cerca</b> scegli i filtri o descrivi cosa ti va: vedrai l'elenco dei film, oppure premi <b>🎲 A caso</b>.<br><br>In <b>🃏 Scopri</b> scorri le carte per segnare i film già visti e riempire la tua lista.<br><br>Vuoi decidere in due? Vai su <b>Liste</b> e crea una lista <b>Coppia</b>.</p>`;
     foot=`<button class="btn" data-a="onbFinish">Andiamo</button>`;
   }
   el.innerHTML=`<div class="wrap"><div class="body">${body}</div><div style="margin-top:24px">${foot}</div></div>`;
@@ -1386,7 +1489,150 @@ async function renderOnb(){
    13. AZIONI (tutti i click passano da qui)
    ===================================================================== */
 function save(){ DB.save(); }
-function renderAll(){ if(!me()) return; renderHeader(); renderPick(); renderLists(); renderProfile(); }
+function renderAll(){ if(!me()) return; renderHeader(); renderPick(); renderDiscover(); renderLists(); renderProfile(); }
+
+/* =====================================================================
+   12b. SCOPRI – due giochi a carte
+   1) "Già visti?"  → tutto il catalogo, dai film più conosciuti:  → visto   ← non visto   ↓ non mi interessa
+   2) "Ti interessa?" → prima quelli che hai detto di non aver visto, poi i più popolari sulle tue piattaforme:
+                        → in lista   ← non ora   ↓ non mi interessa
+   ===================================================================== */
+const GAMES = {
+  seen:{icon:"👀",bg:"linear-gradient(135deg,#2d5cff,#1b6b7b)",title:"Già visti?",q:"Hai già visto questo film?",
+    desc:"Scorri i film più famosi e segna quelli che hai già visto: non te li riproporremo.",
+    r:{lbl:"Visto",stamp:"Visto",icon:"✓"}, l:{lbl:"Non visto",stamp:"Non visto",icon:"✕"}, d:{lbl:"Non mi interessa",stamp:"Non mi interessa",icon:"↓"}},
+  want:{icon:"❤️",bg:"linear-gradient(135deg,#ff5a5f,#ffb347)",title:"Ti interessa?",q:"Lo vorresti vedere?",
+    desc:"Tra i film che non hai visto: quelli che ti interessano finiscono dritti nella tua lista.",
+    r:{lbl:"In lista",stamp:"In lista!",icon:"♥"}, l:{lbl:"Non ora",stamp:"Non ora",icon:"✕"}, d:{lbl:"Non mi interessa",stamp:"Non mi interessa",icon:"↓"}},
+};
+const Swipes = {
+  mine(game){ const me=Auth.current().id; return D().swipes.filter(x=>x.user_id===me&&(!game||x.game===game)); },
+  has(game,movieId){ return Swipes.mine(game).some(x=>x.movie_id===movieId); },
+  add(game,movie,verdict){ D().swipes.push({user_id:Auth.current().id,game,movie_id:movie.id,verdict,movie:liteMovie(movie),at:Date.now()}); DB.save(); },
+  removeLast(game){ const me=Auth.current().id; for(let i=D().swipes.length-1;i>=0;i--){ const x=D().swipes[i]; if(x.user_id===me&&x.game===game){ D().swipes.splice(i,1); DB.save(); return x; } } return null; },
+  count(game,verdict){ return Swipes.mine(game).filter(x=>x.verdict===verdict).length; },
+};
+const personalList = () => Lists.mine().find(x=>x.type==="personal"&&x.owner_id===me().id) || Lists.create("La mia lista","personal");
+function renderDiscover(){
+  const v=$("#v-discover"); if(!v) return;
+  v.innerHTML=`<h2>🃏 Scopri</h2>
+    <p class="muted" style="margin:-4px 0 14px;line-height:1.5">Due giochi veloci per insegnare all'app i tuoi gusti: una carta alla volta, scorri con il dito.</p>
+    ${Object.entries(GAMES).map(([k,g])=>`<div class="gcard" data-a="gameOpen" data-id="${k}"><div class="gic" style="background:${g.bg}">${g.icon}</div>
+      <div style="flex:1"><div class="t">${g.title}</div><div class="muted" style="line-height:1.4">${g.desc}</div>
+      <div class="muted" style="margin-top:6px;color:#bcd0ff">${k==="seen"?`✓ ${Seen.ids().length} visti segnati`:`♥ ${Swipes.count("want","want")} aggiunti alla lista`} · ${Dismissed.count()} che non ti interessano</div></div>
+      <span style="font-size:22px">›</span></div>`).join("")}
+    <p class="muted" style="font-size:12px;line-height:1.5">I film che segni con “non mi interessa” non compariranno più nelle ricerche. Puoi ripristinarli dal Profilo.</p>`;
+}
+let G=null; // stato del gioco aperto
+async function gameOpen(game){
+  G={game,deck:[],page:0,done:false,loading:false,history:[]};
+  $("#game").classList.add("on"); renderGame();
+  if(!prof().tutorials?.[game]) showTutorial();
+  await refillDeck();
+}
+function gameClose(){ $("#game").classList.remove("on"); G=null; renderAll(); }
+const inAnyList = id => Lists.mine().some(l=>Lists.has(l.id,id));
+function deckOk(m){ const g=G.game;
+  if(Swipes.has(g,m.id) || Dismissed.has(m.id)) return false;
+  if(g==="seen") return !Seen.has(m.id);
+  return !Seen.has(m.id) && !inAnyList(m.id);
+}
+async function refillDeck(){
+  if(!G || G.loading || G.done) return; G.loading=true;
+  try{
+    if(G.game==="want" && G.page===0){ // prima i "non visti" del gioco 1
+      const notSeen=Swipes.mine("seen").filter(x=>x.verdict==="not_seen").map(x=>x.movie).filter(m=>deckOk(m)&&!G.deck.some(d=>d.id===m.id));
+      G.deck.push(...notSeen);
+    }
+    let tries=0;
+    while(G && G.deck.length<8 && !G.done && tries<6){
+      tries++; G.page++;
+      const q={language:LANG,include_adult:false,page:G.page};
+      if(G.game==="seen") Object.assign(q,{sort_by:"vote_count.desc"});
+      else Object.assign(q,{sort_by:"popularity.desc","vote_count.gte":200},prof().providerIds.length?{watch_region:REGION,with_watch_providers:prof().providerIds.join("|"),with_watch_monetization_types:"flatrate"}:{});
+      const d=await api("/discover/movie",q);
+      if(!G) return;
+      G.deck.push(...d.results.map(normalize).filter(m=>deckOk(m)&&!G.deck.some(x=>x.id===m.id)));
+      if(G.page>=Math.min(d.total_pages,500)) G.done=true;
+    }
+  }catch(e){ toast(apiErrorMsg(e)); }
+  if(G){ G.loading=false; renderGame(); }
+}
+function cardHtml(m,back){
+  return `<div class="scard ${back?"back":""}" style="background:${gradient(m.title)}" ${back?"":`id="topCard"`}>
+    <div class="ph">${emojiFor(m)}</div>
+    ${m.poster?`<img src="${img(m.poster,"w500")}" alt="" onerror="this.remove()">`:""}
+    ${back?"":`<span class="stamp r" id="stR">${GAMES[G.game].r.stamp}</span><span class="stamp l" id="stL">${GAMES[G.game].l.stamp}</span><span class="stamp d" id="stD">${GAMES[G.game].d.stamp}</span>`}
+    <div class="cap"><h3>${esc(m.title)}</h3><div class="muted">${[m.year,(m.genre_ids||[]).map(genreName).filter(Boolean).slice(0,2).join(", "),m.vote?`⭐ ${m.vote.toFixed(1)}`:""].filter(Boolean).join(" · ")}</div></div>
+  </div>`;
+}
+function renderGame(){
+  if(!G) return; const g=GAMES[G.game], el=$("#game"), tut=el.querySelector(".tut");
+  const top=G.deck[0], next=G.deck[1];
+  const stat=G.game==="seen"?`✓ ${Seen.ids().length} visti`:`♥ ${Swipes.count("want","want")} in lista`;
+  el.innerHTML=`<div class="ghead"><button class="icon" data-a="gameClose" title="Chiudi">✕</button><b>${g.icon} ${g.title}</b><button class="icon" data-a="gameHelp" title="Come funziona">?</button></div>
+    <div class="gq">${g.q}</div>
+    <div class="gstack">${top?(next?cardHtml(next,true):"")+cardHtml(top,false)
+      :`<div class="empty" style="padding-top:80px">${G.loading?`<div class="spinner"></div>Preparo le carte…`:`🎉 Hai finito le carte!<br>Torna più tardi per nuovi film.`}</div>`}</div>
+    <div class="gbtns">
+      <button data-a="swipe" data-dir="l" ${top?"":"disabled"}>${g.l.icon}<small>${g.l.lbl}</small></button>
+      <button class="gd" data-a="swipe" data-dir="d" ${top?"":"disabled"}>${g.d.icon}<small>${g.d.lbl}</small></button>
+      <button class="gr" data-a="swipe" data-dir="r" ${top?"":"disabled"}>${g.r.icon}<small>${g.r.lbl}</small></button>
+    </div>
+    <div class="gfoot"><span>${stat}</span><span class="link" data-a="undo" style="${G.history.length?"":"opacity:.35;pointer-events:none"}">↩️ Annulla</span></div>`;
+  if(tut) el.appendChild(tut);
+  if(top) bindDrag($("#topCard"));
+}
+function bindDrag(card){
+  let sx=0,sy=0,dx=0,dy=0,drag=false;
+  const st={r:$("#stR"),l:$("#stL"),d:$("#stD")};
+  const dirOf=()=> dy>110&&dy>Math.abs(dx) ? "d" : dx>100 ? "r" : dx<-100 ? "l" : null;
+  card.addEventListener("pointerdown",e=>{ drag=true; sx=e.clientX; sy=e.clientY; dx=dy=0; card.setPointerCapture(e.pointerId); card.style.transition="none"; });
+  card.addEventListener("pointermove",e=>{ if(!drag) return; dx=e.clientX-sx; dy=e.clientY-sy;
+    card.style.transform=`translate(${dx}px,${dy}px) rotate(${dx/18}deg)`;
+    st.r.style.opacity=Math.max(0,Math.min(1,dx/110)); st.l.style.opacity=Math.max(0,Math.min(1,-dx/110));
+    st.d.style.opacity=dy>Math.abs(dx)?Math.max(0,Math.min(1,dy/130)):0; });
+  const end=()=>{ if(!drag) return; drag=false; const d=dirOf();
+    if(d) flyOut(d); else { card.style.transition="transform .25s"; card.style.transform=""; Object.values(st).forEach(x=>x.style.opacity=0); } };
+  card.addEventListener("pointerup",end); card.addEventListener("pointercancel",end);
+}
+function flyOut(dir){
+  const card=$("#topCard"); if(!card||!G) return;
+  const st={r:"#stR",l:"#stL",d:"#stD"}[dir]; $(st).style.opacity=1;
+  card.style.transition="transform .3s ease-in";
+  card.style.transform=dir==="r"?"translate(140%,-10%) rotate(25deg)":dir==="l"?"translate(-140%,-10%) rotate(-25deg)":"translate(0,130%)";
+  setTimeout(()=>commitSwipe(dir),260);
+}
+function commitSwipe(dir){
+  if(!G) return; const m=G.deck.shift(); if(!m) return; const g=G.game;
+  const verdict={seen:{r:"seen",l:"not_seen",d:"dismiss"},want:{r:"want",l:"skip",d:"dismiss"}}[g][dir];
+  Swipes.add(g,m,verdict);
+  if(verdict==="seen") Seen.set(m.id,true);
+  if(verdict==="dismiss") Dismissed.set(m.id,true);
+  if(verdict==="want") Lists.add(personalList().id,m);
+  G.history.push({m,verdict});
+  renderGame();
+  if(G.deck.length<5) refillDeck();
+}
+function undoSwipe(){
+  if(!G||!G.history.length) return; const {m,verdict}=G.history.pop();
+  Swipes.removeLast(G.game);
+  if(verdict==="seen") Seen.set(m.id,false);
+  if(verdict==="dismiss") Dismissed.set(m.id,false);
+  if(verdict==="want") Lists.removeItem(personalList().id,m.id);
+  G.deck.unshift(m); renderGame();
+}
+function showTutorial(){
+  const g=GAMES[G.game], t=document.createElement("div"); t.className="tut";
+  t.innerHTML=`<h3>${g.icon} ${g.title}</h3><div class="muted">${g.q} Rispondi con un gesto:</div>
+    <div class="demo">🎬</div>
+    <div class="rowt"><b>👉</b><div><b style="font-size:15px;width:auto">Destra</b> · ${g.r.lbl}</div></div>
+    <div class="rowt"><b>👈</b><div><b style="font-size:15px;width:auto">Sinistra</b> · ${g.l.lbl}</div></div>
+    <div class="rowt"><b>👇</b><div><b style="font-size:15px;width:auto">Giù</b> · ${g.d.lbl} <span class="muted">(non te lo proporremo più)</span></div></div>
+    <p class="muted" style="margin:14px 0 18px">Se preferisci, usa i pulsanti sotto la carta. Sbagliato? C'è sempre “↩️ Annulla”.</p>
+    <button class="btn" data-a="tutDone" style="max-width:330px">Ho capito, iniziamo!</button>`;
+  $("#game").appendChild(t);
+}
 function goTo(view){
   document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("on",x.dataset.view===view));
   document.querySelectorAll(".view").forEach(v=>v.classList.toggle("on",v.id===view));
@@ -1398,12 +1644,19 @@ const A = {
   src:d=>{ F().sources=toggle(F().sources,d.id); save(); renderPick(); },
   genre:d=>{ F().genres=toggle(F().genres,+d.id); save(); renderPick(); },
   mood:d=>{ F().moods=toggle(F().moods,d.id); save(); renderPick(); },
-  pick:()=>{ if(prof().searchMode==="desc" && !prof().descCrit) return toast("Prima descrivi cosa vuoi vedere"); doPick(); },
-  mode:d=>{ prof().searchMode=d.id; save(); renderPick(); },
+  pick:()=>doPick(),
+  gameOpen:d=>gameOpen(d.id),
+  gameClose:()=>gameClose(),
+  gameHelp:()=>showTutorial(),
+  tutDone:(d,el)=>{ prof().tutorials={...(prof().tutorials||{}),[G.game]:true}; save(); el.closest(".tut").remove(); },
+  swipe:d=>flyOut(d.dir),
+  undo:()=>undoSwipe(),
+  restoreDismissed:()=>{ if(confirm("Rimettere in gioco tutti i film che avevi segnato come “non mi interessa”?")){ Dismissed.clear(); renderAll(); toast("Film ripristinati"); } },
+  clearDesc:()=>{ prof().descCrit=null; save(); $("#descBox").value=""; renderPick(); },
   showResults:()=>{ renderResults(); ($("#resTop")||$("#results")).scrollIntoView({behavior:"smooth",block:"start"}); },
   moreResults:()=>loadResults(false),
   openDetail:d=>openDetail(d.id),
-  resetFilters:()=>{ Object.assign(F(),{genres:[],moods:[],maxDur:0,era:"all",years:null,minRating:0}); save(); renderPick(); },
+  resetFilters:()=>{ Object.assign(F(),{genres:[],moods:[],maxDur:0,era:"all",years:null,minRating:0}); prof().descCrit=null; $("#descBox").value=""; save(); renderPick(); },
   backDetail:()=>showDetail(current,currentRandom),
   // --- risultato
   saveSheet:()=>openSaveSheet(),
@@ -1421,15 +1674,15 @@ const A = {
   // --- ricerca descrittiva
   example:(d,el)=>{ $("#descBox").value=el.textContent; A.describe(); },
   describe:async()=>{
-    const t=$("#descBox").value.trim(); if(!t) return toast("Scrivi cosa ti va di vedere");
-    const btn=$("#descBtn"); btn.disabled=true; btn.textContent="…";
+    const t=$("#descBox").value.trim(); if(!t) return A.clearDesc();
+    const btn=$("#descBtn"); btn.disabled=true; btn.textContent="…"; $("#descBox").blur();
     try{
       const r=await parseQuery(t);
       if(!r.labels.length){ $("#descOut").innerHTML=understoodHtml(r); return; }
       prof().descCrit={...r,text:t}; save(); renderPick();
       setTimeout(()=>A.showResults(),400);
     }catch(e){ $("#descOut").innerHTML=`<div class="hint">${esc(apiErrorMsg(e))}</div>`; }
-    finally{ btn.disabled=false; btn.textContent="Cerca"; }
+    finally{ btn.disabled=false; btn.textContent="OK"; }
   },
   // --- liste
   newList:()=>{ if(overLimit()) return; newListType="couple"; openNewList(); },
@@ -1552,6 +1805,8 @@ document.addEventListener("click",e=>{
   fn(el.dataset,el,e);
 });
 // input dei filtri
+document.addEventListener("keydown",e=>{ if(!G || $("#game .tut")) return;
+  const d={ArrowRight:"r",ArrowLeft:"l",ArrowDown:"d"}[e.key]; if(d){ e.preventDefault(); flyOut(d); } });
 let userEdited=false;
 document.addEventListener("input",e=>{
   const id=e.target.id;

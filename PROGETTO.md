@@ -13,7 +13,9 @@ App che risolve l'indecisione serale: scegli genere e mood, l'app propone **un s
 | Liste | Più liste per utente: Personale, Coppia (max 2), Amici (max 10) |
 | Condivisione | Si cerca l'utente registrato **per @nomeutente** e gli arriva un **invito da accettare**; chi non è registrato riceve un **link di iscrizione** e, registrandosi, entra subito nella lista. Niente codici da digitare |
 | Liste collegate (Premium) | Una lista condivisa può *collegare* le liste personali dei membri: i film non vengono duplicati e restano aggiornati. In alternativa, **copia** dei film in un'altra lista (Premium) |
-| Ricerca film | Un solo campo: titolo (anche parziale), attore/regista o descrizione, risultati raggruppati |
+| Pagina Cerca | Un unico blocco di filtri: **Descrivi** (campo libero), **Da dove**, Genere, Mood, Durata/Epoca/Voto, altre opzioni. Il risultato è un **elenco di film**; **🎲 A caso** è un pulsante in fondo ai filtri e in cima all'elenco (non una scheda) |
+| Scopri (giochi a carte) | Due giochi: **Già visti?** (→ visto, ← non visto, ↓ non mi interessa) su tutto il catalogo, e **Ti interessa?** (→ in lista, ← non ora, ↓ non mi interessa) partendo dai film non visti. Tutorial al primo accesso. I “non mi interessa” non vengono più proposti |
+| Ricerca film nelle liste | Un solo campo: titolo (anche parziale), attore/regista o descrizione, risultati raggruppati |
 | Selezione | Si sceglie da quali fonti pescare: piattaforme e/o una o più liste |
 | Account | Apple, Google, email + uso senza account (ospite). Alla registrazione si sceglie un **@nomeutente** unico (suggerito dal nome, modificabile dal profilo) |
 | Guadagni | Pubblicità + abbonamento Premium (vedi §5) |
@@ -100,6 +102,25 @@ create table list_links (
   primary key (list_id, linked_list_id)
 );
 
+-- "non mi interessa": esclusi da ricerche e suggerimenti
+create table dismissed (
+  user_id uuid references profiles on delete cascade,
+  tmdb_id int,
+  created_at timestamptz default now(),
+  primary key (user_id, tmdb_id)
+);
+
+-- risposte ai giochi di Scopri (servono a non riproporre le carte e come segnale di gusto)
+create table swipes (
+  user_id  uuid references profiles on delete cascade,
+  game     text check (game in ('seen','want')),
+  tmdb_id  int,
+  verdict  text check (verdict in ('seen','not_seen','want','skip','dismiss')),
+  snapshot jsonb,
+  created_at timestamptz default now(),
+  primary key (user_id, game, tmdb_id)
+);
+
 create table seen (
   user_id uuid references profiles on delete cascade,
   tmdb_id int,
@@ -145,6 +166,7 @@ Le sole pubblicità difficilmente bastano: è un'app che si apre poche volte a s
 | 6 | Serie TV, filtri avanzati, statistiche | futuro |
 
 ## 7. Ricerca descrittiva: dal prototipo alla versione reale
+- **Prototipo (adesso):** oltre a generi, temi, durata, periodo e persone, riconosce **concetti** espressi a parole proprie, anche in modo colloquiale (“che cazzo sto guardando”, “per piangere”, “finale a sorpresa”, “trash”, “che mi faccia pensare”…). Ogni concetto usa parole chiave TMDB verificate più una selezione di **film di riferimento** scelti per come li descrive la critica; i risultati compaiono in “✨ I più vicini a quello che hai descritto”.
 - **Prototipo:** regole e dizionario italiano. Funziona bene su frasi con generi, temi comuni, durata, periodo e nomi; non capisce trame libere ("quel film dove uno rivive sempre lo stesso giorno").
 - **Produzione:** un modello AI lato server riceve la frase e restituisce lo stesso formato di filtri (generi, temi, persone, durata, periodo). Per le trame libere può anche proporre direttamente i titoli, che poi verifichiamo su TMDB. Costo stimato molto basso per ricerca (frazioni di centesimo), da includere nel piano costi; si può limitare il numero di ricerche AI per gli utenti gratuiti (leva per il Premium).
 
