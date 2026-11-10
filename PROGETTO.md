@@ -19,6 +19,7 @@ App che risolve l'indecisione serale: **non scegli tu, sceglie lei**. Premi "�
 | Liste | Sempre presenti: **La mia lista** e **Rewatch** (i film già visti, utilizzabile in Scegli). Altre liste **a tema** create dall'utente (es. "Film romantici"). Rinomina con ✏️. Niente più liste coppia/amici |
 | Collegamento liste | Dentro una lista: "Collega a una persona" → si cerca il **@nomeutente** → invito da accettare. Chi accetta vede la lista tra le sue come **"Lista @nome"** (sola lettura, sempre aggiornata) e può usarla in Scegli. Chi non è registrato riceve un **link di iscrizione**. Il collegamento si può impostare anche mentre si crea la lista |
 | Game | **Cine-quiz del giorno**: da 1 a 5 domande al giorno uguali per tutti, 15 secondi (10 per vero/falso). Si vede solo il risultato finale. Punti = 100 + 10 per ogni secondo avanzato. **Punteggio cumulativo lun–dom**, classifica settimanale e podio della settimana precedente. **Domenica: domanda bonus che vale doppio** |
+| Sfide tra amici (Game) | Nella pagina Game, accanto al quiz, la scheda **⚔️ Sfide**. Si sfida un **contatto** (aggiunto per @nomeutente con richiesta da accettare, oppure chi condivide con te una lista collegata) o direttamente **@nome**; chi non è iscritto riceve un invito. **Ogni giorno un tipo diverso**, a rotazione: ⚡ domanda secca (vince chi risponde giusto più in fretta) · 🧠 raffica di 5 domande · 🎞️ indovina il film dal fotogramma · 🎵 indovina il film dalla colonna sonora. Si gioca a turni con le stesse domande; vince chi fa più punti, a parità il più veloce. **Chi vince sceglie il film dalla sua lista** (o pesca a caso); chi perde, all'apertura dell'app, vede **"Hai perso! Stasera si guarda…"** con la locandina. Pareggio: film estratto dalle liste di entrambi. Rivincita il giorno dopo |
 | Account | Apple, Google, email + ospite. **@nomeutente** unico. Avatar: **personaggi famosi ritratti nel ruolo** (fotogramma o locandina del film con ritaglio sul volto, es. Joaquin Phoenix nei panni di Joker) e personaggi d'animazione (vedi §5, diritti d'immagine) |
 | Registrazione | Benvenuto → account → personaggio → piattaforme (con nota: "se non trovi il tuo abbonamento, aggiungilo dal Profilo") → **Porta i tuoi dati** (importazione, facoltativa) → **carte "Ce l'ho o manca?"** direttamente nella registrazione, con la nota che si può continuare nell'app. Niente scelta dei generi (resta nel Profilo) |
 | Importazione dati | Da **Letterboxd** (visti, voti, watchlist, liste), **IMDb** (voti, watchlist) e **cronologia Netflix** (solo film), caricando i file CSV che queste app fanno esportare. Ogni film viene riconosciuto su TMDB (codice IMDb, oppure titolo + anno, anche in inglese). Visti → Rewatch, watchlist → La mia lista, voti → gusti, liste Letterboxd → liste a tema. Disponibile anche dal Profilo. TV Time, Trakt e altre: in arrivo (Trakt con collegamento diretto all'account) |
@@ -118,6 +119,28 @@ create table imports (
   created_at timestamptz default now()
 );
 
+-- contatti (richiesta da accettare) e sfide tra amici
+create table contacts (
+  id uuid primary key default gen_random_uuid(),
+  from_user uuid references profiles on delete cascade,
+  to_user   uuid references profiles on delete cascade,
+  status    text not null default 'pending' check (status in ('pending','accepted','declined')),
+  created_at timestamptz default now()
+);
+create table duels (
+  id uuid primary key default gen_random_uuid(),
+  from_user uuid references profiles on delete cascade,     -- chi lancia la sfida (gioca per primo)
+  to_user   uuid references profiles on delete cascade,
+  type      text check (type in ('secca','set','frame','sound')),
+  day       date, seed text,                               -- stesse domande per entrambi
+  status    text check (status in ('playing','waiting','choosing','done','declined')),
+  results   jsonb,                                         -- {utente: {punti, tempo, risposte}} – calcolati dal server
+  winner    uuid,                                          -- null = pareggio
+  film      jsonb,                                         -- il film scelto dal vincitore
+  seen_by   uuid[] default '{}',                           -- chi ha già visto il risultato
+  created_at timestamptz default now()
+);
+
 create table swipes (                    -- carte di Ce l'ho/Manca: ogni film una volta sola
   user_id  uuid references profiles on delete cascade,
   tmdb_id  int,
@@ -172,6 +195,7 @@ create view quiz_weekly as
 
 ⚠️ **Rischi da chiarire prima della Fase 3**
 - **TMDB:** l'uso gratuito è solo non commerciale; con pubblicità o abbonamenti serve un accordo (anche per i dati JustWatch). Alternative: Watchmode, Streaming Availability.
+- **Colonne sonore nelle sfide:** nel prototipo le melodie sono ricostruite nota per nota dal telefono; anche le melodie sono opere protette, quindi per lo store servono licenze (es. anteprime ufficiali di 30 secondi da un servizio musicale) o brani di pubblico dominio.
 - **Avatar con attori reali:** foto di attori e immagini di personaggi (De Niro, Disney/Pixar…) sono protette da diritti d'immagine e copyright. Nel prototipo vanno bene; per lo store servono licenze oppure **illustrazioni originali "ispirate a"** commissionate per l'app (consigliato).
 - **Locandine nel quiz:** stesso discorso; da coprire con la licenza TMDB o con domande senza immagini.
 

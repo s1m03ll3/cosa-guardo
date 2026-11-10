@@ -258,6 +258,19 @@
   .sidehint.r{right:-6px;background:var(--ok);color:#06210f}
   .daisy{display:inline-flex;width:24px;height:24px;color:#fff}
   .daisy svg{width:24px;height:24px}
+  .qframe{width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;margin:0 auto 16px;background:var(--card2)}
+  .qframe img{width:100%;height:100%;object-fit:cover}
+  .qsound{display:flex;flex-direction:column;align-items:center;gap:12px;margin:8px 0 18px}
+  .eq{display:flex;gap:6px;align-items:flex-end;height:60px}
+  .eq i{display:block;width:10px;height:56px;background:linear-gradient(var(--accent2),var(--accent));border-radius:4px;transform-origin:bottom;animation:eq 0.9s ease-in-out infinite}
+  .eq i:nth-child(2){animation-delay:.15s}.eq i:nth-child(3){animation-delay:.3s}.eq i:nth-child(4){animation-delay:.45s}.eq i:nth-child(5){animation-delay:.6s}
+  @keyframes eq{0%,100%{transform:scaleY(.2)}50%{transform:scaleY(1)}}
+  .lose{text-align:center;padding:6px 4px}
+  .lose h2{font-size:28px;color:var(--text);justify-content:center;text-transform:none;letter-spacing:0;margin:4px 0}
+  .lose .tonight{margin:16px 0 10px;font-weight:700;font-size:17px}
+  .bigposter{width:180px;height:270px;object-fit:cover;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.5);margin:0 auto;display:block}
+  .duelhero{background:linear-gradient(135deg,#7a2d2d,#3b2b6b)}
+  .seg .dot{display:inline-flex;min-width:18px;height:18px;border-radius:99px;background:var(--accent);color:#fff;font-size:11px;align-items:center;justify-content:center;padding:0 4px}
   .heartpop{position:absolute;left:50%;top:42%;font-size:120px;transform:translate(-50%,-50%) scale(0);animation:hp .6s ease forwards;pointer-events:none;z-index:5}
   @keyframes hp{45%{transform:translate(-50%,-50%) scale(1.2);opacity:1}100%{transform:translate(-50%,-50%) scale(1);opacity:.9}}
   /* quiz */
@@ -362,7 +375,7 @@
 <nav><div class="in">
   <button data-a="goto" data-view="v-pick" class="on"><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="8.5" r="1.2" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1.2" fill="currentColor"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg></b>Scegli</button>
   <button data-a="goto" data-view="v-discover"><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5.6" rx="2.2" ry="3.6" transform="rotate(0 12 12)"/><ellipse cx="12" cy="5.6" rx="2.2" ry="3.6" transform="rotate(45 12 12)"/><ellipse cx="12" cy="5.6" rx="2.2" ry="3.6" transform="rotate(90 12 12)"/><ellipse cx="12" cy="5.6" rx="2.2" ry="3.6" transform="rotate(135 12 12)"/><ellipse cx="12" cy="5.6" rx="2.2" ry="3.6" transform="rotate(180 12 12)"/><ellipse cx="12" cy="5.6" rx="2.2" ry="3.6" transform="rotate(225 12 12)"/><ellipse cx="12" cy="5.6" rx="2.2" ry="3.6" transform="rotate(270 12 12)"/><circle cx="12" cy="12" r="2.6" fill="currentColor"/><ellipse cx="20.6" cy="20.4" rx="1.1" ry="2" transform="rotate(50 20.6 20.4)"/></svg></b>Ce l'ho/Manca</button>
-  <button data-a="goto" data-view="v-quiz"><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8.5 20h7"/></svg></b>Game</button>
+  <button data-a="goto" data-view="v-quiz"><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8.5 20h7"/></svg><span class="badge" id="duelBadge"></span></b>Game</button>
   <button data-a="goto" data-view="v-lists"><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1" fill="currentColor"/><circle cx="4.5" cy="12" r="1" fill="currentColor"/><circle cx="4.5" cy="18" r="1" fill="currentColor"/></svg><span class="badge" id="invBadge"></span></b>Liste</button>
   <button data-a="goto" data-view="v-profile"><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-3.5 4.5-5 8-5s6.5 1.5 8 5"/></svg></b>Profilo</button>
 </div></nav>
@@ -516,7 +529,7 @@ function mockApi(path, q){
 const DB_KEY = "cosaguardo_db_v3", DEV_KEY = "cosaguardo_dev";
 const DB = {
   data:null,
-  empty(){ return {users:[],profiles:{},lists:[],list_members:[],list_items:[],list_invites:[],seen:[],ratings:[],dismissed:[],swipes:[],quiz:[],session:null}; },
+  empty(){ return {users:[],profiles:{},lists:[],list_members:[],list_items:[],list_invites:[],seen:[],ratings:[],dismissed:[],swipes:[],quiz:[],contacts:[],duels:[],session:null}; },
   load(){ try{ this.data=JSON.parse(localStorage.getItem(DB_KEY)); }catch(e){} if(!this.data) this.data=this.empty();
     for(const [k,v] of Object.entries(this.empty())) if(!(k in this.data)) this.data[k]=v;
     for(const u of this.data.users) if(!u.username && u.provider!=="guest") u.username=Usernames.suggest(u.name);
@@ -571,6 +584,7 @@ const Auth = {
     d.list_members=d.list_members.filter(m=>m.user_id!==id);
     d.list_invites=d.list_invites.filter(x=>x.from_user!==id && x.to_user!==id);
     for(const k of ["seen","ratings","dismissed","swipes","quiz"]) d[k]=d[k].filter(x=>x.user_id!==id);
+    d.contacts=d.contacts.filter(c=>c.from!==id&&c.to!==id); d.duels=d.duels.filter(x=>x.from!==id&&x.to!==id);
     delete d.profiles[id];
     d.users=d.users.filter(u=>u.id!==id);
     d.session=null; DB.save();
@@ -1094,6 +1108,7 @@ function activeFilterCount(){ const f=F(), d=DEFAULT_FILTERS;
 // quanti film sono candidati con i filtri attuali (per il sottotitolo del bottone e per "elenco")
 let countSeq=0;
 const updateCount = debounce(async()=>{
+  if(!me()) return;                                   // uscita dall'account nel frattempo
   const seq=++countSeq, c=C(); let n=listPool().length;
   try{ if(c.sources.includes("platforms") && prof().providerIds.length) n+=(await api("/discover/movie",{...discoverParams(),page:1})).total_results||0; }
   catch(e){ n=-1; }
@@ -1784,7 +1799,7 @@ const QBONUS = [
    13. AZIONI (tutti i click passano da qui)
    ===================================================================== */
 function save(){ DB.save(); }
-function renderAll(){ if(!me()) return; renderHeader(); renderPick(); renderDiscover(); renderQuiz(); renderLists(); renderProfile(); }
+function renderAll(){ if(!me()) return; renderHeader(); renderPick(); renderDiscover(); renderQuiz(); renderLists(); renderProfile(); checkDuelNotices(); }
 
 /* =====================================================================
    12b. SCOPRI – carte "Già visto?" (si apre direttamente toccando la scheda)
@@ -1966,6 +1981,13 @@ function lbHtml(rows,limit=10){
 }
 let QZ=null; // partita in corso
 function renderQuiz(){
+  const v=$("#v-quiz"); if(!v||!me()) return; renderDuelBadge();
+  if(QZ) return renderQuestion();
+  if(DZ) return renderDuelQ();
+  if((prof().gameTab||"quiz")==="duel") renderDuels(v); else renderDailyQuiz();
+  v.insertAdjacentHTML("afterbegin",gameTabs());
+}
+function renderDailyQuiz(){
   const v=$("#v-quiz"); if(!v||!me()) return;
   if(QZ) return renderQuestion();
   const today=dayKey(), wk=weekKey(), rec=Quiz.rec();
@@ -2017,7 +2039,7 @@ function quizAnswer(k){
   QZ.i++; nextQuestion();
 }
 function finishQuiz(){ clearInterval(QZ.timer); QZ.rec.done=true; save(); QZ=null; renderQuiz(); }
-function stopQuiz(){ if(QZ){ clearInterval(QZ.timer); QZ=null; } }
+function stopQuiz(){ if(QZ){ clearInterval(QZ.timer); QZ=null; } if(typeof DZ!=="undefined"&&DZ){ clearInterval(DZ.timer); stopMelody(); DZ=null; } }
 function renderQuestion(){
   const q=QZ.qs[QZ.i], T=qTime(q);
   $("#v-quiz").innerHTML=`<div class="qbox">
@@ -2345,6 +2367,286 @@ $("#fEra").onchange=e=>{ F().era=e.target.value; save(); renderPick(); };
 $("#fRating").onchange=e=>{ F().minRating=+e.target.value; save(); renderPick(); };
 $("#fPopular").onchange=e=>{ F().popular=e.target.checked; save(); renderPick(); };
 $("#fOnlyAvail").onchange=e=>{ F().onlyAvail=e.target.checked; save(); renderPick(); };
+
+/* =====================================================================
+   12e. SFIDE TRA AMICI
+   - Ogni giorno un tipo di sfida diverso (uguale per tutti): domanda secca, raffica di domande,
+     fotogramma da riconoscere, colonna sonora da indovinare.
+   - Si gioca a turni: chi lancia la sfida gioca subito, l'altro quando apre l'app (stesse domande).
+   - Vince chi fa più punti (a parità, chi è stato più veloce). Chi vince sceglie il film dalla
+     sua lista; chi perde, appena apre l'app, vede "Hai perso, stasera si guarda…".
+   - Contatti: richieste per @nomeutente + chi condivide con te una lista collegata.
+   In produzione: tutto sul server (risposte giuste e tempi mai sul telefono) + notifiche push.
+   ===================================================================== */
+const DUEL_TYPES = {
+  secca:{icon:"⚡",name:"Domanda secca",desc:"Una sola domanda: vince chi risponde giusto più in fretta."},
+  set:{icon:"🧠",name:"Raffica di domande",desc:"5 domande di fila: vince chi fa più punti."},
+  frame:{icon:"🎞️",name:"Indovina il fotogramma",desc:"3 scene di film: riconosci il titolo prima dell'altro."},
+  sound:{icon:"🎵",name:"Colonna sonora",desc:"3 temi famosi: indovina il film dalla musica."},
+};
+const dayNum = (d=new Date()) => Math.round(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/864e5);
+const duelTypeOf = (d=new Date()) => Object.keys(DUEL_TYPES)[dayNum(d)%4];
+
+/* Temi musicali famosi, ricostruiti nota per nota e suonati dal telefono (nessuna registrazione).
+   [nota, durata in battiti] · "-" = pausa. ⚠️ Anche le melodie sono opere protette: per lo store
+   servono licenze (o brani di pubblico dominio come "Così parlò Zarathustra" di Strauss). */
+const MELODIES = [
+  {a:["Lo squalo","Alien","Psycho","Jurassic Park"],bpm:132,wave:"sawtooth",notes:[["E2",1],["F2",1],["-",2],["E2",1],["F2",1],["-",1],["E2",.5],["F2",.5],["E2",.5],["F2",.5],["E2",.5],["F2",.5],["E2",.5],["F2",.5],["E2",.5],["F2",.5],["E2",.5],["F2",.5]]},
+  {a:["Guerre stellari","Superman","Star Trek","E.T. l'extra-terrestre"],bpm:104,wave:"square",notes:[["G4",1/3],["G4",1/3],["G4",1/3],["C5",2],["G5",2],["F5",1/3],["E5",1/3],["D5",1/3],["C6",2],["G5",1],["F5",1/3],["E5",1/3],["D5",1/3],["C6",2],["G5",1],["F5",1/3],["E5",1/3],["F5",1/3],["D5",2]]},
+  {a:["Il buono, il brutto, il cattivo","C'era una volta il West","Django","Il mucchio selvaggio"],bpm:116,wave:"sine",notes:[["A4",.5],["D5",.5],["A4",.5],["D5",.5],["A4",1.5],["-",.5],["F4",1],["G4",1],["D4",2.5]]},
+  {a:["Mission: Impossible","Agente 007 – Licenza di uccidere","The Bourne Identity","Kingsman"],bpm:168,wave:"square",notes:[["G4",1.5],["G4",1.5],["A#4",1],["C5",1],["G4",1.5],["G4",1.5],["F4",1],["F#4",1],["G4",1.5],["G4",1.5],["A#4",1],["C5",1],["G4",1.5],["G4",1.5],["F4",1],["F#4",1]]},
+  {a:["Harry Potter e la pietra filosofale","La storia infinita","Hook – Capitan Uncino","Il Signore degli Anelli"],bpm:96,wave:"triangle",notes:[["B3",.5],["E4",.75],["G4",.25],["F#4",.5],["E4",1],["B4",.5],["A4",1.5],["F#4",1.5],["E4",.75],["G4",.25],["F#4",.5],["D#4",1],["F4",.5],["B3",2]]},
+  {a:["I predatori dell'arca perduta","Jurassic Park","Ritorno al futuro","La mummia"],bpm:132,wave:"square",notes:[["E4",.75],["F4",.25],["G4",.5],["C5",2.5],["D4",.75],["E4",.25],["F4",3],["G4",.75],["A4",.25],["B4",.5],["F5",2.5],["A4",.75],["B4",.25],["C5",1],["D5",1],["E5",1.5]]},
+  {a:["Il Padrino","C'era una volta in America","Scarface","Quei bravi ragazzi"],bpm:96,wave:"triangle",notes:[["G4",.5],["C5",.5],["D#5",.5],["D5",.5],["C5",.5],["D#5",.5],["C5",.5],["D5",.5],["C5",.5],["G#4",.5],["A#4",.5],["G4",2]]},
+  {a:["Halloween – La notte delle streghe","Venerdì 13","Nightmare – Dal profondo della notte","Scream"],bpm:240,wave:"triangle",notes:[["C#5",1],["F#4",1],["F#4",1],["C#5",1],["F#4",1],["F#4",1],["C#5",1],["F#4",1],["D5",1],["F#4",1],["C#5",1],["F#4",1],["F#4",1],["C#5",1],["F#4",1],["F#4",1],["C#5",1],["F#4",1],["D5",1],["F#4",1]]},
+  {a:["2001: Odissea nello spazio","Interstellar","Solaris","Gravity"],bpm:60,wave:"sawtooth",notes:[["C3",2],["G3",2],["C4",2],["E4",.4],["D#4",3]]},
+];
+let AC=null, acStop=[];
+function noteHz(n){ const m=n.match(/^([A-G])(#|b)?(\d)$/); const base={C:0,D:2,E:4,F:5,G:7,A:9,B:11}[m[1]]+(m[2]==="#"?1:m[2]==="b"?-1:0);
+  return 440*Math.pow(2,(12*(+m[3]+1)+base-69)/12); }
+function stopMelody(){ acStop.forEach(o=>{ try{ o.stop(); }catch(e){} }); acStop=[]; }
+function playMelody(mel){
+  try{ AC=AC||new (window.AudioContext||window.webkitAudioContext)(); AC.resume(); }catch(e){ return; }
+  stopMelody(); let t=AC.currentTime+.08;
+  for(const [n,b] of mel.notes){ const dur=b*60/mel.bpm;
+    if(n!=="-"){ const o=AC.createOscillator(), g=AC.createGain(); o.type=mel.wave; o.frequency.value=noteHz(n);
+      const vol=mel.wave==="sine"?.35:mel.wave==="triangle"?.3:.12;
+      g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(vol,t+.02); g.gain.exponentialRampToValueAtTime(.001,t+Math.max(.08,dur*.95));
+      o.connect(g).connect(AC.destination); o.start(t); o.stop(t+dur); acStop.push(o); }
+    t+=dur; }
+}
+
+const Contacts = {
+  all(){ const meId=me().id, ids=new Set();
+    D().contacts.filter(c=>c.status==="accepted"&&(c.from===meId||c.to===meId)).forEach(c=>ids.add(c.from===meId?c.to:c.from));
+    for(const l of D().lists){ const mem=D().list_members.filter(m=>m.list_id===l.id).map(m=>m.user_id); if(mem.length>1&&mem.includes(meId)) mem.forEach(u=>u!==meId&&ids.add(u)); }
+    return [...ids].map(userById).filter(Boolean); },
+  isContact(uid){ return Contacts.all().some(u=>u.id===uid); },
+  incoming(){ return D().contacts.filter(c=>c.to===me().id&&c.status==="pending"&&userById(c.from)); },
+  outgoing(){ return D().contacts.filter(c=>c.from===me().id&&c.status==="pending"); },
+  request(uid){ const meId=me().id;
+    if(Contacts.isContact(uid)) return {error:"È già tra i tuoi contatti"};
+    if(D().contacts.some(c=>c.status==="pending"&&((c.from===meId&&c.to===uid)||(c.from===uid&&c.to===meId)))) return {error:"Richiesta già in corso"};
+    D().contacts.push({id:uid_("ct"),from:meId,to:uid,status:"pending",at:Date.now()}); save(); return {}; },
+  answer(id,ok){ const c=D().contacts.find(x=>x.id===id); if(c){ c.status=ok?"accepted":"declined"; save(); } },
+};
+const uid_ = p => uid(p);
+const Duels = {
+  mine(){ const meId=me().id; return D().duels.filter(d=>d.from===meId||d.to===meId).sort((a,b)=>b.at-a.at); },
+  get(id){ return D().duels.find(d=>d.id===id); },
+  other(d){ return userById(d.from===me().id?d.to:d.from); },
+  incoming(){ const meId=me().id; return Duels.mine().filter(d=>d.to===meId&&d.status==="waiting"&&!d.results[meId]); },
+  toChoose(){ const meId=me().id; return Duels.mine().filter(d=>d.status==="choosing"&&d.winner===meId); },
+  waitingOther(){ const meId=me().id; return Duels.mine().filter(d=>(d.status==="waiting"&&d.from===meId)||(d.status==="choosing"&&d.winner!==meId)); },
+  unseenResult(){ const meId=me().id; return Duels.mine().find(d=>d.status==="done"&&d.film&&d.winner!==meId&&!(d.seen||{})[meId]); },
+  badge(){ return me() ? Duels.incoming().length+Duels.toChoose().length+(Duels.unseenResult()?1:0)+Contacts.incoming().length : 0; },
+};
+// film nelle liste di un utente (esclusa Rewatch)
+const listFilmsOf = userId => { const seen=new Set(), out=[];
+  for(const l of D().lists.filter(l=>l.owner_id===userId&&l.type!=="rewatch")) for(const it of Lists.items(l.id)) if(!it.movie.custom&&!seen.has(it.movie.id)){ seen.add(it.movie.id); out.push(it.movie); }
+  return out; };
+function duelQuestions(d){
+  const rnd=seeded(d.seed), pick=(arr,n)=>shuffled(arr,rnd).slice(0,n);
+  let qs=[];
+  if(d.type==="secca") qs=pick(QUIZ.filter(q=>q.c!=="tf"),1).map(q=>({...q}));
+  if(d.type==="set") qs=pick(QUIZ,5).map(q=>({...q}));
+  if(d.type==="frame"){ const films=DEMO.filter(m=>m.backdrop_path);
+    qs=pick(films,3).map(m=>({c:"frame",q:"Di che film è questa scena?",b:m.backdrop_path,t:12,
+      a:[m.title,...shuffled(films.filter(x=>x.id!==m.id),rnd).slice(0,3).map(x=>x.title)]})); }
+  if(d.type==="sound") qs=pick(MELODIES,3).map(m=>({c:"sound",q:"Di che film è questa colonna sonora?",mel:m,t:20,a:m.a}));
+  return qs.map((q,k)=>({...q,opts:shuffled(q.a,seeded(d.seed+":"+k))}));
+}
+const duelTime = q => q.t || (q.c==="tf"?10:15);
+function resolveDuel(d){
+  const a=d.results[d.from], b=d.results[d.to];
+  let w="tie";
+  if(a.points!==b.points) w=a.points>b.points?d.from:d.to;
+  else if(a.points>0 && a.ms!==b.ms) w=a.ms<b.ms?d.from:d.to;
+  d.winner=w; d.resolvedAt=Date.now();
+  if(w==="tie"){ const pool=[...listFilmsOf(d.from),...listFilmsOf(d.to)]; d.film=pool.length?pool[Math.floor(Math.random()*pool.length)]:null; d.status="done"; }
+  else d.status="choosing";
+  save();
+}
+
+/* ---- partita di una sfida ---- */
+let DZ=null;
+function duelStart(d){
+  stopQuiz(); const qs=duelQuestions(d);
+  d.results[me().id]={answers:[],points:0,ms:0,partial:true,at:Date.now()}; save();
+  DZ={d,qs,i:0,t0:0,timer:null}; goTo("v-quiz"); duelNext();
+}
+function duelNext(){
+  if(DZ.i>=DZ.qs.length) return duelFinish();
+  DZ.t0=Date.now(); renderDuelQ(); clearInterval(DZ.timer); DZ.timer=setInterval(duelTick,100);
+  const q=DZ.qs[DZ.i]; if(q.mel) playMelody(q.mel);
+}
+function duelTick(){
+  if(!DZ) return; const q=DZ.qs[DZ.i], T=duelTime(q)*1000, left=Math.max(0,T-(Date.now()-DZ.t0));
+  const bar=$("#qbar"); if(bar) bar.style.width=(left/T*100)+"%";
+  const s=$("#qsec"); if(s) s.textContent=Math.ceil(left/1000);
+  const im=$("#qimg"); if(im) im.style.filter=`blur(${(3+17*left/T).toFixed(1)}px)`;
+  if(left<=0) duelAnswer(-1);
+}
+function duelAnswer(k){
+  if(!DZ) return; clearInterval(DZ.timer); stopMelody();
+  const q=DZ.qs[DZ.i], used=Math.min(duelTime(q)*1000,Date.now()-DZ.t0), left=Math.max(0,duelTime(q)-used/1000), ok=k>=0 && q.opts[k]===q.a[0];
+  const r=DZ.d.results[me().id]; r.answers.push({ok,ms:used}); r.points+=ok?100+10*Math.floor(left):0; r.ms+=used; save();
+  DZ.i++; duelNext();
+}
+function duelFinish(){
+  const d=DZ.d, meId=me().id; clearInterval(DZ.timer); stopMelody(); DZ=null;
+  delete d.results[meId].partial;
+  if(d.from===meId){ d.status="waiting"; save(); renderQuiz(); toast(`⚔️ Sfida inviata a ${handle(userById(d.to))}! Ti avvisiamo quando avrà giocato`); return; }
+  resolveDuel(d); renderQuiz();
+  if(d.winner===meId) openChooseFilm(d.id);
+  else if(d.winner==="tie") showDuelResult(d);
+  else { const r=d.results[meId]; toast(`😅 Hai perso! ${handle(userById(d.winner))} sta scegliendo il film`); }
+}
+// partite interrotte (app chiusa a metà): valgono le risposte già date
+function finalizeInterrupted(){
+  if(DZ) return; const meId=me().id;
+  for(const d of Duels.mine()){ const r=d.results[meId]; if(!r||!r.partial) continue;
+    delete r.partial;
+    if(d.from===meId) d.status="waiting"; else if(d.status==="waiting") resolveDuel(d); }
+  save();
+}
+function renderDuelQ(){
+  const q=DZ.qs[DZ.i], T=duelTime(q), o=Duels.other(DZ.d), ty=DUEL_TYPES[DZ.d.type];
+  $("#v-quiz").innerHTML=`<div class="qbox">
+    <div class="qtop"><span>⚔️ Sfida con ${esc(handle(o)||o?.name)} · ${DZ.i+1} di ${DZ.qs.length}</span><span>⏱ <b id="qsec">${T}</b> s</span></div>
+    <div class="qbar"><i id="qbar"></i></div>
+    <div><span class="qcat">${ty.icon} ${ty.name}</span>${q.c&&QCAT[q.c]?` <span class="qcat">${QCAT[q.c]}</span>`:""}</div>
+    <p class="qq">${esc(q.q)}</p>
+    ${q.e?`<div class="qemoji">${q.e}</div>`:""}
+    ${q.p&&DEMO_POSTERS[q.p]?`<div class="qposter"><img id="qimg" src="${img(DEMO_POSTERS[q.p][0],"w342")}" alt="" style="filter:blur(20px)"></div>`:""}
+    ${q.b?`<div class="qframe"><img src="${img(q.b,"w780")}" alt=""></div>`:""}
+    ${q.mel?`<div class="qsound"><div class="eq"><i></i><i></i><i></i><i></i><i></i></div><button class="btn ghost sm" data-a="duelReplay">🔁 Riascolta</button></div>`:""}
+    <div class="qopts">${q.opts.map((x,k)=>`<button class="qopt" data-a="duelAns" data-k="${k}">${esc(x)}</button>`).join("")}</div>
+  </div>`;
+}
+
+/* ---- dopo la sfida: chi vince sceglie, chi perde guarda ---- */
+let chooseSel=null;
+function openChooseFilm(id){
+  const d=Duels.get(id), o=Duels.other(d), films=listFilmsOf(me().id).slice(0,30); chooseSel=null;
+  openSheet(`<div style="text-align:center"><div style="font-size:52px">🏆</div><h3>Hai vinto contro ${esc(handle(o)||o?.name)}!</h3>
+      <p class="muted">Tocca a te decidere: scegli il film di stasera dalla tua lista.</p></div>
+    ${films.length?`<div class="tiles" style="margin-top:12px">${films.map(f=>`<div class="tile" data-a="duelPickTile" data-id="${f.id}" style="background:${gradient(f.title)}">
+        ${f.poster?`<img src="${img(f.poster,"w185")}" alt="" onerror="this.remove()">`:""}<span>${f.poster?"":esc(f.title)}</span></div>`).join("")}</div>
+      <div class="stack" style="margin-top:12px"><button class="btn" data-a="duelConfirm" data-id="${d.id}" id="duelConfirm" disabled>Scegli questo film</button>
+      <button class="btn ghost" data-a="duelRandom" data-id="${d.id}">🎲 Pesca a caso dalla mia lista</button></div>`
+    :`<p class="muted" style="text-align:center">La tua lista è vuota: peschiamo un film dalle tue piattaforme.</p><button class="btn" data-a="duelRandom" data-id="${d.id}">🎲 Pesca dalle mie piattaforme</button>`}`);
+}
+async function duelDecide(id,movie){
+  const d=Duels.get(id); d.film=liteMovie(movie); d.status="done"; d.seen={...(d.seen||{}),[me().id]:true};
+  prof().lastPick={movie:liteMovie(movie),at:Date.now(),chosen:true,done:false}; save();
+  closeSheet(); renderAll();
+  toast(`🍿 Stasera si guarda “${movie.title}”: ${handle(Duels.other(d))} lo scoprirà appena apre l'app`);
+}
+function showDuelResult(d){
+  const meId=me().id, o=Duels.other(d), f=d.film, tie=d.winner==="tie", ty=DUEL_TYPES[d.type];
+  const mine=d.results[meId]||{points:0}, theirs=d.results[o?.id]||{points:0};
+  openSheet(`<div class="lose">
+    <div style="font-size:56px">${tie?"🤝":"😅"}</div>
+    <h2>${tie?"Pareggio!":"Hai perso!"}</h2>
+    <p class="muted">${tie?`Tu e ${esc(handle(o))} avete fatto gli stessi punti`:`${esc(handle(o)||o?.name)} ha vinto la sfida`} · ${ty.icon} ${ty.name} · ${mine.points} a ${theirs.points}</p>
+    <div class="tonight">${tie?"Stasera si guarda, estratto dalle vostre liste:":"Stasera si guarda:"}</div>
+    ${f?`${f.poster?`<img class="bigposter" src="${img(f.poster,"w342")}" alt="">`:`<div class="bigposter" style="background:${gradient(f.title)};display:flex;align-items:center;justify-content:center;font-size:60px">${emojiFor(f)}</div>`}
+      <h3 style="margin:10px 0 2px">${esc(f.title)}</h3><div class="muted">${[f.year,(f.genre_ids||[]).map(genreName).filter(Boolean).slice(0,2).join(", ")].filter(Boolean).join(" · ")}</div>`
+      :`<p class="muted">Le vostre liste sono vuote: usate “Scegli per me”!</p>`}
+    <button class="btn" data-a="duelAck" data-id="${d.id}" style="margin-top:16px">${f?"🍿 Va bene, si guarda":"Ok"}</button>
+    <button class="btn ghost" data-a="duelRevenge" data-id="${d.id}" style="margin-top:8px">⚔️ Rivincita domani</button>
+  </div>`);
+}
+// all'apertura: sconfitta da vedere, oppure vittoria da riscattare
+function checkDuelNotices(){
+  if(!me()||onb||DZ||QZ||$("#sheetBg").classList.contains("on")) return;
+  finalizeInterrupted();
+  const r=Duels.unseenResult(); if(r) return showDuelResult(r);
+  const c=Duels.toChoose().find(d=>!(d.noticed||{})[me().id]);
+  if(c){ c.noticed={...(c.noticed||{}),[me().id]:true}; save(); openChooseFilm(c.id); }
+}
+
+/* ---- pagina Sfide ---- */
+function renderDuelBadge(){ const n=Duels.badge(), b=$("#duelBadge"); if(!b) return; b.textContent=n||""; b.style.display=n?"inline-flex":"none"; }
+function duelRow(d,action){
+  const o=Duels.other(d), ty=DUEL_TYPES[d.type], meId=me().id;
+  let sub=`${ty.icon} ${ty.name}`;
+  if(d.status==="done"){ const res=d.winner==="tie"?"Pareggio":d.winner===meId?"Hai vinto":"Hai perso"; sub=`${res} · ${d.results[meId]?.points??0} a ${d.results[o?.id]?.points??0}${d.film?` · 🍿 ${esc(d.film.title)}`:""}`; }
+  return `<div class="item">${avatar(o)}<div class="info"><div class="t">${esc(handle(o)||o?.name)}</div><div class="muted">${sub}</div></div>${action||""}</div>`;
+}
+function renderDuels(v){
+  finalizeInterrupted();
+  const t=DUEL_TYPES[duelTypeOf()], inc=Duels.incoming(), ch=Duels.toChoose(), wait=Duels.waitingOther(), done=Duels.mine().filter(d=>d.status==="done").slice(0,6);
+  const contacts=Contacts.all(), creq=Contacts.incoming();
+  v.innerHTML=`
+    <div class="qhero duelhero"><div class="big">⚔️</div><h2>Sfida un amico</h2>
+      <div style="font-size:15px">Sfida di oggi: <b>${t.icon} ${t.name}</b></div><div style="color:#e0d6ff;margin-top:4px;font-size:13px">${t.desc}</div>
+      <div style="color:#ffd58a;margin-top:10px;font-size:13px">🏆 Chi vince sceglie il film di stasera dalla sua lista</div>
+      <button class="btn white" data-a="duelNew" style="margin-top:14px">⚔️ Lancia una sfida</button></div>
+    ${inc.length?`<h2>📩 Ti hanno sfidato</h2><div class="section">${inc.map(d=>duelRow(d,`<button class="btn sm" data-a="duelPlay" data-id="${d.id}">Gioca</button><button class="icon" title="Rifiuta" data-a="duelDecline" data-id="${d.id}">✕</button>`)).join("")}</div>`:""}
+    ${ch.length?`<h2>🏆 Hai vinto: scegli il film</h2><div class="section">${ch.map(d=>duelRow(d,`<button class="btn sm" data-a="duelChoose" data-id="${d.id}">Scegli</button>`)).join("")}</div>`:""}
+    ${wait.length?`<h2>⏳ In attesa</h2><div class="section">${wait.map(d=>duelRow(d,`<span class="muted" style="font-size:12px">${d.status==="choosing"?"sta scegliendo il film":"deve ancora giocare"}</span>`)).join("")}</div>`:""}
+    ${done.length?`<h2>📜 Ultime sfide</h2><div class="section">${done.map(d=>duelRow(d)).join("")}</div>`:""}
+    <h2>👥 I tuoi contatti</h2>
+    <div class="section">
+      ${creq.map(c=>{ const u=userById(c.from); return `<div class="item">${avatar(u)}<div class="info"><div class="t">${esc(u.name)}</div><div class="muted">${esc(handle(u))} vuole aggiungerti ai contatti</div></div>
+        <button class="btn sm" data-a="contactAns" data-id="${c.id}" data-ok="1">Accetta</button><button class="icon" data-a="contactAns" data-id="${c.id}" data-ok="">✕</button></div>`; }).join("")}
+      ${contacts.map(u=>`<div class="item">${avatar(u)}<div class="info"><div class="t">${esc(u.name)}</div><div class="muted">${esc(handle(u))}</div></div><button class="btn ghost sm" data-a="duelWith" data-id="${u.id}">⚔️ Sfida</button></div>`).join("")}
+      ${!contacts.length&&!creq.length?`<p class="muted" style="margin:0 0 10px;line-height:1.5">Ancora nessun contatto. Aggiungi gli amici con il loro @nomeutente: sono contatti anche le persone con cui hai collegato una lista.</p>`:""}
+      ${Contacts.outgoing().length?`<p class="muted" style="font-size:12px">In attesa di risposta: ${Contacts.outgoing().map(c=>esc(handle(userById(c.to)))).join(", ")}</p>`:""}
+      <button class="btn ghost" data-a="contactAdd" style="margin-top:8px">＋ Aggiungi contatto</button>
+    </div>
+    <p class="muted" style="line-height:1.5;margin-top:14px"><b>Come funziona</b> · Ogni giorno c'è un tipo di sfida diverso: domanda secca, raffica di domande, fotogramma o colonna sonora. Giochi subito tu, il tuo amico risponde quando apre l'app: stesse domande, vince chi fa più punti (a parità, il più veloce). Chi vince sceglie il film dalla sua lista, chi perde… se lo guarda 🍿</p>`;
+}
+const gameTabs = () => { const t=prof().gameTab||"quiz";
+  return `<div class="seg" style="margin-bottom:14px"><button class="${t==="quiz"?"on":""}" data-a="gameTab" data-id="quiz">🎬 Quiz del giorno</button>
+    <button class="${t==="duel"?"on":""}" data-a="gameTab" data-id="duel">⚔️ Sfide${Duels.badge()?` <span class="dot">${Duels.badge()}</span>`:""}</button></div>`; };
+function peopleForDuel(q){
+  const el=$("#duelPeople"); if(!el) return;
+  const res=Users.search(q);
+  el.innerHTML = q.trim().length<2 ? "" : res.length ? res.map(u=>`<div class="item">${avatar(u)}<div class="info"><div class="t">${esc(u.name)}</div><div class="muted">${esc(handle(u))}</div></div>
+      <button class="btn sm" data-a="duelWith" data-id="${u.id}">⚔️ Sfida</button></div>`).join("")
+    : `<p class="muted">Nessun utente con questo nome. Invitalo con il link qui sotto.</p>`;
+}
+Object.assign(A,{
+  gameTab:d=>{ prof().gameTab=d.id; save(); renderQuiz(); },
+  duelNew:()=>{ if(needAccount()) return; const t=DUEL_TYPES[duelTypeOf()], cs=Contacts.all();
+    openSheet(`<h3>⚔️ Lancia una sfida</h3><p class="muted">Oggi: <b>${t.icon} ${t.name}</b> · ${t.desc}</p>
+      ${cs.length?`<div class="flabel">I tuoi contatti</div>${cs.map(u=>`<div class="item">${avatar(u)}<div class="info"><div class="t">${esc(u.name)}</div><div class="muted">${esc(handle(u))}</div></div><button class="btn sm" data-a="duelWith" data-id="${u.id}">Sfida</button></div>`).join("")}`:""}
+      <div class="flabel" style="margin-top:14px">Oppure sfida @nome</div>
+      <input type="text" id="duelQ" placeholder="@nomeutente" autocomplete="off" autocapitalize="none" spellcheck="false">
+      <div id="duelPeople"></div>
+      <button class="btn ghost" data-a="duelInviteLink" style="margin-top:12px">📤 Non è su CosaGuardo? Mandagli l'invito</button>`);
+    $("#duelQ").oninput=e=>peopleForDuel(e.target.value); },
+  duelWith:d=>{ if(needAccount()) return; closeSheet();
+    const du={id:uid("du"),from:me().id,to:d.id,type:duelTypeOf(),day:dayKey(),seed:uid("s"),status:"playing",results:{},at:Date.now()};
+    D().duels.push(du); save(); duelStart(du); },
+  duelPlay:d=>duelStart(Duels.get(d.id)),
+  duelDecline:d=>{ if(!confirm("Rifiutare la sfida?")) return; const x=Duels.get(d.id); x.status="declined"; save(); renderQuiz(); },
+  duelAns:d=>duelAnswer(+d.k),
+  duelReplay:()=>{ if(DZ&&DZ.qs[DZ.i].mel) playMelody(DZ.qs[DZ.i].mel); },
+  duelChoose:d=>openChooseFilm(d.id),
+  duelPickTile:(d,el)=>{ chooseSel=+d.id||d.id; document.querySelectorAll("#sheet .tile").forEach(t=>t.classList.toggle("on",t===el)); $("#duelConfirm").disabled=false; },
+  duelConfirm:d=>{ const f=listFilmsOf(me().id).find(m=>String(m.id)===String(chooseSel)); if(f) duelDecide(d.id,f); },
+  duelRandom:async d=>{ let pool=listFilmsOf(me().id);
+    if(!pool.length && prof().providerIds.length){ try{ const r=await api("/discover/movie",{language:LANG,watch_region:REGION,with_watch_providers:prof().providerIds.join("|"),with_watch_monetization_types:"flatrate",sort_by:"popularity.desc","vote_count.gte":MIN_VOTES,page:1}); pool=r.results.map(normalize); }catch(e){} }
+    if(!pool.length) return toast("Nessun film disponibile");
+    duelDecide(d.id,pool[Math.floor(Math.random()*pool.length)]); },
+  duelAck:d=>{ const x=Duels.get(d.id); x.seen={...(x.seen||{}),[me().id]:true};
+    if(x.film) prof().lastPick={movie:x.film,at:Date.now(),chosen:true,done:false}; save(); closeSheet(); renderAll(); },
+  duelRevenge:d=>{ const x=Duels.get(d.id); x.seen={...(x.seen||{}),[me().id]:true}; save(); closeSheet(); prof().gameTab="duel"; renderAll(); goTo("v-quiz"); toast("Domani c'è una nuova sfida: lanciala da qui ⚔️"); },
+  duelInviteLink:async()=>{ const link="https://cosaguardo.app"; const text=`${me().name} ti sfida su CosaGuardo: chi vince sceglie il film di stasera! Scarica l'app e cerca ${handle(me())} ${link}`;
+    try{ if(navigator.share) await navigator.share({title:"CosaGuardo",text,url:link}); else { await navigator.clipboard.writeText(text); toast("Invito copiato negli appunti"); } }catch(e){ toast(link); } },
+  contactAdd:()=>{ if(needAccount()) return;
+    openSheet(`<h3>＋ Aggiungi contatto</h3><p class="muted">Cerca il suo @nomeutente: riceverà una richiesta da accettare.</p>
+      <input type="text" id="ctQ" placeholder="@nomeutente" autocomplete="off" autocapitalize="none" spellcheck="false" style="margin:8px 0"><div id="ctRes"></div>`);
+    $("#ctQ").oninput=e=>{ const q=e.target.value, res=Users.search(q);
+      $("#ctRes").innerHTML = q.trim().length<2 ? "" : res.length ? res.map(u=>`<div class="item">${avatar(u)}<div class="info"><div class="t">${esc(u.name)}</div><div class="muted">${esc(handle(u))}</div></div>
+        ${Contacts.isContact(u.id)?`<span class="muted">già contatto</span>`:`<button class="btn sm" data-a="contactReq" data-id="${u.id}">Aggiungi</button>`}</div>`).join("") : `<p class="muted">Nessun utente con questo nome.</p>`; }; },
+  contactReq:(d,el)=>{ const r=Contacts.request(d.id); toast(r.error||`Richiesta inviata a ${handle(userById(d.id))}`); el.disabled=true; renderQuiz(); },
+  contactAns:d=>{ Contacts.answer(d.id,!!d.ok); renderQuiz(); renderDuelBadge(); },
+});
 
 async function reconnect(verbose){
   memo.clear(); metaOk=false; G=null; if(me()) clearResults();
