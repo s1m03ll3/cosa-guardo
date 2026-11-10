@@ -10,6 +10,7 @@
     --bg:#0f1115; --card:#181b22; --card2:#20242d; --line:#2a2f3a;
     --text:#eef0f4; --muted:#9aa1ad; --accent:#ff5a5f; --accent2:#ffb347; --ok:#3ecf8e; --gold:#f5c542;
     --r:16px;
+    --field:#626a7a; /* bordo dei campi e dello switch spento: 3.2:1 su --card */
   }
   *{box-sizing:border-box}
   html,body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
@@ -26,21 +27,21 @@
   .section{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px}
   .chips{display:flex;flex-wrap:wrap;gap:8px}
   .chip{border:1px solid var(--line);background:var(--card2);color:var(--text);padding:8px 12px;border-radius:99px;font-size:14px;cursor:pointer;user-select:none;transition:.15s;display:inline-flex;align-items:center;gap:6px}
-  .chip.on{background:var(--accent);border-color:var(--accent);color:#fff}
-  .chip.plat.on,.chip.src.on{background:#2d5cff;border-color:#2d5cff}
+  .chip.on{background:var(--accent);border-color:var(--accent);color:#1a0d0a}
+  .chip.plat.on,.chip.src.on{background:#2d5cff;border-color:#2d5cff;color:#fff}
   .logo-img{width:22px;height:22px;border-radius:6px;pointer-events:none;flex:none;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff}
   .row{display:flex;gap:12px;align-items:center;justify-content:space-between;margin:12px 0}
   .row label{font-size:14px}
-  select,input[type=text],input[type=email],input[type=number],input[type=password]{background:var(--card2);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:15px;width:100%}
+  select,input[type=text],input[type=email],input[type=number],input[type=password]{background:var(--card2);color:var(--text);border:1px solid var(--field);border-radius:10px;padding:10px 12px;font-size:15px;width:100%}
   .row select{width:auto}
   input[type=range]{flex:1;accent-color:var(--accent)}
   .switch{position:relative;width:44px;height:26px;flex:none}
   .switch input{opacity:0;width:0;height:0}
-  .switch span{position:absolute;inset:0;background:var(--line);border-radius:99px;transition:.2s;cursor:pointer}
+  .switch span{position:absolute;inset:0;background:var(--field);border-radius:99px;transition:.2s;cursor:pointer}
   .switch span:before{content:"";position:absolute;width:20px;height:20px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s}
   .switch input:checked+span{background:var(--ok)}
   .switch input:checked+span:before{transform:translateX(18px)}
-  .btn{display:block;width:100%;border:0;border-radius:14px;padding:15px;font-size:16px;font-weight:700;cursor:pointer;color:#fff;text-align:center;
+  .btn{display:block;width:100%;border:0;border-radius:14px;padding:15px;font-size:16px;font-weight:700;cursor:pointer;color:#1a0d0a;text-align:center;
        background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:0 8px 24px rgba(255,90,95,.25)}
   .btn:active{transform:scale(.98)}
   .btn:disabled{opacity:.5;cursor:default}
@@ -100,10 +101,11 @@
       display:flex;justify-content:center;padding:8px 8px calc(8px + env(safe-area-inset-bottom));z-index:5}
   nav .in{display:flex;max-width:560px;width:100%}
   nav button{flex:1;background:none;border:0;color:var(--muted);font-size:12px;padding:6px;cursor:pointer}
-  nav button b{display:block;font-size:22px;margin-bottom:2px}
+  nav button b{display:block;font-size:22px;margin-bottom:2px;height:24px}
+  nav button svg{width:24px;height:24px;display:block;margin:0 auto}
   nav button.on{color:var(--text)}
   nav button b{position:relative}
-  .badge{position:absolute;top:-4px;right:-10px;min-width:18px;height:18px;border-radius:99px;background:var(--accent);color:#fff;font-size:11px;font-weight:700;display:none;align-items:center;justify-content:center;padding:0 4px}
+  .badge{position:absolute;top:-4px;right:-10px;min-width:18px;height:18px;border-radius:99px;background:var(--accent);color:#1a0d0a;font-size:11px;font-weight:700;display:none;align-items:center;justify-content:center;padding:0 4px}
   .view{display:none}.view.on{display:block}
   .toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);background:var(--text);color:#111;padding:10px 16px;border-radius:99px;font-size:14px;font-weight:600;opacity:0;transition:.25s;pointer-events:none;z-index:60;max-width:90vw;text-align:center}
   .toast.on{opacity:1}
@@ -274,6 +276,26 @@
   .qopts{display:grid;gap:10px;margin-top:auto;padding-bottom:8px}
   .qopt{border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:14px;padding:15px;font-size:16px;text-align:left;cursor:pointer}
   .qopt:active{background:var(--card2)}
+  /* --- scelta automatica: il bottone principale è la prima cosa che si vede --- */
+  .pickhero{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px 16px 16px}
+  .pickhero h2.pick-title{display:block;font-size:26px;line-height:1.15;color:var(--text);text-transform:none;letter-spacing:-.4px;margin:0 0 6px;font-weight:800}
+  .pick-sub{margin:0 0 4px;color:var(--muted);font-size:15px;line-height:1.4}
+  .pick-sub b{color:var(--text)}
+  .pickhero .flabel{margin-top:14px}
+  .opt-note{text-transform:none;letter-spacing:0}
+  .pickhero .btn.big{margin-top:12px}
+  .btn.big small{display:block;font-size:13px;font-weight:500;opacity:.9;margin-top:3px}
+  .fcount{display:inline-block;margin-left:6px;font-size:12px;font-weight:700;color:#1a0d0a;background:var(--accent2);border-radius:99px;padding:1px 8px}
+  .fcount:empty{display:none}
+  details.more summary{padding:4px 0}
+  .why{font-size:13px;line-height:1.45;background:#3a2a10;border:1px solid #7a5a1a;color:#ffd58a;border-radius:10px;padding:8px 10px;margin:4px 0 10px}
+  .ferr{color:#ff8a8d;font-size:13px;margin-top:6px}
+  [aria-invalid="true"]{border-color:#ff8a8d !important}
+  .gfoot .btn.sm{padding:7px 12px;font-size:13px}
+  /* focus visibile per chi usa tastiera o lettore di schermo */
+  :focus-visible{outline:2px solid var(--accent2);outline-offset:2px}
+  select:focus-visible,input:focus-visible{outline:none;border-color:var(--accent2);box-shadow:0 0 0 2px rgba(255,179,71,.35)}
+  .switch input:focus-visible+span{outline:2px solid var(--accent2);outline-offset:2px}
 </style>
 </head>
 <body>
@@ -287,18 +309,21 @@
   <section id="v-pick" class="view on">
     <div id="setupBanner"></div>
     <div id="followUp"></div>
-    <div class="section" id="modeFilters">
-      <div class="flabel">✨ Descrivi cosa ti va <span style="text-transform:none;letter-spacing:0">(facoltativo)</span></div>
-      <div class="ask"><input type="text" id="descBox" placeholder="Es. un film che mi faccia piangere" autocomplete="off" enterkeyhint="search">
-        <button class="clearx" data-a="clearDesc" id="descClear" title="Cancella" style="visibility:hidden">✕</button></div>
+    <div class="pickhero">
+      <h2 class="pick-title">Stasera non scegli tu.</h2>
+      <p class="pick-sub">Un tocco e ti diciamo <b>un solo film</b> da guardare, tra quelli inclusi nei tuoi abbonamenti.</p>
+      <div class="flabel">Che voglia hai? <span class="opt-note">(facoltativo)</span></div>
+      <div class="hscroll" id="moodChips"></div>
+      <button class="btn big" data-a="pick">🎲 Scegli per me<small id="pickSub">Ti proponiamo un film, subito</small></button>
+    </div>
+
+    <details class="more" id="filtersBox"><summary>⚙️ Personalizza la scelta<span id="fCount" class="fcount"></span></summary>
+      <div class="flabel">✨ Descrivi cosa ti va</div>
+      <div class="ask"><input type="text" id="descBox" placeholder="Es. un film che mi faccia piangere" autocomplete="off" enterkeyhint="go" aria-label="Descrivi cosa ti va">
+        <button class="clearx" data-a="clearDesc" id="descClear" title="Cancella" aria-label="Cancella la descrizione" style="visibility:hidden">✕</button></div>
       <div id="descOut"></div>
       <div class="flabel">Cerca tra</div><div class="chips sm" id="srcChips"></div>
       <div class="flabel">Genere</div><div class="chips sm" id="genreChips"></div>
-      <div class="flabel">Mood</div><div class="chips sm" id="moodChips"></div>
-      <div style="text-align:right;margin-top:10px"><span class="link" data-a="resetFilters">Azzera filtri</span></div>
-    </div>
-
-    <details class="more"><summary>Altre opzioni</summary>
       <div class="grid3" style="margin-top:12px">
         <label><span class="flabel">Durata</span><select id="fDuration">
           <option value="0">Qualsiasi</option><option value="100">&lt; 1h40</option><option value="130">&lt; 2h10</option><option value="160">&lt; 2h40</option></select></label>
@@ -307,18 +332,16 @@
         <label><span class="flabel">Voto</span><select id="fRating">
           <option value="0">Qualsiasi</option><option value="6">6+</option><option value="6.5">6.5+</option><option value="7">7+</option><option value="7.5">7.5+</option><option value="8">8+</option></select></label>
       </div>
-      <div class="row"><label>Solo film che posso vedere<br><span class="muted">sulle mie piattaforme (anche per le liste)</span></label>
+      <div class="row"><label for="fOnlyAvail">Solo film che posso vedere<br><span class="muted">sulle mie piattaforme (anche per le liste)</span></label>
         <label class="switch"><input type="checkbox" id="fOnlyAvail"><span></span></label></div>
-      <div class="row"><label>Solo film conosciuti<br><span class="muted">almeno 300 voti su TMDB</span></label>
+      <div class="row"><label for="fPopular">Solo film conosciuti<br><span class="muted">almeno 300 voti su TMDB</span></label>
         <label class="switch"><input type="checkbox" id="fPopular"><span></span></label></div>
-      <div class="row"><label>Escludi film che ho già visto<br><span class="muted">non vale per la lista Rewatch</span></label>
+      <div class="row"><label for="fHideSeen">Escludi film che ho già visto<br><span class="muted">non vale per la lista Rewatch</span></label>
         <label class="switch"><input type="checkbox" id="fHideSeen"><span></span></label></div>
+      <div style="text-align:right;margin-top:10px"><span class="link" data-a="resetFilters" tabindex="0" role="button">Azzera filtri</span></div>
     </details>
 
-    <div class="actions2">
-      <button class="btn big" data-a="pick">🎲 Sorprendimi<small>Ti scegliamo noi un film, con questi filtri</small></button>
-      <button class="btn ghost" data-a="search">🔍 Mostra tutti i film con questi filtri</button>
-    </div>
+    <button class="btn ghost" data-a="search" id="listBtn" style="margin-top:10px">📋 Preferisco vedere l'elenco</button>
     <div id="results"></div>
   </section>
 
@@ -330,11 +353,11 @@
 </div>
 
 <nav><div class="in">
-  <button data-a="goto" data-view="v-pick" class="on"><b>🔍</b>Cerca</button>
-  <button data-a="goto" data-view="v-discover"><b>🃏</b>Scopri</button>
-  <button data-a="goto" data-view="v-quiz"><b>🏆</b>Game</button>
-  <button data-a="goto" data-view="v-lists"><b>📋<span class="badge" id="invBadge"></span></b>Liste</button>
-  <button data-a="goto" data-view="v-profile"><b>👤</b>Profilo</button>
+  <button data-a="goto" data-view="v-pick" class="on"><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="8.5" r="1.2" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1.2" fill="currentColor"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg></b>Scegli</button>
+  <button data-a="goto" data-view="v-discover"><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="4" width="12" height="16" rx="2.5"/><path d="M4.5 7.5v10A2.5 2.5 0 0 0 7 20"/></svg></b>Scopri</button>
+  <button data-a="goto" data-view="v-quiz"><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8.5 20h7"/></svg></b>Game</button>
+  <button data-a="goto" data-view="v-lists"><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1" fill="currentColor"/><circle cx="4.5" cy="12" r="1" fill="currentColor"/><circle cx="4.5" cy="18" r="1" fill="currentColor"/></svg><span class="badge" id="invBadge"></span></b>Liste</button>
+  <button data-a="goto" data-view="v-profile"><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-3.5 4.5-5 8-5s6.5 1.5 8 5"/></svg></b>Profilo</button>
 </div></nav>
 
 <div class="onb" id="onb"></div>
@@ -367,7 +390,7 @@ const MOODS = {
   paura:     {label:"😱 Paura",          g:[27]},
   romantico: {label:"💕 Romantico",      g:[10749]},
   famiglia:  {label:"🍿 Con la famiglia",g:[10751,16],      not:[27,53,80]},
-  giallo:    {label:"🔎 Mistero",        g:[9648,80]},
+  giallo:    {label:"🧩 Giallo",         g:[9648,80]},
 };
 const GENRE_EMOJI = {28:"💥",12:"🗺️",16:"🎨",35:"😂",80:"🕵️",99:"📽️",18:"🎭",10751:"👨‍👩‍👧",14:"🐉",36:"🏛️",27:"👻",10402:"🎵",9648:"🔎",10749:"❤️",878:"🚀",10770:"📺",53:"🔪",10752:"🪖",37:"🤠"};
 const BASE_GENRES = [[28,"Azione"],[12,"Avventura"],[16,"Animazione"],[35,"Commedia"],[80,"Crime"],[99,"Documentario"],[18,"Dramma"],[10751,"Famiglia"],[14,"Fantasy"],[36,"Storia"],[27,"Horror"],[10402,"Musica"],[9648,"Mistero"],[10749,"Romance"],[878,"Fantascienza"],[53,"Thriller"],[10752,"Guerra"],[37,"Western"]].map(([id,name])=>({id,name}));
@@ -1025,8 +1048,17 @@ async function pick(){
    7. PUBBLICITÀ (simulata) + ANIMAZIONE DI CARICAMENTO
    In produzione: interstitial AdMob mostrato mentre carichiamo il film.
    ===================================================================== */
-let pickCount=0;
-const shouldShowAd = () => !prof().premium && (pickCount%AD_EVERY===1);
+// Regole: mai alla prima azione del giorno; mai tra "Scegli per me" e il film proposto.
+// Quando tocca (ogni AD_EVERY azioni) compare alla prima occasione buona: "Scegline un altro" o l'elenco.
+function shouldShowAd(kind){
+  if(prof().premium) return false;
+  const p=prof(), day=new Date().toDateString();
+  if(p.ads?.day!==day) p.ads={day,n:0,due:false};
+  p.ads.n++; if(p.ads.n>1 && p.ads.n%AD_EVERY===0) p.ads.due=true;
+  const show = kind!=="pick" && p.ads.due; if(show) p.ads.due=false;
+  save(); return show;
+}
+const buzz = (ms=12) => { try{ navigator.vibrate?.(ms); }catch(e){} };
 async function withLoader(task, showAd){
   const L=$("#loader"), emojis=["🎬","🍿","🎞️","📽️","🎥","⭐","🎟️"], msgs=["Mescolo i titoli…","Controllo le tue piattaforme…","Guardo cosa ti piace…","Quasi pronto…"];
   L.innerHTML=`<div class="reel" id="reel">🎬</div><div class="msg" id="lmsg">${msgs[0]}</div>
@@ -1045,7 +1077,22 @@ async function withLoader(task, showAd){
 /* =====================================================================
    8. RENDER – SCEGLI
    ===================================================================== */
-const chip=(label,on,attrs="",cls="")=>`<span class="chip ${cls} ${on?"on":""}" ${attrs}>${label}</span>`;
+const chip=(label,on,attrs="",cls="")=>`<span class="chip ${cls} ${on?"on":""}" tabindex="0" role="button" aria-pressed="${!!on}" ${attrs}>${label}</span>`;
+const ariaEmoji = s => s.replace(/^(\S+)\s/,'<span aria-hidden="true">$1</span> '); // il lettore di schermo legge solo la parola
+function activeFilterCount(){ const f=F(), d=DEFAULT_FILTERS;
+  return f.genres.length+(prof().descCrit?1:0)+(f.maxDur?1:0)+(f.era!=="all"?1:0)+(f.minRating!==d.minRating?1:0)
+    +(f.onlyAvail!==d.onlyAvail?1:0)+(f.hideSeen!==d.hideSeen?1:0)+(f.popular!==d.popular?1:0)+(JSON.stringify(f.sources)!==JSON.stringify(d.sources)?1:0); }
+// quanti film sono candidati con i filtri attuali (per il sottotitolo del bottone e per "elenco")
+let countSeq=0;
+const updateCount = debounce(async()=>{
+  const seq=++countSeq, c=C(); let n=listPool().length;
+  try{ if(c.sources.includes("platforms") && prof().providerIds.length) n+=(await api("/discover/movie",{...discoverParams(),page:1})).total_results||0; }
+  catch(e){ n=-1; }
+  if(seq!==countSeq) return;
+  const s=n>0?n.toLocaleString("it-IT"):"";
+  $("#pickSub").textContent = n>0 ? `Ne scegliamo uno tra ${s} film adatti a te` : n===0 ? "Nessun film con questi filtri: prova ad allargare la scelta" : "Ti proponiamo un film, subito";
+  $("#listBtn").textContent = n>0 ? `📋 Preferisco vedere l'elenco (${s})` : "📋 Preferisco vedere l'elenco";
+},400);
 function renderHeader(){
   const pill=$("#statusPill");
   if(!me()){ pill.textContent=""; return; }
@@ -1061,8 +1108,10 @@ function renderPick(){
   const d=p.descCrit;
   if(d && !$("#descBox").value && document.activeElement!==$("#descBox")) $("#descBox").value=d.text||"";
   renderDescOut();
-  $("#genreChips").innerHTML=GENRES.map(g=>chip(`${GENRE_EMOJI[g.id]||"🎬"} ${esc(g.name)}`,f.genres.includes(g.id),`data-a="genre" data-id="${g.id}"`)).join("");
-  $("#moodChips").innerHTML=Object.entries(MOODS).map(([k,v])=>chip(v.label,f.moods.includes(k),`data-a="mood" data-id="${k}"`)).join("");
+  $("#genreChips").innerHTML=GENRES.map(g=>chip(`<span aria-hidden="true">${GENRE_EMOJI[g.id]||"🎬"}</span> ${esc(g.name)}`,f.genres.includes(g.id),`data-a="genre" data-id="${g.id}"`)).join("");
+  $("#moodChips").innerHTML=Object.entries(MOODS).map(([k,v])=>chip(ariaEmoji(v.label),f.moods.includes(k),`data-a="mood" data-id="${k}"`)).join("");
+  const n=activeFilterCount(); $("#fCount").textContent=n?`${n} attiv${n>1?"i":"o"}`:"";
+  updateCount();
   setOption("#fDuration",f.maxDur,f.maxDur?`< ${fmtDur(f.maxDur)}`:"");
   setOption("#fEra",f.era,f.era==="custom"&&f.years?`${f.years[0]}–${f.years[1]}`:"");
   setOption("#fRating",f.minRating,`${f.minRating}+`);
@@ -1090,7 +1139,7 @@ async function applyDesc(){
   p.descCrit = r.labels.length ? {...r,text:t} : null; save(); renderDescOut(r);
 }
 
-/* ---- Elenco risultati: compare solo dopo "Mostra tutti i film" ---- */
+/* ---- Elenco risultati: compare solo dopo "Preferisco vedere l'elenco" ---- */
 let R={key:null,fkey:null,items:[],listCount:0,page:0,totalPages:0,platTotal:0,loading:false,error:null};
 const resultsKey = () => JSON.stringify([devKey(),Dismissed.count(),C(),discoverParams(),Seen.ids().length,activeListIds().map(id=>Lists.items(id).length),prof().providerIds]);
 const filtersKey = () => JSON.stringify([C(),activeListIds(),prof().providerIds]);
@@ -1182,7 +1231,7 @@ function renderFollowUp(){
   </div></div>`;
 }
 
-/* ---- Scheda film (pannello dal basso): da elenco o da "Sorprendimi" ---- */
+/* ---- Scheda film (pannello dal basso): da elenco o da "Scegli per me" ---- */
 let current=null, currentRandom=false;
 function showDetail(f,random){
   current=f; currentRandom=!!random;
@@ -1200,6 +1249,13 @@ function showDetail(f,random){
   const o=f.origin, shared=o && o.addedBy.some(id=>id!==me().id);
   const originHtml=o?`<div class="origin">${o.lists.map(n=>"📋 "+esc(n)).join(" · ")}${shared?` · aggiunto da ${o.addedBy.map(id=>id===me().id?"te":esc(userName(id))).join(", ")}`:""}</div>`:"";
   const saved=Lists.owned().filter(l=>l.type!=="rewatch").some(l=>Lists.has(l.id,f.id));
+  // "Scelto per te": diciamo in una riga perché proprio questo, così ci si fida della scelta
+  const why = !random ? [] : [
+    mine.length ? `è su ${mine.slice(0,2).map(p=>esc(p.provider_name)).join(" e ")}` : (o ? `è nella tua lista “${esc(o.lists[0])}”` : ""),
+    ...C().moods.filter(m=>(f.genre_ids||[]).some(g=>MOODS[m].g.includes(g))).map(m=>`va bene per il mood ${esc(MOODS[m].label.replace(/^\S+\s/,"").toLowerCase())}`),
+    f.vote>=7 ? `piace molto (⭐ ${f.vote.toFixed(1)})` : "",
+    f.runtime && f.runtime<=110 ? `dura solo ${fmtDur(f.runtime)}` : "",
+  ].filter(Boolean);
   openSheet(`
   <div class="result" style="margin:-4px 0 0;animation:none">
     <div class="hero" style="${bg}">
@@ -1207,6 +1263,7 @@ function showDetail(f,random){
       <div>${random?`<div class="muted" style="color:#ffd58a">🎲 Scelto per te</div>`:""}<h3>${esc(f.title)}</h3>${f.tagline?`<div class="tagline">${esc(f.tagline)}</div>`:""}</div>
     </div>
     <div class="meta">
+      ${why.length?`<div class="why">🎯 <b>Perché questo:</b> ${why.join(" · ")}</div>`:""}
       ${originHtml}
       <div class="tags">
         ${f.year?`<span class="tag">${f.year}</span>`:""}${f.runtime?`<span class="tag">⏱ ${fmtDur(f.runtime)}</span>`:""}
@@ -1222,7 +1279,7 @@ function showDetail(f,random){
         <button class="btn ghost" data-a="seenCurrent">✅ Già visto</button>
         <button class="btn ghost" data-a="notInterested">🙈 Non mi interessa</button>
       </div>
-      ${random?`<button class="btn ghost" data-a="pick" style="margin-top:8px">🔄 Proponimene un altro</button>`:`<button class="btn ghost" data-a="closeSheet" style="margin-top:8px">Chiudi</button>`}
+      ${random?`<button class="btn ghost" data-a="pick" style="margin-top:8px">🎲 Scegline un altro</button>`:`<button class="btn ghost" data-a="closeSheet" style="margin-top:8px">Chiudi</button>`}
     </div>
   </div>`);
 }
@@ -1232,20 +1289,21 @@ async function openDetail(id){
   try{ const d=await details(f); showDetail(f.origin?{...d,origin:f.origin}:d,false); }
   catch(e){ openSheet(`<div class="empty">${esc(apiErrorMsg(e))}</div>`); }
 }
-// "Mostra tutti i film" e "Sorprendimi" partono entrambi con l'animazione (e la pubblicità per chi non è Premium)
+// "Elenco" e "Scegli per me" partono entrambi con l'animazione (la pubblicità segue le regole di shouldShowAd)
 let busy=false;
 async function runSearch(){
-  if(busy) return; busy=true; pickCount++; closeSheet();
-  try{ await applyDesc(); await withLoader(loadResults(true), shouldShowAd()); }
+  if(busy) return; busy=true; closeSheet();
+  try{ await applyDesc(); await withLoader(loadResults(true), shouldShowAd("list")); }
   catch(e){ R.error=apiErrorMsg(e); }
   finally{ busy=false; renderResults(); setTimeout(()=>($("#resTop")||$("#results")).scrollIntoView({behavior:"smooth",block:"start"}),60); }
 }
 async function doPick(){
-  if(busy) return; busy=true; pickCount++; closeSheet();
+  if(busy) return; busy=true;
+  const reroll=$("#sheetBg").classList.contains("on") && currentRandom; closeSheet();
   try{
     await applyDesc();
-    const f=await withLoader(pick(), shouldShowAd());
-    if(f) showDetail(f,true);
+    const f=await withLoader(pick(), shouldShowAd(reroll?"reroll":"pick"));
+    if(f){ buzz(); showDetail(f,true); }
     else toast(!C().sources.length?"Seleziona almeno una voce in “Cerca tra”":"Nessun film corrisponde ai filtri");
   }catch(e){ toast(apiErrorMsg(e)); }
   finally{ busy=false; }
@@ -1398,7 +1456,7 @@ function renderProfile(){
     <div class="section"><div class="chips">${metaOk?provList.map(g=>chip(`${logoHtml(g)}${esc(g.name)}`,g.ids.some(id=>p.providerIds.includes(id)),`data-a="prov" data-name="${esc(g.name)}"`,"plat")).join(""):`<span class="muted">Caricamento…</span>`}</div>
       ${PROVIDERS.length>16?`<button class="btn ghost" data-a="moreProv" style="margin-top:10px">${showAllProv?"Mostra solo le principali":`Mostra tutte (${PROVIDERS.length})`}</button>`:""}</div>
 
-    <h2>Generi preferiti</h2>
+    <h2>Generi preferiti <span class="opt-note">(facoltativo)</span></h2>
     <div class="section"><div class="chips">${GENRES.map(g=>chip(`${GENRE_EMOJI[g.id]||"🎬"} ${esc(g.name)}`,p.favGenres.includes(g.id),`data-a="favGenre" data-id="${g.id}"`)).join("")}</div>
       <p class="muted" style="margin:10px 0 0">Servono a proporti più spesso film di questi generi. Anche i tuoi 👍/👎 contano (${Ratings.mine().length} voti finora).</p>
       ${Dismissed.count()?`<p class="muted" style="margin:8px 0 0">🙈 ${Dismissed.count()} film esclusi (“non mi interessa”) · <span class="link" data-a="restoreDismissed">ripristina</span></p>`:""}</div>
@@ -1517,7 +1575,7 @@ function consumeInvite(){
   openSheet(`<h3>🔗 ${esc(l.name)}</h3><p><b>${esc(handle(o)||o?.name)}</b> vuole collegarti questa lista (${Lists.items(l.id).length} film). La vedrai tra le tue liste come “Lista ${esc(handle(o))}”.</p>
     <button class="btn" data-a="joinLink" data-code="${l.invite_code}">Aggiungi alle mie liste</button><button class="btn ghost" data-a="closeSheet" style="margin-top:8px">Non ora</button>`);
 }
-const ONB_STEPS=["welcome","auth","avatar","platforms","genres","seen","done"];
+const ONB_STEPS=["welcome","auth","avatar","platforms","seen","done"];
 function startOnboarding(step){ onb={step,method:null,seenTiles:null}; renderOnb(); $("#onb").classList.add("on"); }
 function endOnboarding(){ onb=null; $("#onb").classList.remove("on"); renderAll(); goTo("v-pick"); }
 const avatarPreview = () => { const a=avatarOf(me());
@@ -1537,10 +1595,11 @@ async function renderOnb(){
     const il=pendingInvite && Lists.byCode(pendingInvite), io=il&&userById(il.owner_id);
     body=`${il?`<div class="fu" style="margin-top:10px">${avatar(io)}<div class="info"><b>${esc(handle(io)||io?.name)}</b> vuole collegarti la sua lista <b>“${esc(il.name)}”</b>. Registrati per vederla.</div></div>`:""}
       <div class="hero-emoji">🍿</div><div class="logo">Cosa<span>Guardo</span></div>
-      <p style="text-align:center;font-size:18px;color:var(--muted);line-height:1.4;margin:14px 10px">Basta mezz'ore a scorrere cataloghi.<br>Scegli il mood, al film pensiamo noi.</p>
+      <p style="text-align:center;font-size:18px;color:var(--muted);line-height:1.4;margin:14px 10px">Basta perdere mezz'ora a scorrere i cataloghi.<br><b style="color:var(--text)">Il film di stasera lo scegliamo noi.</b></p>
       <div class="section stack" style="margin-top:30px">
-        <div class="feat">📺 Solo film delle piattaforme che hai</div>
-        <div class="feat">🃏 Scorri le carte e scopri cosa vedere</div>
+        <div class="feat">🎲 Un tocco e ti diciamo cosa guardare</div>
+        <div class="feat">📺 Solo film inclusi nei tuoi abbonamenti</div>
+        <div class="feat">🃏 Più carte scorri, più la scelta è giusta</div>
         <div class="feat">🏆 Cine-quiz ogni giorno, classifica ogni settimana</div></div>`;
     foot=`<button class="btn" data-a="onbGo" data-step="auth">Inizia</button>`;
   }
@@ -1578,12 +1637,7 @@ async function renderOnb(){
     const p=prof();
     body=`${dots}<h2 class="big">A cosa sei abbonato?</h2><p class="muted">Ti proporremo solo film inclusi nei tuoi abbonamenti. Puoi cambiarli quando vuoi.</p>
       <div class="chips" style="margin-top:16px">${metaOk?PROVIDERS.slice(0,16).map(g=>chip(`${logoHtml(g)}${esc(g.name)}`,g.ids.some(id=>p.providerIds.includes(id)),`data-a="prov" data-name="${esc(g.name)}"`,"plat")).join(""):`<span class="muted">Caricamento piattaforme…</span>`}</div>`;
-    foot=`<button class="btn" data-a="onbGo" data-step="genres" ${p.providerIds.length?"":"disabled"}>Continua</button>`;
-  }
-  if(s==="genres"){
-    body=`${dots}<h2 class="big">Cosa ti piace guardare?</h2><p class="muted">Facoltativo. Ci aiuta a centrare i tuoi gusti.</p>
-      <div class="chips" style="margin-top:16px">${GENRES.map(g=>chip(`${GENRE_EMOJI[g.id]||"🎬"} ${esc(g.name)}`,prof().favGenres.includes(g.id),`data-a="favGenre" data-id="${g.id}"`)).join("")}</div>`;
-    foot=`<button class="btn" data-a="onbGo" data-step="seen">Continua</button>`;
+    foot=`<button class="btn" data-a="onbGo" data-step="seen" ${p.providerIds.length?"":"disabled"}>Continua</button>`;
   }
   if(s==="seen"){
     if(!onb.seenTiles){
@@ -1600,7 +1654,7 @@ async function renderOnb(){
   }
   if(s==="done"){
     body=`<div class="hero-emoji">🎉</div><h2 class="big" style="text-align:center">Tutto pronto, ${esc(me().name)}!</h2>
-      <p style="text-align:center;color:var(--muted);line-height:1.6">In <b>🔍 Cerca</b> scegli filtri o descrivi cosa ti va, poi premi <b>🎲 Sorprendimi</b> o guarda tutti i film.<br><br>In <b>🃏 Scopri</b> scorri le carte: quelli già visti vanno in Rewatch, con un doppio tap ❤️ li salvi.<br><br>In <b>🏆 Game</b> ogni giorno c'è il cine-quiz con la classifica della settimana.</p>`;
+      <p style="text-align:center;color:var(--muted);line-height:1.6">Quando non sai cosa guardare, apri l'app e premi <b>🎲 Scegli per me</b>: ti proponiamo un film. Se vuoi, prima dicci che voglia hai.<br><br>In <b>🃏 Scopri</b> scorri le carte: ogni risposta ci insegna i tuoi gusti e rende la scelta più giusta.<br><br>In <b>🏆 Game</b> ogni giorno c'è il cine-quiz con la classifica della settimana.</p>`;
     foot=`<button class="btn" data-a="onbFinish">Andiamo</button>`;
   }
   el.innerHTML=`<div class="wrap"><div class="body">${body}</div><div class="onbfoot">${foot}</div></div>`;
@@ -1769,7 +1823,7 @@ function renderGame(){
   const top=G.deck[0], next=G.deck[1];
   v.innerHTML=`<div class="gwrap">
     <div class="ghead"><b>👀 L'hai già visto?</b><button class="icon" data-a="gameHelp" title="Come funziona">?</button></div>
-    <div class="gq">👈 già visto · non visto 👉 · doppio tap ❤️</div>
+    <div class="gq">Ogni carta ci insegna i tuoi gusti: la prossima scelta sarà più giusta.<br>👈 già visto · non visto 👉 · doppio tap ❤️</div>
     <div class="gstack">${top?(next?cardHtml(next,true):"")+cardHtml(top,false)
       :`<div class="empty" style="padding-top:80px">${G.loading?`<div class="spinner"></div>Preparo le carte…`:`🎉 Hai visto tutte le carte!<br>Torna più tardi per nuovi film.`}</div>`}</div>
     <div class="gbtns g4">
@@ -1778,7 +1832,7 @@ function renderGame(){
       <button class="gh" data-a="swipe" data-dir="h" ${top?"":"disabled"}>❤️<small>In lista</small></button>
       <button data-a="swipe" data-dir="r" ${top?"":"disabled"}>👉<small>Non visto</small></button>
     </div>
-    <div class="gfoot"><span>✓ ${Seen.ids().length} visti · ❤️ ${Swipes.count("want")} salvati</span><span class="link" data-a="undo" style="${G.history.length?"":"opacity:.35;pointer-events:none"}">↩️ Annulla</span></div>
+    <div class="gfoot"><span>✓ ${Seen.ids().length} visti · ❤️ ${Swipes.count("want")} salvati</span><button class="btn ghost sm" data-a="undo" ${G.history.length?"":"disabled"}>↩️ Annulla</button></div>
   </div>`;
   if(tut) v.querySelector(".gwrap").appendChild(tut);
   if(top) bindDrag($("#topCard"));
@@ -1814,7 +1868,7 @@ function commitSwipe(dir){
   if(verdict==="seen") Seen.set(m.id,true,m);
   if(verdict==="dismiss") Dismissed.set(m.id,true);
   if(verdict==="want") Lists.add(Lists.personal().id,m);
-  G.history.push({m,verdict});
+  G.history.push({m,verdict}); buzz(8);
   if(verdict==="want") toast(`❤️ “${m.title}” salvato nella tua lista`);
   renderGame();
   if(G.deck.length<5) refillDeck();
@@ -1939,7 +1993,7 @@ function quizTick(){
   if(left<=0) quizAnswer(-1);
 }
 function quizAnswer(k){
-  if(!QZ) return; clearInterval(QZ.timer);
+  if(!QZ) return; clearInterval(QZ.timer); if(k>=0) buzz(10);
   const q=QZ.qs[QZ.i], left=Math.max(0,qTime(q)-(Date.now()-QZ.t0)/1000), ok=k>=0 && q.opts[k]===q.a[0];
   const pts=ok?(100+10*Math.floor(left))*(q.bonus?2:1):0;
   QZ.rec.answers.push({q:q.idx,ok,pts}); QZ.rec.points+=pts; save();
@@ -1977,7 +2031,7 @@ const A = {
   clearDesc:()=>{ $("#descBox").value=""; prof().descCrit=null; save(); renderDescOut(); renderPick(); $("#descBox").focus(); },
   moreResults:()=>loadResults(false),
   openDetail:d=>openDetail(d.id),
-  resetFilters:()=>{ Object.assign(F(),{genres:[],moods:[],maxDur:0,era:"all",years:null,minRating:0}); prof().descCrit=null; $("#descBox").value=""; save(); renderPick(); },
+  resetFilters:()=>{ Object.assign(F(),{genres:[],moods:[],maxDur:0,era:"all",years:null,minRating:DEFAULT_FILTERS.minRating}); prof().descCrit=null; $("#descBox").value=""; save(); renderPick(); },
   backDetail:()=>showDetail(current,currentRandom),
   restoreDismissed:()=>{ if(confirm("Rimettere in gioco tutti i film che avevi escluso?")){ Dismissed.clear(); renderAll(); toast("Film ripristinati"); } },
   // --- scheda film
@@ -2093,16 +2147,16 @@ const A = {
   onbMethod:d=>{ userEdited=false; if(d.m==="guest"){ Auth.signUp({name:"Ospite",email:null,provider:"guest"}); onb.step="avatar"; renderOnb(); return; }
     onb.method=d.m||null; renderOnb(); },
   onbAuth:()=>{
-    const name=$("#oName").value.trim(); if(!name) return toast("Dimmi come ti chiami");
+    const name=$("#oName").value.trim(); if(!name) return fieldErr("oName","Dimmi come ti chiami");
     const username=Usernames.norm($("#oUser").value);
     let email;
     if(onb.method==="email"){ email=$("#oEmail").value.trim();
-      if(!/^\S+@\S+\.\S+$/.test(email)) return toast("Email non valida");
-      if(($("#oPwd").value||"").length<8) return toast("La password deve avere almeno 8 caratteri");
-      const ex=Auth.byEmail(email); if(!ex){ const err=Usernames.error(username); if(err) return toast(err); }
+      if(!/^\S+@\S+\.\S+$/.test(email)) return fieldErr("oEmail","Email non valida: controlla la @ e il dominio (es. nome@gmail.com)");
+      if(($("#oPwd").value||"").length<8) return fieldErr("oPwd","La password deve avere almeno 8 caratteri");
+      const ex=Auth.byEmail(email); if(!ex){ const err=Usernames.error(username); if(err) return fieldErr("oUser",err); }
       if(ex){ Auth.login(ex.id); toast("Bentornato "+ex.name); if(prof().onboarded){ endOnboarding(); consumeInvite(); } else { onb.step="platforms"; renderOnb(); } return; }
     } else { email=name.toLowerCase().replace(/\s+/g,".")+(onb.method==="apple"?"@icloud.com":"@gmail.com");
-      const err=Usernames.error(username); if(err) return toast(err); }
+      const err=Usernames.error(username); if(err) return fieldErr("oUser",err); }
     Auth.signUp({name,email,provider:onb.method,username}); onb.step="avatar"; onb.method=null; renderOnb();
   },
   // tocco su una locandina: si aggiorna solo quella (lo schermo non si sposta)
@@ -2114,11 +2168,22 @@ const A = {
   joinLink:d=>{ const r=Lists.joinByLink(d.code); closeSheet(); toast(r.error||`Ora hai “${listLabel(r.list)}”`); if(r.list){ openListId=r.list.id; renderAll(); goTo("v-lists"); } },
 };
 let onbRateNext=true;
+// errore mostrato sotto il campo sbagliato (non in un toast lontano)
+function fieldErr(id,msg){
+  document.querySelectorAll("#onb .ferr").forEach(x=>x.remove());
+  document.querySelectorAll("#onb [aria-invalid]").forEach(x=>x.removeAttribute("aria-invalid"));
+  const i=$("#"+id); if(!i) return toast(msg);
+  i.setAttribute("aria-invalid","true");
+  const e=document.createElement("div"); e.className="ferr"; e.setAttribute("role","alert"); e.textContent=msg;
+  ($("#"+id+"Msg")||i).after(e); i.focus();
+}
 document.addEventListener("click",e=>{
   const el=e.target.closest("[data-a]"); if(!el || el.disabled) return;
   const fn=A[el.dataset.a]; if(!fn) return;
   fn(el.dataset,el,e);
 });
+// Invio o Spazio attivano chip e link (che non sono <button>)
+document.addEventListener("keydown",e=>{ if((e.key==="Enter"||e.key===" ") && e.target.matches?.("[data-a][tabindex]:not(button)")){ e.preventDefault(); e.target.click(); } });
 // frecce da tastiera per le carte di Scopri (utile da computer)
 document.addEventListener("keydown",e=>{ if(!G || !$("#v-discover").classList.contains("on") || $("#v-discover .tut") || /INPUT|TEXTAREA/.test(document.activeElement?.tagName)) return;
   const d={ArrowRight:"r",ArrowLeft:"l",ArrowDown:"d",ArrowUp:"h"}[e.key]; if(d){ e.preventDefault(); flyOut(d); } });
@@ -2135,7 +2200,7 @@ function checkUser(input){
   const err=Usernames.error(un,input.id==="eUser"?me()?.id:undefined);
   msg.innerHTML = err ? `<span style="color:#ff8a8d">✕ ${esc(err)}</span>` : `<span style="color:var(--ok)">✓ @${esc(un)} è disponibile</span>`;
 }
-$("#descBox").addEventListener("keydown",e=>{ if(e.key==="Enter"){ $("#descBox").blur(); runSearch(); } });
+$("#descBox").addEventListener("keydown",e=>{ if(e.key==="Enter"){ $("#descBox").blur(); doPick(); } });
 $("#fDuration").onchange=e=>{ F().maxDur=+e.target.value; save(); renderPick(); };
 $("#fEra").onchange=e=>{ F().era=e.target.value; save(); renderPick(); };
 $("#fRating").onchange=e=>{ F().minRating=+e.target.value; save(); renderPick(); };
@@ -2148,7 +2213,7 @@ async function reconnect(verbose){
   connInfo=null;
   try{ await loadMeta(); if(verbose) toast(isDemo()?"Uso il catalogo demo":"✅ Connesso a TMDB"); }
   catch(e){ GENRES=BASE_GENRES; connInfo=diagnose(e); if(verbose) toast("❌ "+connInfo.title); }
-  if(onb){ if(["platforms","genres","seen"].includes(onb.step)) renderOnb(); } else renderAll();
+  if(onb){ if(["platforms","seen"].includes(onb.step)) renderOnb(); } else renderAll();
 }
 
 /* =====================================================================

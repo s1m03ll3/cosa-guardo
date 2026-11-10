@@ -3,22 +3,23 @@
 _Ultimo aggiornamento: 9 novembre 2026 · Fase 1 (prototipo)_
 
 ## 1. Visione
-App che risolve l'indecisione serale: scegli filtri o descrivi cosa ti va, e l'app ti mostra i film disponibili sulle tue piattaforme o nelle tue liste, oppure te ne **sceglie uno lei** ("Sorprendimi"). In più: carte da scorrere per insegnarle i tuoi gusti e un cine-quiz quotidiano con classifica settimanale, che dà un motivo per aprire l'app ogni giorno.
+App che risolve l'indecisione serale: **non scegli tu, sceglie lei**. Premi "🎲 Scegli per me" e l'app ti propone un film disponibile sulle tue piattaforme o nelle tue liste; se vuoi, prima dici che voglia hai o descrivi cosa ti va. L'elenco completo resta disponibile, ma è secondario. In più: carte da scorrere per insegnarle i tuoi gusti e un cine-quiz quotidiano con classifica settimanale, che dà un motivo per aprire l'app ogni giorno.
 
 ## 2. Decisioni prese
 | Tema | Decisione |
 |---|---|
 | Contenuti | Solo film. Serie TV in una fase successiva |
 | Storico suggerimenti | Non previsto |
-| Navigazione | 5 schede: **Cerca · Scopri · Game · Liste · Profilo** |
-| Pagina Cerca | Un blocco filtri: **Descrivi** (campo libero, con ✕ per svuotarlo; viene interpretato quando si cerca), **Cerca tra** (piattaforme, La mia lista, Rewatch, liste a tema, liste collegate), Genere e Mood tutti visibili. Durata/Epoca/Voto e opzioni in "Altre opzioni". Sotto: **🎲 Sorprendimi** (un film a caso) e **🔍 Mostra tutti i film**. L'elenco compare solo dopo la ricerca; entrambi i pulsanti partono con animazione + pubblicità |
+| Principio guida | **L'utente non sceglie: sceglie l'app.** Ogni schermata spinge verso un solo film proposto ("🎲 Scegli per me"); liste ed elenco sono strumenti secondari, non il centro dell'app |
+| Navigazione | 5 schede: **Scegli · Scopri · Game · Liste · Profilo** (icone disegnate, non emoji) |
+| Pagina Scegli | In alto il bottone **🎲 Scegli per me**, visibile senza scorrere, con sopra una riga facoltativa "Che voglia hai?" (mood) e sotto quanti film sono candidati. Tutto il resto (Descrivi, Cerca tra, Genere, Durata/Epoca/Voto, opzioni) sta in **"Personalizza la scelta"**, chiuso, con il numero di filtri attivi. Sotto: **📋 Preferisco vedere l'elenco**. Il film proposto dice in una riga **perché** è stato scelto |
 | Scheda film | Lo guardo · Trailer (**Premium**) · Salva · Già visto · **Non mi interessa**. Nessun link a siti esterni |
 | Scopri | Si apre direttamente sulle carte. ← **già visto** (va in Rewatch) · → **non visto** · ↓ o ✕ **escludi** · **doppio tap ❤️** = nella mia lista. Ogni film compare una volta sola. Tutorial al primo accesso |
-| Liste | Sempre presenti: **La mia lista** e **Rewatch** (i film già visti, utilizzabile in Cerca). Altre liste **a tema** create dall'utente (es. "Film romantici"). Rinomina con ✏️. Niente più liste coppia/amici |
-| Collegamento liste | Dentro una lista: "Collega a una persona" → si cerca il **@nomeutente** → invito da accettare. Chi accetta vede la lista tra le sue come **"Lista @nome"** (sola lettura, sempre aggiornata) e può usarla in Cerca. Chi non è registrato riceve un **link di iscrizione**. Il collegamento si può impostare anche mentre si crea la lista |
+| Liste | Sempre presenti: **La mia lista** e **Rewatch** (i film già visti, utilizzabile in Scegli). Altre liste **a tema** create dall'utente (es. "Film romantici"). Rinomina con ✏️. Niente più liste coppia/amici |
+| Collegamento liste | Dentro una lista: "Collega a una persona" → si cerca il **@nomeutente** → invito da accettare. Chi accetta vede la lista tra le sue come **"Lista @nome"** (sola lettura, sempre aggiornata) e può usarla in Scegli. Chi non è registrato riceve un **link di iscrizione**. Il collegamento si può impostare anche mentre si crea la lista |
 | Game | **Cine-quiz del giorno**: da 1 a 5 domande al giorno uguali per tutti, 15 secondi (10 per vero/falso). Si vede solo il risultato finale. Punti = 100 + 10 per ogni secondo avanzato. **Punteggio cumulativo lun–dom**, classifica settimanale e podio della settimana precedente. **Domenica: domanda bonus che vale doppio** |
 | Account | Apple, Google, email + ospite. **@nomeutente** unico. Avatar: **personaggi famosi di film e cartoni** (vedi §8, diritti d'immagine) |
-| Registrazione | Benvenuto → account → personaggio → piattaforme → generi → "già visti?" (con **"Lo faccio dopo"**) |
+| Registrazione | Benvenuto → account → personaggio → piattaforme → "già visti?" (con **"Lo faccio dopo"**). La domanda sui generi è stata tolta: non serve a scegliere il film (i generi preferiti restano facoltativi nel Profilo) |
 | Guadagni | Pubblicità + Premium (niente pubblicità, trailer, liste illimitate) |
 | Tecnologia (proposta) | App: React Native + Expo · Backend: Supabase (Postgres + Auth) · Dati film: TMDB |
 
@@ -152,7 +153,7 @@ create view quiz_weekly as
 **Chiave TMDB:** mai nell'app. Le chiamate passano da una funzione server che aggiunge la chiave e mette in cache le risposte.
 
 ## 5. Piano economico
-1. **Pubblicità (utenti gratuiti)** – AdMob: interstitial durante "Sorprendimi"/"Mostra tutti" (ogni 3), banner nelle schermate secondarie, eventuale *rewarded* ("guarda un video per un aiuto nel quiz").
+1. **Pubblicità (utenti gratuiti)** – AdMob: interstitial ogni 3 azioni, ma **mai alla prima del giorno e mai tra "Scegli per me" e il film proposto**: compare su "Scegline un altro" o sull'elenco. Banner nelle schermate secondarie, eventuale *rewarded* ("guarda un video per un aiuto nel quiz").
 2. **Premium** (es. 2,49 €/mese o 19,99 €/anno): niente pubblicità, **trailer**, liste illimitate; in futuro filtri avanzati, serie TV.
 3. **Il quiz come motore di ritorno quotidiano**: più aperture = più pubblicità viste. Possibili premi settimanali sponsorizzati (es. un mese di Premium al primo classificato).
 4. **Affiliazioni** (da verificare): prove gratuite delle piattaforme.
@@ -180,7 +181,7 @@ create view quiz_weekly as
 - **Quiz – produzione:** banca domande sul server, nuove domande generate in parte automaticamente (dati TMDB + AI) ma **sempre approvate da una persona** prima di andare online.
 
 ## 8. Domande aperte
-- Nome definitivo dell'app (e di alcune voci: pagina "Cerca", "Cerca tra", pulsante "Sorprendimi")
+- Nome definitivo dell'app (e di alcune voci: "Cerca tra"; la pagina ora si chiama "Scegli" e il pulsante "Scegli per me")
 - Avatar: licenze o illustrazioni originali?
 - Premi per la classifica settimanale del quiz?
 - Frequenza pubblicità: ogni 3 ricerche è un compromesso da testare con utenti reali
