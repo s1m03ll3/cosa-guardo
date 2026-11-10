@@ -1,6 +1,6 @@
 # CosaGuardo – Documento di progetto
 
-_Ultimo aggiornamento: 9 novembre 2026 · Fase 1 (prototipo)_
+_Ultimo aggiornamento: 10 novembre 2026 · Fase 1 (prototipo) · revisione UX applicata_
 
 ## 1. Visione
 App che risolve l'indecisione serale: **non scegli tu, sceglie lei**. Premi "🎲 Scegli per me" e l'app ti propone un film disponibile sulle tue piattaforme o nelle tue liste; se vuoi, prima dici che voglia hai o descrivi cosa ti va. L'elenco completo resta disponibile, ma è secondario. In più: carte da scorrere per insegnarle i tuoi gusti e un cine-quiz quotidiano con classifica settimanale, che dà un motivo per aprire l'app ogni giorno.
@@ -10,20 +10,20 @@ App che risolve l'indecisione serale: **non scegli tu, sceglie lei**. Premi "�
 |---|---|
 | Contenuti | Solo film. Serie TV in una fase successiva |
 | Storico suggerimenti | Non previsto |
-| Principio guida | **L'utente non sceglie: sceglie l'app.** Ogni schermata spinge verso un solo film proposto ("🎲 Scegli per me"); liste ed elenco sono strumenti secondari, non il centro dell'app |
+| Principio guida | **"Goditi il film. A sceglierlo ci pensiamo noi."** L'utente non sceglie: sceglie l'app. Non si perde più tempo a scorrere i cataloghi per poi rivedere sempre lo stesso film perché ormai è tardi. Ogni schermata spinge verso un solo film proposto ("🎲 Scegli per me"); liste ed elenco sono strumenti secondari |
 | Navigazione | 5 schede: **Scegli · Ce l'ho/Manca · Game · Liste · Profilo** (icone disegnate; per Ce l'ho/Manca una margherita senza un petalo) |
-| Pagina Scegli | In alto: **Che voglia hai?** (tutti i mood visibili, a griglia), **Pesca da** (piattaforme, La mia lista, Rewatch, liste a tema e collegate) e il bottone **🎲 Scegli per me**. Il resto (descrizione libera, genere, durata/epoca/voto, opzioni) sta in **"Personalizza la scelta"**, chiuso, con il numero di filtri attivi. Sotto: **📋 Preferisco vedere l'elenco (N)**. Il film proposto dice in una riga **perché** è stato scelto |
+| Pagina Scegli | In alto solo la frase a effetto e il bottone **🎲 Scegli per me**, con sotto il numero di film candidati. Poi **Che film ti senti?** (mood facoltativo, 8 voci su due righe). Tutto il resto sta in **"Personalizza la scelta"**, chiuso, con il numero di filtri attivi: **Scegli tra** (piattaforme, La mia lista, Rewatch, liste a tema e collegate; le liste vuote sono spente), descrizione libera, genere, durata/epoca/voto, opzioni. Sotto: **📋 Preferisco vedere l'elenco (N)**. Se i filtri non danno nessun film il bottone si spegne e compare il rimedio ("Togli Paura" / "Azzera i filtri"). Alla riapertura la domanda sull'ultimo film ("Com'è andata?") sta sotto il bottone, in due righe. Il film proposto dice in una riga **perché** è stato scelto e, se non convince, porta ai filtri ("Cambia i filtri") |
 | Film già visti | **Non vengono mai proposti**, tranne quando in "Pesca da" è selezionata la lista **Rewatch** (e solo da lì). Tolta l'opzione "escludi film già visti" |
-| Scheda film | Lo guardo · Trailer (**Premium**) · Salva · Già visto · **Non mi interessa**. Nessun link a siti esterni |
-| Ce l'ho / Manca | (ex Scopri) Si apre direttamente sulle carte, "come con le figurine". ← **manca** = non visto · → **ce l'ho** = visto (va in Rewatch) · ↓ o ✕ **escludi** · **doppio tap ❤️** = nella mia lista. Mentre trascini compare l'etichetta dal lato giusto. Ogni film compare una volta sola. Tutorial al primo accesso |
+| Scheda film | Due bottoni grandi: **Lo guardo** · **Un altro**. Sotto, piccoli: Salva · Già visto · Non mi interessa · **Trailer (gratuito)**. Si chiude con la ✕ o trascinandola in basso. Nessun link alle piattaforme: il film si guarda in TV; "Lo guardo" serve a sapere se il consiglio è stato seguito e, dopo la conferma, a mettere il film in Rewatch |
+| Ce l'ho / Manca | (ex Scopri) Si apre direttamente sulle carte, "come con le figurine". ← **Non visto** · → **Visto** (va in Rewatch): le etichette sono dirette, "Ce l'ho o manca?" resta solo come titolo · ↓ o ✕ **escludi** · **doppio tap ❤️** = nella mia lista. Mentre trascini compare l'etichetta dal lato giusto. Ogni film compare una volta sola. Tutorial al primo accesso |
 | Liste | Sempre presenti: **La mia lista** e **Rewatch** (i film già visti, utilizzabile in Scegli). Altre liste **a tema** create dall'utente (es. "Film romantici"). Rinomina con ✏️. Niente più liste coppia/amici |
 | Collegamento liste | Dentro una lista: "Collega a una persona" → si cerca il **@nomeutente** → invito da accettare. Chi accetta vede la lista tra le sue come **"Lista @nome"** (sola lettura, sempre aggiornata) e può usarla in Scegli. Chi non è registrato riceve un **link di iscrizione**. Il collegamento si può impostare anche mentre si crea la lista |
-| Game | **Cine-quiz del giorno**: da 1 a 5 domande al giorno uguali per tutti, 15 secondi (10 per vero/falso). Si vede solo il risultato finale. Punti = 100 + 10 per ogni secondo avanzato. **Punteggio cumulativo lun–dom**, classifica settimanale e podio della settimana precedente. **Domenica: domanda bonus che vale doppio** |
+| Game | **Cine-quiz del giorno**: da 1 a 5 domande al giorno uguali per tutti, 15 secondi (10 per vero/falso). Dopo ogni risposta si vede subito se è giusta o sbagliata; a fine partita c'è il riepilogo con le risposte corrette. Chi non ha ancora giocato non compare in classifica ("Gioca per entrare in classifica"). Punti = 100 + 10 per ogni secondo avanzato. **Punteggio cumulativo lun–dom**, classifica settimanale e podio della settimana precedente. **Domenica: domanda bonus che vale doppio** |
 | Sfide tra amici (Game) | Nella pagina Game, accanto al quiz, la scheda **⚔️ Sfide**. Si sfida un **contatto** (aggiunto per @nomeutente con richiesta da accettare, oppure chi condivide con te una lista collegata) o direttamente **@nome**; chi non è iscritto riceve un invito. **Ogni giorno un tipo diverso**, a rotazione: ⚡ domanda secca (vince chi risponde giusto più in fretta) · 🧠 raffica di 5 domande · 🎞️ indovina il film dal fotogramma · 🎵 indovina il film dalla colonna sonora. Si gioca a turni con le stesse domande; vince chi fa più punti, a parità il più veloce. **Chi vince sceglie il film dalla sua lista** (o pesca a caso); chi perde, all'apertura dell'app, vede **"Hai perso! Stasera si guarda…"** con la locandina. Pareggio: film estratto dalle liste di entrambi. Rivincita il giorno dopo |
-| Account | Apple, Google, email + ospite. **@nomeutente** unico. Avatar: **personaggi famosi ritratti nel ruolo** (fotogramma o locandina del film con ritaglio sul volto, es. Joaquin Phoenix nei panni di Joker) e personaggi d'animazione (vedi §5, diritti d'immagine) |
-| Registrazione | Benvenuto → account → personaggio → piattaforme (con nota: "se non trovi il tuo abbonamento, aggiungilo dal Profilo") → **Porta i tuoi dati** (importazione, facoltativa) → **carte "Ce l'ho o manca?"** direttamente nella registrazione, con la nota che si può continuare nell'app. Niente scelta dei generi (resta nel Profilo) |
-| Importazione dati | Da **Letterboxd** (visti, voti, watchlist, liste), **IMDb** (voti, watchlist) e **cronologia Netflix** (solo film), caricando i file CSV che queste app fanno esportare. Ogni film viene riconosciuto su TMDB (codice IMDb, oppure titolo + anno, anche in inglese). Visti → Rewatch, watchlist → La mia lista, voti → gusti, liste Letterboxd → liste a tema. Disponibile anche dal Profilo. TV Time, Trakt e altre: in arrivo (Trakt con collegamento diretto all'account) |
-| Guadagni | Pubblicità + Premium (niente pubblicità, trailer, liste illimitate) |
+| Account | **Si parte sempre da ospiti**: l'account (Apple, Google, email) si chiede solo quando serve, cioè per collegare una lista o sfidare un amico, oppure dal Profilo. **@nomeutente** unico. Avatar: **personaggi famosi ritratti nel ruolo** (fotogramma o locandina del film con ritaglio sul volto, es. De Niro ne Il Padrino) e personaggi d'animazione (vedi §5, diritti d'immagine). Si sceglie **alla creazione dell'account con un test di 3 domande a tema cinema** ("Che personaggio sei?"): alla fine escono 4 personaggi tra cui scegliere; resta disponibile l'elenco completo |
+| Registrazione | Tre schermate, poi subito il primo film: **Benvenuto** (frase a effetto, "Inizia" oppure "Ho già un account") → **Dove guardi i film?** (piattaforme) → **Quali hai già visto?** (griglia con i film più famosi delle sue piattaforme, da toccare: serve solo a non proporre come primo film qualcosa di già visto, non crea liste) → **"Ecco il tuo primo film"**. Niente account, personaggio, importazione, generi o schermata "tutto pronto" |
+| Importazione dati | Solo dal **Profilo** (non più nella registrazione). Da **Letterboxd** (visti, voti, watchlist, liste), **IMDb** (voti, watchlist) e **cronologia Netflix** (solo film), caricando i file CSV che queste app fanno esportare. Ogni film viene riconosciuto su TMDB (codice IMDb, oppure titolo + anno, anche in inglese). Visti → Rewatch, watchlist → La mia lista, voti → gusti, liste Letterboxd → liste a tema. Disponibile anche dal Profilo. TV Time, Trakt e altre: in arrivo (Trakt con collegamento diretto all'account) |
+| Guadagni | Pubblicità + Premium (niente pubblicità, liste illimitate). Il trailer è gratuito |
 | Tecnologia (proposta) | App: React Native + Expo · Backend: Supabase (Postgres + Auth) · Dati film: TMDB |
 
 ## 3. Funzioni del prototipo (`index.html`)
@@ -187,8 +187,8 @@ create view quiz_weekly as
 **Chiave TMDB:** mai nell'app. Le chiamate passano da una funzione server che aggiunge la chiave e mette in cache le risposte.
 
 ## 5. Piano economico
-1. **Pubblicità (utenti gratuiti)** – AdMob: interstitial ogni 3 azioni, ma **mai alla prima del giorno e mai tra "Scegli per me" e il film proposto**: compare su "Scegline un altro" o sull'elenco. Banner nelle schermate secondarie, eventuale *rewarded* ("guarda un video per un aiuto nel quiz").
-2. **Premium** (es. 2,49 €/mese o 19,99 €/anno): niente pubblicità, **trailer**, liste illimitate; in futuro filtri avanzati, serie TV.
+1. **Pubblicità (utenti gratuiti)** – AdMob: interstitial ogni 3 azioni, ma **mai alla prima del giorno, mai tra "Scegli per me" e il film proposto, mai dopo "Non mi interessa" o "Già visto"**: compare su "Un altro" o sull'elenco. Banner nelle schermate secondarie, eventuale *rewarded* ("guarda un video per un aiuto nel quiz").
+2. **Premium** (es. 2,49 €/mese o 19,99 €/anno): niente pubblicità, liste illimitate; in futuro filtri avanzati, serie TV. Il trailer è gratuito per tutti.
 3. **Il quiz come motore di ritorno quotidiano**: più aperture = più pubblicità viste. Possibili premi settimanali sponsorizzati (es. un mese di Premium al primo classificato).
 4. **Affiliazioni** (da verificare): prove gratuite delle piattaforme.
 5. **Costi:** Apple 99 $/anno, Google 25 $ una tantum, Supabase ~25 $/mese dopo la fase gratuita, dominio ~20 €/anno, **licenza commerciale TMDB (da richiedere)**, eventuale AI per descrizioni e domande del quiz.
@@ -217,6 +217,7 @@ create view quiz_weekly as
 
 ## 8. Domande aperte
 - Nome definitivo dell'app
+- Nome della scheda "Ce l'ho/Manca" nella barra in basso: serve un'altra parola chiave (scartate "Visti" e "Gusti")
 - Avatar: licenze o illustrazioni originali?
 - Premi per la classifica settimanale del quiz?
 - Frequenza pubblicità: ogni 3 ricerche è un compromesso da testare con utenti reali
