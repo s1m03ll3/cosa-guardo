@@ -180,7 +180,7 @@
   .tut{position:absolute;inset:0;background:rgba(10,11,14,.94);z-index:3;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center}
   .tut h3{font-size:22px;margin:0 0 6px}
   .tut .demo{width:150px;height:210px;border-radius:16px;background:linear-gradient(135deg,#3b2b6b,#1b6b7b);margin:18px auto;display:flex;align-items:center;justify-content:center;font-size:54px;animation:tutsw 4.5s ease-in-out infinite}
-  @keyframes tutsw{0%,10%{transform:none}20%,28%{transform:translateX(70px) rotate(10deg)}38%,46%{transform:none}56%,64%{transform:translateX(-70px) rotate(-10deg)}74%,82%{transform:translateY(60px)}92%,100%{transform:none}}
+  @keyframes tutsw{0%,10%{transform:none}20%,28%{transform:translateX(-70px) rotate(-10deg)}38%,46%{transform:none}56%,64%{transform:translateX(70px) rotate(10deg)}74%,82%{transform:translateY(60px)}92%,100%{transform:none}}
   .tut .rowt{display:flex;gap:12px;align-items:center;text-align:left;margin:6px 0;font-size:15px;max-width:330px;width:100%}
   .tut .rowt b{font-size:24px;width:34px;text-align:center;flex:none}
   .srcrow{display:flex;align-items:center;gap:8px;margin:2px 0 12px}
@@ -188,6 +188,8 @@
   .hscroll{display:flex;gap:8px;overflow-x:auto;padding:2px 0 6px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
   .hscroll::-webkit-scrollbar{display:none}
   .hscroll .chip{flex:none;padding:7px 11px;font-size:13px}
+  .moodgrid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:4px}
+  .moodgrid .chip{justify-content:center;padding:9px 6px;font-size:13px;border-radius:12px;width:100%}
   .flabel{display:block;font-size:12px;color:var(--muted);margin:10px 0 6px;text-transform:uppercase;letter-spacing:.5px}
   #modeFilters .flabel:first-child{margin-top:0}
   .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
@@ -233,10 +235,10 @@
   .actions2 .btn small{display:block;font-size:12px;font-weight:500;opacity:.92;margin-top:3px}
   .btn.big{padding:16px;font-size:19px}
   .stale{background:#1d2a45;border:1px solid #2d4370;color:#bcd0ff;border-radius:10px;padding:8px 12px;font-size:13px;margin-top:14px}
-  .av.img{overflow:hidden;padding:0;background:var(--card2)}
+  .av.img{overflow:hidden;padding:0;background:var(--card2);position:relative}
   .av.img img{width:100%;height:100%;object-fit:cover;object-position:center 20%}
   .avsec{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin:16px 0 6px}
-  .avopt .ai{width:60px;height:60px;border-radius:50%;overflow:hidden;margin:0 auto 6px;background:var(--card2)}
+  .avopt .ai{width:60px;height:60px;border-radius:50%;overflow:hidden;margin:0 auto 6px;background:var(--card2);position:relative}
   .avopt .ai img{width:100%;height:100%;object-fit:cover;object-position:center 20%}
   .avopt b{display:block;font-size:11px;color:var(--text);line-height:1.2}
   .avopt small{display:block;font-size:10px;color:var(--muted);margin-top:2px;line-height:1.2}
@@ -249,6 +251,11 @@
   .stamp.l{right:20px;left:auto;color:var(--ok);border-color:var(--ok);transform:rotate(14deg)}
   .stamp.r{left:20px;right:auto;color:#c9ced8;border-color:#c9ced8;transform:rotate(-14deg)}
   .stamp.h{left:50%;top:38%;transform:translate(-50%,-50%);color:#ff5a8a;border-color:#ff5a8a;white-space:nowrap}
+  .sidehint{position:absolute;top:44%;z-index:6;padding:8px 12px;border-radius:12px;font-weight:800;font-size:15px;opacity:0;pointer-events:none;transition:opacity .1s}
+  .sidehint.l{left:-6px;background:var(--ok);color:#06210f}
+  .sidehint.r{right:-6px;background:#c9ced8;color:#111}
+  .daisy{display:inline-flex;width:24px;height:24px;color:#fff}
+  .daisy svg{width:24px;height:24px}
   .heartpop{position:absolute;left:50%;top:42%;font-size:120px;transform:translate(-50%,-50%) scale(0);animation:hp .6s ease forwards;pointer-events:none;z-index:5}
   @keyframes hp{45%{transform:translate(-50%,-50%) scale(1.2);opacity:1}100%{transform:translate(-50%,-50%) scale(1);opacity:.9}}
   /* quiz */
@@ -312,9 +319,10 @@
     <div class="pickhero">
       <h2 class="pick-title">Stasera non scegli tu.</h2>
       <p class="pick-sub">Un tocco e ti diciamo <b>un solo film</b> da guardare, tra quelli inclusi nei tuoi abbonamenti.</p>
-      <div class="flabel">Che voglia hai? <span class="opt-note">(facoltativo)</span></div>
-      <div class="hscroll" id="moodChips"></div>
-      <button class="btn big" data-a="pick">🎲 Scegli per me<small id="pickSub">Ti proponiamo un film, subito</small></button>
+      <div class="flabel">Che voglia hai?</div>
+      <div class="moodgrid" id="moodChips"></div>
+      <div class="flabel">Pesca da</div><div class="chips sm" id="srcChips"></div>
+      <button class="btn big" data-a="pick" style="margin-top:14px">🎲 Scegli per me</button>
     </div>
 
     <details class="more" id="filtersBox"><summary>⚙️ Personalizza la scelta<span id="fCount" class="fcount"></span></summary>
@@ -322,7 +330,6 @@
       <div class="ask"><input type="text" id="descBox" placeholder="Es. un film che mi faccia piangere" autocomplete="off" enterkeyhint="go" aria-label="Descrivi cosa ti va">
         <button class="clearx" data-a="clearDesc" id="descClear" title="Cancella" aria-label="Cancella la descrizione" style="visibility:hidden">✕</button></div>
       <div id="descOut"></div>
-      <div class="flabel">Cerca tra</div><div class="chips sm" id="srcChips"></div>
       <div class="flabel">Genere</div><div class="chips sm" id="genreChips"></div>
       <div class="grid3" style="margin-top:12px">
         <label><span class="flabel">Durata</span><select id="fDuration">
@@ -336,8 +343,6 @@
         <label class="switch"><input type="checkbox" id="fOnlyAvail"><span></span></label></div>
       <div class="row"><label for="fPopular">Solo film conosciuti<br><span class="muted">almeno 300 voti su TMDB</span></label>
         <label class="switch"><input type="checkbox" id="fPopular"><span></span></label></div>
-      <div class="row"><label for="fHideSeen">Escludi film che ho già visto<br><span class="muted">non vale per la lista Rewatch</span></label>
-        <label class="switch"><input type="checkbox" id="fHideSeen"><span></span></label></div>
       <div style="text-align:right;margin-top:10px"><span class="link" data-a="resetFilters" tabindex="0" role="button">Azzera filtri</span></div>
     </details>
 
@@ -354,7 +359,7 @@
 
 <nav><div class="in">
   <button data-a="goto" data-view="v-pick" class="on"><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="8.5" r="1.2" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1.2" fill="currentColor"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg></b>Scegli</button>
-  <button data-a="goto" data-view="v-discover"><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="4" width="12" height="16" rx="2.5"/><path d="M4.5 7.5v10A2.5 2.5 0 0 0 7 20"/></svg></b>Scopri</button>
+  <button data-a="goto" data-view="v-discover"><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5.6" rx="2.2" ry="3.6" transform="rotate(0 12 12)"/><ellipse cx="12" cy="5.6" rx="2.2" ry="3.6" transform="rotate(45 12 12)"/><ellipse cx="12" cy="5.6" rx="2.2" ry="3.6" transform="rotate(90 12 12)"/><ellipse cx="12" cy="5.6" rx="2.2" ry="3.6" transform="rotate(135 12 12)"/><ellipse cx="12" cy="5.6" rx="2.2" ry="3.6" transform="rotate(180 12 12)"/><ellipse cx="12" cy="5.6" rx="2.2" ry="3.6" transform="rotate(225 12 12)"/><ellipse cx="12" cy="5.6" rx="2.2" ry="3.6" transform="rotate(270 12 12)"/><circle cx="12" cy="12" r="2.6" fill="currentColor"/><ellipse cx="20.6" cy="20.4" rx="1.1" ry="2" transform="rotate(50 20.6 20.4)"/></svg></b>Ce l'ho/Manca</button>
   <button data-a="goto" data-view="v-quiz"><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8.5 20h7"/></svg></b>Game</button>
   <button data-a="goto" data-view="v-lists"><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1" fill="currentColor"/><circle cx="4.5" cy="12" r="1" fill="currentColor"/><circle cx="4.5" cy="18" r="1" fill="currentColor"/></svg><span class="badge" id="invBadge"></span></b>Liste</button>
   <button data-a="goto" data-view="v-profile"><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-3.5 4.5-5 8-5s6.5 1.5 8 5"/></svg></b>Profilo</button>
@@ -683,17 +688,19 @@ const toggle=(arr,v)=>arr.includes(v)?arr.filter(x=>x!==v):[...arr,v];
 const sleep = ms => new Promise(r=>setTimeout(r,ms));
 function hue(t){ let h=0; for(const c of String(t)) h=(h*31+c.charCodeAt(0))%360; return h; }
 const gradient = t => { const h=hue(t); return `linear-gradient(135deg,hsl(${h} 60% 35%),hsl(${(h+50)%360} 70% 20%))`; };
-// Avatar: personaggi famosi del cinema (foto ufficiale dell'attore su TMDB) e dell'animazione (locandina del film).
+// Avatar: personaggi famosi del cinema e dell'animazione, ritratti NEL RUOLO (fotogramma del film o locandina), ritaglio sul volto.
 // ⚠️ Prototipo: per pubblicare l'app servono i diritti d'immagine, oppure illustrazioni originali.
-const AVATARS_RAW = [["vito","Vito Corleone","Robert De Niro","Il Padrino – Parte II","m","/cT8htcckIuyI1Lqwt1CvD02ynTh.jpg"],["tyler","Tyler Durden","Brad Pitt","Fight Club","m","/ajNaPmXVVMJFg9GWmu6MJzTaXdV.jpg"],["sparrow","Jack Sparrow","Johnny Depp","Pirati dei Caraibi","m","/k2xt6EUxQDwYRKIyI4IBdZxfs8n.jpg"],["joker","Joker","Joaquin Phoenix","Joker","m","/u38k3hQBDwNX0VA22aQceDp9Iyv.jpg"],["forrest","Forrest Gump","Tom Hanks","Forrest Gump","m","/oFvZoKI6lvU03n4YoNGAll9rkas.jpg"],["neo","Neo","Keanu Reeves","Matrix","m","/8RZLOyYGsoRe9p44q3xin9QkMHv.jpg"],["jack","Jack Dawson","Leonardo DiCaprio","Titanic","m","/wo2hJpn04vbtmh0B9utCFdsQhxM.jpg"],["indy","Indiana Jones","Harrison Ford","I predatori dell'arca perduta","m","/pjBMJVPpcZK23Vt1nzr1zEBTWrP.jpg"],["maximus","Massimo Decimo Meridio","Russell Crowe","Il gladiatore","m","/3IBZF0qCZMZ7zJYlgrH0sQzNZV.jpg"],["rocky","Rocky Balboa","Sylvester Stallone","Rocky","m","/gn3pDWthJqR0VDYGViGD3048og7.jpg"],["paul","Paul Atreides","Timothée Chalamet","Dune","m","/dFxpwRpmzpVfP1zjluH68DeQhyj.jpg"],["vincent","Vincent Vega","John Travolta","Pulp Fiction","m","/ap8eEYfBKTLixmVVpRlq4NslDD5.jpg"],["mia","Mia Dolan","Emma Stone","La La Land","f","/ak2Y9wOI3wi2pNQU6OWSvVvWPj5.jpg"],["amelie","Amélie Poulain","Audrey Tautou","Il favoloso mondo di Amélie","f","/d1HVrV8zXy1FJVptmOCkHWG8Jf2.jpg"],["holly","Holly Golightly","Audrey Hepburn","Colazione da Tiffany","f","/wg3RRHA5jV755dV0ksQ9g0Nc2xE.jpg"],["barbie","Barbie","Margot Robbie","Barbie","f","/euDPyqLnuwaWMHajcU3oZ9uZezR.jpg"],["hermione","Hermione Granger","Emma Watson","Harry Potter","f","/mf0OANvWYSzU1d8yggrhyw8IbIz.jpg"],["miawallace","Mia Wallace","Uma Thurman","Pulp Fiction","f","/sBgAZWi3o4FsnaTvnTNtK6jpQcF.jpg"],["furiosa","Furiosa","Charlize Theron","Mad Max: Fury Road","f","/gd7ShD0yt4bsR2STeQ19KQ6hvXL.jpg"],["ripley","Ellen Ripley","Sigourney Weaver","Alien","f","/wTSnfktNBLd6kwQxgvkqYw6vEon.jpg"],["katniss","Katniss Everdeen","Jennifer Lawrence","Hunger Games","f","/6WTY6HjXMGxnHilJRVC3eLnu43F.jpg"],["rose","Rose DeWitt Bukater","Kate Winslet","Titanic","f","/6qNnMsKtKz9si5rabpUEG85UfHp.jpg"],["miranda","Miranda Priestly","Meryl Streep","Il diavolo veste Prada","f","/g5cVxQBAQ3AXt3LhdBXtbbN47Uc.jpg"],["leia","Leia Organa","Carrie Fisher","Star Wars","f","/of4yHmryKPy92eeskUQ7MRmjC3l.jpg"],["shrek","Shrek","","Shrek","a","/iB64vpL3dIObOtMZgX3RqdVdQDc.jpg"],["woody","Woody","","Toy Story","a","/uXDfjJbdP4ijW5hWSBrPrlKpxab.jpg"],["simba","Simba","","Il Re Leone","a","/sKCr78MXSLixwmZ8DyJLrpMsd15.jpg"],["elsa","Elsa","","Frozen","a","/itAKcobTYGpYT8Phwjd8c9hleTo.jpg"],["nemo","Nemo","","Alla ricerca di Nemo","a","/eHuGQ10FUzK1mdOY69wF5pGgEf5.jpg"],["walle","WALL·E","","WALL·E","a","/hbhFnRzzg6ZDmm8YAmxBnQpQIPh.jpg"],["carl","Carl Fredricksen","","Up","a","/mFvoEwSfLqbcWwFsDjQebn9bzFe.jpg"],["totoro","Totoro","","Il mio vicino Totoro","a","/rtGDOeG9LzoerkDGZF9dnVeLppL.jpg"],["stitch","Stitch","","Lilo & Stitch","a","/cFuLvQJPoZpuruAtN3rVnMmLIH8.jpg"],["moana","Vaiana","","Oceania","a","/m5MDZOIFEFlxGiLuAzWzFSsWcye.jpg"],["remy","Rémy","","Ratatouille","a","/t3vaWRPSf6WjDSamIkKDs1iQWna.jpg"],["miles","Miles Morales","","Spider-Man: Un nuovo universo","a","/iiZZdoQBEYBv6id8su7ImL0oCbD.jpg"]];
+// [id, personaggio, attore, film, gruppo, immagine TMDB (fotogramma o locandina), formato, larghezza%, sinistra%, alto%] → ritaglio tondo sul volto del personaggio
+const AVATARS_RAW = [["vito","Vito Corleone","Robert De Niro","Il Padrino – Parte II","m","/7KkoQT7TDfe9VNNrJ8X0p2bQBY4.jpg","w780",568.6,-316.8,-78.0],["tyler","Tyler Durden","Brad Pitt","Fight Club","m","/eVnlzr2Ktro43tDva2n1ah7HTBR.jpg","w780",260.0,-132.0,-66.9],["sparrow","Jack Sparrow","Johnny Depp","Pirati dei Caraibi","m","/uRNgkJSkNBFbbn9fPsEjDIy8Sh3.jpg","w780",391.2,-153.4,-29.2],["joker","Joker","Joaquin Phoenix","Joker","m","/tgcrYiyG75iDcyk3en9NzZis0dh.jpg","w342",130.0,-8.5,-24.1],["forrest","Forrest Gump","Tom Hanks","Forrest Gump","m","/rgz51ESlPANtfy1PUsYItTi1HaB.jpg","w780",391.2,-161.2,-42.4],["neo","Neo","Keanu Reeves","Matrix","m","/fNG7i7RqMErkcqhohV2a6cV1Ehy.jpg","w780",533.4,-200.7,-58.0],["jack","Jack Dawson","Leonardo DiCaprio","Titanic","m","/b2HC07f8Eoq55we2wRFhAYFZU7Z.jpg","w780",604.2,-234.0,-58.8],["indy","Indiana Jones","Harrison Ford","I predatori dell'arca perduta","m","/sN0W6PRyD5RVQvxNojxnZ2ORaUe.jpg","w342",135.0,-6.7,-22.9],["maximus","Massimo Decimo Meridio","Russell Crowe","Il gladiatore","m","/jKCaGq8dJoc4IDGqmDSjU36b7ee.jpg","w780",300.0,-94.0,-116.4],["rocky","Rocky Balboa","Sylvester Stallone","Rocky","m","/5FhnTJkfRYG4Ng3LJ8qsUpcFy0O.jpg","w342",200.0,-70.0,-10.0],["paul","Paul Atreides","Timothée Chalamet","Dune","m","/34T7UYDSNfEQbuealcm4Plibla2.jpg","w342",150.0,-25.0,-31.0],["vincent","Vincent Vega","John Travolta","Pulp Fiction","m","/tfaY1QVIhkr4ft1eUk1UP2ZdfCC.jpg","w780",462.3,-116.4,-28.0],["mia","Mia Dolan","Emma Stone","La La Land","f","/frM7tvt49DjYJx5TW7GSDyRogEw.jpg","w780",355.6,-99.4,-34.0],["amelie","Amélie Poulain","Audrey Tautou","Il favoloso mondo di Amélie","f","/bgWRWA4cSjMrBEGaJSrWxsItsXE.jpg","w342",140.0,-20.0,-25.6],["holly","Holly Golightly","Audrey Hepburn","Colazione da Tiffany","f","/xt51KynU907zIUbvs0vpUyg1rb6.jpg","w780",426.7,-154.8,-22.0],["barbie","Barbie","Margot Robbie","Barbie","f","/6jZnkVwyh2wbN438UcMFV5VqSIR.jpg","w342",220.0,-42.4,-58.8],["hermione","Hermione Granger","Emma Watson","Harry Potter","f","/oMHB4CgScsgBBlwILPd3MM1E840.jpg","w780",817.9,-23.6,-193.8],["miawallace","Mia Wallace","Uma Thurman","Pulp Fiction","f","/jFA5fCAbFDXtdRXYipjqjiWxngh.jpg","w342",170.0,-31.6,-22.8],["furiosa","Furiosa","Charlize Theron","Mad Max: Fury Road","f","/bkDnNt0SOBJHXybCvkaQy7VHvm4.jpg","w780",320.0,-180.4,-79.5],["ripley","Ellen Ripley","Sigourney Weaver","Alien","f","/Ad19RSlBqRw4tQLJmYfQN6a8vEe.jpg","w342",160.0,-30.0,-36.4],["katniss","Katniss Everdeen","Jennifer Lawrence","Hunger Games","f","/f5IrlQGAmoF2rEyzXD8igGvt63r.jpg","w342",160.0,-30.0,-34.0],["rose","Rose DeWitt Bukater","Kate Winslet","Titanic","f","/iNPXPAEfdaVlf1NU0W0ec5716UE.jpg","w780",355.6,-127.8,-34.0],["miranda","Miranda Priestly","Meryl Streep","Il diavolo veste Prada","f","/achRrg1n2rXqTx4Mq98WpmHMF1d.jpg","w342",160.0,-30.0,-29.2],["leia","Leia Organa","Carrie Fisher","Star Wars","f","/yrdAamkeqXHm0UYukk8xgoCvc7G.jpg","w780",569.0,-223.1,-65.2],["shrek","Shrek","","Shrek","a","/iB64vpL3dIObOtMZgX3RqdVdQDc.jpg","w500",300.0,-100.0,-183.9],["woody","Woody","","Toy Story","a","/uXDfjJbdP4ijW5hWSBrPrlKpxab.jpg","w500",320.0,-7.6,-218.7],["simba","Simba","","Il Re Leone","a","/sKCr78MXSLixwmZ8DyJLrpMsd15.jpg","w500",240.0,-84.4,-7.6],["elsa","Elsa","","Frozen","a","/itAKcobTYGpYT8Phwjd8c9hleTo.jpg","w500",440.0,-0.0,-266.6],["nemo","Nemo","","Alla ricerca di Nemo","a","/pDMndR1yj7WHZmLTwzLxMu16xxD.jpg","w780",302.3,-131.4,-31.6],["walle","WALL·E","","WALL·E","a","/3CvNc04vTwTir5q3LBDuvUb8Ng6.jpg","w780",444.5,-141.1,-32.5],["carl","Carl Fredricksen","","Up","a","/hGGC9gKo7CFE3fW07RA587e5kol.jpg","w780",533.4,-323.4,-49.0],["totoro","Totoro","","Il mio vicino Totoro","a","/rtGDOeG9LzoerkDGZF9dnVeLppL.jpg","w500",200.0,-90.0,-90.9],["stitch","Stitch","","Lilo & Stitch","a","/cFuLvQJPoZpuruAtN3rVnMmLIH8.jpg","w500",300.0,-106.0,-287.3],["moana","Vaiana","","Oceania","a","/rPCvRf72tkMCao9mRT99DYJUZLE.jpg","w780",355.6,-127.8,-26.0],["remy","Rémy","","Ratatouille","a","/qxGmHvmjlBlH5WZOhdHEHAjHaMB.jpg","w780",391.2,-184.7,-38.0],["miles","Miles Morales","","Spider-Man: Un nuovo universo","a","/iiZZdoQBEYBv6id8su7ImL0oCbD.jpg","w500",220.0,-60.0,-49.0]];
 const AVATAR_GROUPS = {m:"Attori",f:"Attrici",a:"Animazione"};
-const AVATARS = AVATARS_RAW.map(([id,name,actor,film,g,path])=>({id,name,actor,film,g,path}));
+const AVATARS = AVATARS_RAW.map(([id,name,actor,film,g,path,size,w,l,t])=>({id,name,actor,film,g,path,size,w,l,t}));
+const avImg = a => `<img src="${img(a.path,a.size)}" alt="" loading="lazy" style="position:absolute;max-width:none;height:auto;width:${a.w}%;left:${a.l}%;top:${a.t}%" onerror="this.remove()">`;
 const avatarOf = u => AVATARS.find(a=>a.id===u?.avatar);
 const avatar = (u,cls="") => { const a=avatarOf(u);
-  if(a) return `<span class="av img ${cls}" title="${esc(u?.name)} · ${esc(a.name)}"><img src="${img(a.path,"w185")}" alt="" onerror="this.remove()"></span>`;
+  if(a) return `<span class="av img ${cls}" title="${esc(u?.name)} · ${esc(a.name)}">${avImg(a)}</span>`;
   return `<span class="av ${cls}" style="background:hsl(${hue(u?.id||"x")} 55% 45%)" title="${esc(u?.name)}">${esc((u?.name||"?")[0].toUpperCase())}</span>`; };
 const avatarGrid = sel => Object.entries(AVATAR_GROUPS).map(([g,lbl])=>`<div class="avsec">${lbl}</div><div class="avgrid">${AVATARS.filter(a=>a.g===g).map(a=>
-  `<div class="avopt ${a.id===sel?"on":""}" data-a="setAvatar" data-id="${a.id}"><div class="ai"><img src="${img(a.path,"w185")}" alt="" loading="lazy"></div><b>${esc(a.name)}</b><small>${esc(a.actor?a.actor+" · ":"")}${esc(a.film)}</small></div>`).join("")}</div>`).join("");
+  `<div class="avopt ${a.id===sel?"on":""}" data-a="setAvatar" data-id="${a.id}"><div class="ai">${avImg(a)}</div><b>${esc(a.name)}</b><small>${esc(a.actor?a.actor+" · ":"")}${esc(a.film)}</small></div>`).join("")}</div>`).join("");
 
 function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("on"); clearTimeout(t._x); t._x=setTimeout(()=>t.classList.remove("on"),2200); }
 function debounce(fn,ms){ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a),ms); }; }
@@ -938,10 +945,10 @@ const understoodHtml = (r,clearable) => r.labels.length
    ===================================================================== */
 // criteri attivi = filtri scelti + quello che si è capito dalla descrizione (campo "Descrivi")
 const C = () => { const f=F(), d=prof().descCrit;
-  if(!d) return {...f,keywords:[],people:[],concepts:[]};
+  if(!d) return {...f,hideSeen:true,keywords:[],people:[],concepts:[]};
   const u=(a,b)=>[...new Set([...(a||[]),...(b||[])])];
   const era=f.era!=="all"?f.era:(d.years?"custom":(d.era||"all"));
-  return {...f,genres:u(f.genres,d.genres),moods:u(f.moods,d.moods),
+  return {...f,hideSeen:true,genres:u(f.genres,d.genres),moods:u(f.moods,d.moods),
     maxDur:f.maxDur&&d.maxDur?Math.min(f.maxDur,d.maxDur):(f.maxDur||d.maxDur||0),
     era,years:era==="custom"?(f.era==="custom"?f.years:d.years):null,
     minRating:Math.max(f.minRating||0,d.minRating||0),
@@ -1081,7 +1088,7 @@ const chip=(label,on,attrs="",cls="")=>`<span class="chip ${cls} ${on?"on":""}" 
 const ariaEmoji = s => s.replace(/^(\S+)\s/,'<span aria-hidden="true">$1</span> '); // il lettore di schermo legge solo la parola
 function activeFilterCount(){ const f=F(), d=DEFAULT_FILTERS;
   return f.genres.length+(prof().descCrit?1:0)+(f.maxDur?1:0)+(f.era!=="all"?1:0)+(f.minRating!==d.minRating?1:0)
-    +(f.onlyAvail!==d.onlyAvail?1:0)+(f.hideSeen!==d.hideSeen?1:0)+(f.popular!==d.popular?1:0)+(JSON.stringify(f.sources)!==JSON.stringify(d.sources)?1:0); }
+    +(f.onlyAvail!==d.onlyAvail?1:0)+(f.popular!==d.popular?1:0); }
 // quanti film sono candidati con i filtri attuali (per il sottotitolo del bottone e per "elenco")
 let countSeq=0;
 const updateCount = debounce(async()=>{
@@ -1090,7 +1097,6 @@ const updateCount = debounce(async()=>{
   catch(e){ n=-1; }
   if(seq!==countSeq) return;
   const s=n>0?n.toLocaleString("it-IT"):"";
-  $("#pickSub").textContent = n>0 ? `Ne scegliamo uno tra ${s} film adatti a te` : n===0 ? "Nessun film con questi filtri: prova ad allargare la scelta" : "Ti proponiamo un film, subito";
   $("#listBtn").textContent = n>0 ? `📋 Preferisco vedere l'elenco (${s})` : "📋 Preferisco vedere l'elenco";
 },400);
 function renderHeader(){
@@ -1115,7 +1121,7 @@ function renderPick(){
   setOption("#fDuration",f.maxDur,f.maxDur?`< ${fmtDur(f.maxDur)}`:"");
   setOption("#fEra",f.era,f.era==="custom"&&f.years?`${f.years[0]}–${f.years[1]}`:"");
   setOption("#fRating",f.minRating,`${f.minRating}+`);
-  $("#fOnlyAvail").checked=f.onlyAvail; $("#fHideSeen").checked=f.hideSeen; $("#fPopular").checked=f.popular;
+  $("#fOnlyAvail").checked=f.onlyAvail; $("#fPopular").checked=f.popular;
   renderFollowUp();
   if(R.key) renderResults();
 }
@@ -1187,13 +1193,13 @@ function renderResults(){
   if(!R.key){ el.innerHTML=""; return; }
   const total=Math.max(0,R.listCount+(R.seedCount||0)+(R.platTotal||0)-(R.dup||0));
   const stale = R.fkey!==filtersKey() ? `<div class="stale">Hai cambiato i filtri · <span class="link" data-a="search">aggiorna i risultati</span></div>` : "";
-  if(!c.sources.length){ el.innerHTML=stale+`<div class="empty">Seleziona almeno una voce in “Cerca tra”.</div>`; return; }
+  if(!c.sources.length){ el.innerHTML=stale+`<div class="empty">Seleziona almeno una voce in “Pesca da”.</div>`; return; }
   if(R.error && !R.items.length){ el.innerHTML=stale+`<div class="empty">${esc(R.error)}</div>`; return; }
   if(!R.items.length){
     if(R.loading){ el.innerHTML=`<div class="empty">Cerco…</div>`; return; }
     const why=[];
     if(c.sources.includes("platforms") && !prof().providerIds.length) why.push(`Non hai selezionato nessuna piattaforma: <span class="link" data-a="goto" data-view="v-profile">scegline almeno una nel Profilo</span>.`);
-    if(!c.sources.includes("platforms")) why.push(`Stai cercando solo nelle liste: attiva anche <b>📺 Piattaforme</b> in “Cerca tra”.`);
+    if(!c.sources.includes("platforms")) why.push(`Stai cercando solo nelle liste: attiva anche <b>📺 Piattaforme</b> in “Pesca da”.`);
     if(activeListIds().length && !listPool().length) why.push("Le liste selezionate non hanno film che corrispondono (o sono vuote).");
     if(c.genres.length && c.moods.length) why.push("Genere e mood insieme possono escludersi a vicenda: prova a togliere il mood.");
     if(c.minRating>=7.5) why.push(`Il voto minimo (${c.minRating}+) è alto.`);
@@ -1304,7 +1310,7 @@ async function doPick(){
     await applyDesc();
     const f=await withLoader(pick(), shouldShowAd(reroll?"reroll":"pick"));
     if(f){ buzz(); showDetail(f,true); }
-    else toast(!C().sources.length?"Seleziona almeno una voce in “Cerca tra”":"Nessun film corrisponde ai filtri");
+    else toast(!C().sources.length?"Seleziona almeno una voce in “Pesca da”":"Nessun film corrisponde ai filtri");
   }catch(e){ toast(apiErrorMsg(e)); }
   finally{ busy=false; }
 }
@@ -1362,8 +1368,8 @@ function renderListDetail(v){
     <div class="listcard" style="cursor:default"><div class="lic">${mine?LIST_TYPES[l.type].icon:avatar(owner)}</div>
       <div class="info"><div class="t">${esc(listLabel(l))}</div><div class="muted">${items.length} film${mine?"":` · di ${esc(owner?.name)}`}</div></div>
       ${mine?`<button class="icon" title="Rinomina" data-a="renameSheet">✏️</button>`:""}</div>
-    ${isRw&&mine?`<p class="muted" style="line-height:1.5">Qui finiscono i film che hai già visto (da 🃏 Scopri, dalla scheda film o dalla registrazione). Usala in <b>Cerca tra → 🔁 Rewatch</b> quando hai voglia di riguardarne uno.</p>`:""}
-    ${!mine?`<div class="fu"><div class="info">🔗 <b>Lista collegata da ${esc(handle(owner)||owner?.name)}</b><br><span class="muted">La vedi in sola lettura e si aggiorna quando ${esc(owner?.name)} aggiunge film. Puoi usarla in “Cerca tra”.</span></div></div>`:""}
+    ${isRw&&mine?`<p class="muted" style="line-height:1.5">Qui finiscono i film che hai già visto (da “Ce l'ho / Manca”, dalla scheda film o dalla registrazione). Usala in <b>Pesca da → 🔁 Rewatch</b> quando hai voglia di riguardarne uno.</p>`:""}
+    ${!mine?`<div class="fu"><div class="info">🔗 <b>Lista collegata da ${esc(handle(owner)||owner?.name)}</b><br><span class="muted">La vedi in sola lettura e si aggiorna quando ${esc(owner?.name)} aggiunge film. Puoi usarla in “Pesca da”.</span></div></div>`:""}
     ${mine?`<h2>🔗 Collegamenti</h2><div class="section">
       ${viewers.map(m=>`<div class="item">${avatar(m.user)}<div class="info"><div class="t">${esc(m.user?.name)}</div><div class="muted">${esc(handle(m.user))} · la vede come “Lista ${esc(handle(me()))}”</div></div>
         <button class="btn ghost sm" data-a="unshare" data-id="${m.user_id}">Scollega</button></div>`).join("")}
@@ -1386,7 +1392,7 @@ function renderListDetail(v){
     </div>`:""}
     <h2>Film (${items.length})</h2>
     <div class="section">${items.length?items.map(it=>itemRow(it,{canEdit:mine,isRewatch:isRw})).join("")
-      :`<div class="empty">${isRw?"Ancora nessun film visto. Segnali scorrendo le carte in 🃏 Scopri.":"Ancora nessun film."}</div>`}</div>
+      :`<div class="empty">${isRw?"Ancora nessun film visto. Segnali scorrendo le carte in “Ce l'ho / Manca”.":"Ancora nessun film."}</div>`}</div>
     <div class="stack" style="margin-top:18px">${mine?(l.type==="custom"?`<button class="btn danger" data-a="deleteList">Elimina lista</button>`:"")
       :`<button class="btn danger" data-a="leaveList">Togli dalle mie liste</button>`}</div>`;
   if(mine) $("#listSearch").oninput=doSearch;
@@ -1585,7 +1591,7 @@ function seenFoot(){
   const marked=onb.seenTiles.filter(f=>Seen.has(f.id)).length;
   return `<button class="btn" data-a="onbGo" data-step="done" ${marked?"":"disabled"}>${marked?`Continua (${marked} segnat${marked>1?"i":"o"})`:"Tocca i film che hai visto"}</button>
     <button class="btn ghost" data-a="onbGo" data-step="done" style="margin-top:8px">⏭ Lo faccio dopo</button>
-    <p class="muted" style="text-align:center;margin:10px 0 0;line-height:1.5">Potrai farlo quando vuoi nella sezione <b>🃏 Scopri</b>, scorrendo le carte dei film.</p>`;
+    <p class="muted" style="text-align:center;margin:10px 0 0;line-height:1.5">Potrai farlo quando vuoi nella sezione <b>Ce l'ho / Manca</b>, scorrendo le carte dei film.</p>`;
 }
 async function renderOnb(){
   const el=$("#onb"), s=onb.step, idx=ONB_STEPS.indexOf(s);
@@ -1599,7 +1605,7 @@ async function renderOnb(){
       <div class="section stack" style="margin-top:30px">
         <div class="feat">🎲 Un tocco e ti diciamo cosa guardare</div>
         <div class="feat">📺 Solo film inclusi nei tuoi abbonamenti</div>
-        <div class="feat">🃏 Più carte scorri, più la scelta è giusta</div>
+        <div class="feat">🌼 Ce l'ho / Manca: più carte scorri, più la scelta è giusta</div>
         <div class="feat">🏆 Cine-quiz ogni giorno, classifica ogni settimana</div></div>`;
     foot=`<button class="btn" data-a="onbGo" data-step="auth">Inizia</button>`;
   }
@@ -1637,6 +1643,7 @@ async function renderOnb(){
     const p=prof();
     body=`${dots}<h2 class="big">A cosa sei abbonato?</h2><p class="muted">Ti proporremo solo film inclusi nei tuoi abbonamenti. Puoi cambiarli quando vuoi.</p>
       <div class="chips" style="margin-top:16px">${metaOk?PROVIDERS.slice(0,16).map(g=>chip(`${logoHtml(g)}${esc(g.name)}`,g.ids.some(id=>p.providerIds.includes(id)),`data-a="prov" data-name="${esc(g.name)}"`,"plat")).join(""):`<span class="muted">Caricamento piattaforme…</span>`}</div>`;
+    body+=`<div class="hint" style="margin-top:16px;font-size:13px">ℹ️ Non trovi il tuo abbonamento tra questi? Nessun problema: potrai aggiungerlo in qualsiasi momento dal <b>Profilo</b>, dove c'è l'elenco completo delle piattaforme.</div>`;
     foot=`<button class="btn" data-a="onbGo" data-step="seen" ${p.providerIds.length?"":"disabled"}>Continua</button>`;
   }
   if(s==="seen"){
@@ -1654,7 +1661,7 @@ async function renderOnb(){
   }
   if(s==="done"){
     body=`<div class="hero-emoji">🎉</div><h2 class="big" style="text-align:center">Tutto pronto, ${esc(me().name)}!</h2>
-      <p style="text-align:center;color:var(--muted);line-height:1.6">Quando non sai cosa guardare, apri l'app e premi <b>🎲 Scegli per me</b>: ti proponiamo un film. Se vuoi, prima dicci che voglia hai.<br><br>In <b>🃏 Scopri</b> scorri le carte: ogni risposta ci insegna i tuoi gusti e rende la scelta più giusta.<br><br>In <b>🏆 Game</b> ogni giorno c'è il cine-quiz con la classifica della settimana.</p>`;
+      <p style="text-align:center;color:var(--muted);line-height:1.6">Quando non sai cosa guardare, apri l'app e premi <b>🎲 Scegli per me</b>: ti proponiamo un film. Se vuoi, prima dicci che voglia hai.<br><br>In <b>Ce l'ho / Manca</b> scorri le carte: ogni risposta ci insegna i tuoi gusti e rende la scelta più giusta.<br><br>In <b>🏆 Game</b> ogni giorno c'è il cine-quiz con la classifica della settimana.</p>`;
     foot=`<button class="btn" data-a="onbFinish">Andiamo</button>`;
   }
   el.innerHTML=`<div class="wrap"><div class="body">${body}</div><div class="onbfoot">${foot}</div></div>`;
@@ -1779,7 +1786,8 @@ function renderAll(){ if(!me()) return; renderHeader(); renderPick(); renderDisc
    ↓ giù o ✕: escludi (non mi interessa)   doppio tap: ❤️ nella mia lista
    Ogni film analizzato non viene più riproposto.
    ===================================================================== */
-const SW = {l:{verdict:"seen",stamp:"Già visto"}, r:{verdict:"not_seen",stamp:"Non visto"}, d:{verdict:"dismiss",stamp:"Escludi"}, h:{verdict:"want",stamp:"❤️ In lista"}};
+const SW = {l:{verdict:"seen",stamp:"Ce l'ho"}, r:{verdict:"not_seen",stamp:"Manca"}, d:{verdict:"dismiss",stamp:"Escludi"}, h:{verdict:"want",stamp:"❤️ In lista"}};
+const DAISY_SVG = `<span class="daisy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5.6" rx="2.2" ry="3.6" transform="rotate(0 12 12)"/><ellipse cx="12" cy="5.6" rx="2.2" ry="3.6" transform="rotate(45 12 12)"/><ellipse cx="12" cy="5.6" rx="2.2" ry="3.6" transform="rotate(90 12 12)"/><ellipse cx="12" cy="5.6" rx="2.2" ry="3.6" transform="rotate(135 12 12)"/><ellipse cx="12" cy="5.6" rx="2.2" ry="3.6" transform="rotate(180 12 12)"/><ellipse cx="12" cy="5.6" rx="2.2" ry="3.6" transform="rotate(225 12 12)"/><ellipse cx="12" cy="5.6" rx="2.2" ry="3.6" transform="rotate(270 12 12)"/><circle cx="12" cy="12" r="2.6" fill="currentColor"/><ellipse cx="20.6" cy="20.4" rx="1.1" ry="2" transform="rotate(50 20.6 20.4)"/></svg></span>`;
 const Swipes = {
   mine(){ const me=Auth.current().id; return D().swipes.filter(x=>x.user_id===me); },
   has(movieId){ return Swipes.mine().some(x=>x.movie_id===movieId); },
@@ -1822,15 +1830,15 @@ function renderGame(){
   const v=$("#v-discover"); if(!G||!v) return; const tut=v.querySelector(".tut");
   const top=G.deck[0], next=G.deck[1];
   v.innerHTML=`<div class="gwrap">
-    <div class="ghead"><b>👀 L'hai già visto?</b><button class="icon" data-a="gameHelp" title="Come funziona">?</button></div>
-    <div class="gq">Ogni carta ci insegna i tuoi gusti: la prossima scelta sarà più giusta.<br>👈 già visto · non visto 👉 · doppio tap ❤️</div>
-    <div class="gstack">${top?(next?cardHtml(next,true):"")+cardHtml(top,false)
+    <div class="ghead"><b style="display:flex;align-items:center;gap:6px">${DAISY_SVG}Ce l'ho o manca?</b><button class="icon" data-a="gameHelp" title="Come funziona">?</button></div>
+    <div class="gq">Ogni carta ci insegna i tuoi gusti: la prossima scelta sarà più giusta.<br>👈 ce l'ho · manca 👉 · doppio tap ❤️</div>
+    <div class="gstack"><span class="sidehint l" id="shL">👈 Ce l'ho</span><span class="sidehint r" id="shR">Manca 👉</span>${top?(next?cardHtml(next,true):"")+cardHtml(top,false)
       :`<div class="empty" style="padding-top:80px">${G.loading?`<div class="spinner"></div>Preparo le carte…`:`🎉 Hai visto tutte le carte!<br>Torna più tardi per nuovi film.`}</div>`}</div>
     <div class="gbtns g4">
-      <button data-a="swipe" data-dir="l" ${top?"":"disabled"}>👈<small>Già visto</small></button>
+      <button class="gr" data-a="swipe" data-dir="l" ${top?"":"disabled"}>👈<small>Ce l'ho</small></button>
       <button class="gd" data-a="swipe" data-dir="d" ${top?"":"disabled"}>✕<small>Escludi</small></button>
       <button class="gh" data-a="swipe" data-dir="h" ${top?"":"disabled"}>❤️<small>In lista</small></button>
-      <button data-a="swipe" data-dir="r" ${top?"":"disabled"}>👉<small>Non visto</small></button>
+      <button data-a="swipe" data-dir="r" ${top?"":"disabled"}>👉<small>Manca</small></button>
     </div>
     <div class="gfoot"><span>✓ ${Seen.ids().length} visti · ❤️ ${Swipes.count("want")} salvati</span><button class="btn ghost sm" data-a="undo" ${G.history.length?"":"disabled"}>↩️ Annulla</button></div>
   </div>`;
@@ -1841,11 +1849,12 @@ function bindDrag(card){
   let sx=0,sy=0,dx=0,dy=0,drag=false,lastTap=0;
   const st={r:$("#stR"),l:$("#stL"),d:$("#stD")};
   const dirOf=()=> dy>110&&dy>Math.abs(dx) ? "d" : dx>100 ? "r" : dx<-100 ? "l" : null;
-  const reset=()=>{ card.style.transition="transform .25s"; card.style.transform=""; Object.values(st).forEach(x=>x.style.opacity=0); };
+  const reset=()=>{ card.style.transition="transform .25s"; card.style.transform=""; Object.values(st).forEach(x=>x.style.opacity=0); $("#shL").style.opacity=0; $("#shR").style.opacity=0; };
   card.addEventListener("pointerdown",e=>{ drag=true; sx=e.clientX; sy=e.clientY; dx=dy=0; card.setPointerCapture(e.pointerId); card.style.transition="none"; });
   card.addEventListener("pointermove",e=>{ if(!drag) return; dx=e.clientX-sx; dy=e.clientY-sy;
     card.style.transform=`translate(${dx}px,${dy}px) rotate(${dx/18}deg)`;
     st.r.style.opacity=Math.max(0,Math.min(1,dx/110)); st.l.style.opacity=Math.max(0,Math.min(1,-dx/110));
+    $("#shR").style.opacity=st.r.style.opacity; $("#shL").style.opacity=st.l.style.opacity;
     st.d.style.opacity=dy>Math.abs(dx)?Math.max(0,Math.min(1,dy/130)):0; });
   const end=()=>{ if(!drag) return; drag=false;
     if(Math.abs(dx)<8 && Math.abs(dy)<8){ reset(); const now=Date.now(); if(now-lastTap<350){ lastTap=0; flyOut("h"); } else lastTap=now; return; }
@@ -1857,7 +1866,7 @@ function flyOut(dir){
   if(dir==="h"){ const h=document.createElement("div"); h.className="heartpop"; h.textContent="❤️"; card.appendChild(h);
     setTimeout(()=>{ card.style.transition="transform .3s ease-in"; card.style.transform="translate(0,-130%) scale(.9)"; },380);
     return setTimeout(()=>commitSwipe(dir),640); }
-  const st={r:"#stR",l:"#stL",d:"#stD"}[dir]; $(st).style.opacity=1;
+  const st={r:"#stR",l:"#stL",d:"#stD"}[dir]; $(st).style.opacity=1; if(dir==="l"||dir==="r") $(dir==="l"?"#shL":"#shR").style.opacity=1;
   card.style.transition="transform .3s ease-in";
   card.style.transform=dir==="r"?"translate(140%,-10%) rotate(25deg)":dir==="l"?"translate(-140%,-10%) rotate(-25deg)":"translate(0,130%)";
   setTimeout(()=>commitSwipe(dir),260);
@@ -1884,10 +1893,10 @@ function undoSwipe(){
 function showTutorial(){
   const w=$("#v-discover .gwrap"); if(!w || w.querySelector(".tut")) return;
   const t=document.createElement("div"); t.className="tut";
-  t.innerHTML=`<h3>👀 L'hai già visto?</h3><div class="muted">Ti mostriamo i film più famosi, uno alla volta. Rispondi con un gesto:</div>
+  t.innerHTML=`<h3 style="display:flex;align-items:center;justify-content:center;gap:6px">${DAISY_SVG} Ce l'ho o manca?</h3><div class="muted">Come con le figurine: ti mostriamo i film più famosi, uno alla volta. Rispondi con un gesto:</div>
     <div class="demo">🎬</div>
-    <div class="rowt"><b>👈</b><div><b style="font-size:15px;width:auto">Sinistra</b> · L'ho già visto <span class="muted">(finisce nella lista Rewatch)</span></div></div>
-    <div class="rowt"><b>👉</b><div><b style="font-size:15px;width:auto">Destra</b> · Non l'ho visto</div></div>
+    <div class="rowt"><b>👈</b><div><b style="font-size:15px;width:auto">Sinistra · Ce l'ho</b>: l'ho già visto <span class="muted">(finisce nella lista Rewatch)</span></div></div>
+    <div class="rowt"><b>👉</b><div><b style="font-size:15px;width:auto">Destra · Manca</b>: non l'ho visto</div></div>
     <div class="rowt"><b>👇</b><div><b style="font-size:15px;width:auto">Giù o ✕</b> · Escludi <span class="muted">(non te lo proporremo più)</span></div></div>
     <div class="rowt"><b>❤️</b><div><b style="font-size:15px;width:auto">Doppio tap</b> · Mi interessa: va nella tua lista</div></div>
     <p class="muted" style="margin:14px 0 18px">Ogni film compare una volta sola. Sbagliato? C'è sempre “↩️ Annulla”.</p>
@@ -2184,7 +2193,7 @@ document.addEventListener("click",e=>{
 });
 // Invio o Spazio attivano chip e link (che non sono <button>)
 document.addEventListener("keydown",e=>{ if((e.key==="Enter"||e.key===" ") && e.target.matches?.("[data-a][tabindex]:not(button)")){ e.preventDefault(); e.target.click(); } });
-// frecce da tastiera per le carte di Scopri (utile da computer)
+// frecce da tastiera per le carte di "Ce l'ho / Manca" (utile da computer)
 document.addEventListener("keydown",e=>{ if(!G || !$("#v-discover").classList.contains("on") || $("#v-discover .tut") || /INPUT|TEXTAREA/.test(document.activeElement?.tagName)) return;
   const d={ArrowRight:"r",ArrowLeft:"l",ArrowDown:"d",ArrowUp:"h"}[e.key]; if(d){ e.preventDefault(); flyOut(d); } });
 let userEdited=false;
@@ -2204,7 +2213,6 @@ $("#descBox").addEventListener("keydown",e=>{ if(e.key==="Enter"){ $("#descBox")
 $("#fDuration").onchange=e=>{ F().maxDur=+e.target.value; save(); renderPick(); };
 $("#fEra").onchange=e=>{ F().era=e.target.value; save(); renderPick(); };
 $("#fRating").onchange=e=>{ F().minRating=+e.target.value; save(); renderPick(); };
-$("#fHideSeen").onchange=e=>{ F().hideSeen=e.target.checked; save(); renderPick(); };
 $("#fPopular").onchange=e=>{ F().popular=e.target.checked; save(); renderPick(); };
 $("#fOnlyAvail").onchange=e=>{ F().onlyAvail=e.target.checked; save(); renderPick(); };
 

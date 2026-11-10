@@ -11,15 +11,16 @@ App che risolve l'indecisione serale: **non scegli tu, sceglie lei**. Premi "�
 | Contenuti | Solo film. Serie TV in una fase successiva |
 | Storico suggerimenti | Non previsto |
 | Principio guida | **L'utente non sceglie: sceglie l'app.** Ogni schermata spinge verso un solo film proposto ("🎲 Scegli per me"); liste ed elenco sono strumenti secondari, non il centro dell'app |
-| Navigazione | 5 schede: **Scegli · Scopri · Game · Liste · Profilo** (icone disegnate, non emoji) |
-| Pagina Scegli | In alto il bottone **🎲 Scegli per me**, visibile senza scorrere, con sopra una riga facoltativa "Che voglia hai?" (mood) e sotto quanti film sono candidati. Tutto il resto (Descrivi, Cerca tra, Genere, Durata/Epoca/Voto, opzioni) sta in **"Personalizza la scelta"**, chiuso, con il numero di filtri attivi. Sotto: **📋 Preferisco vedere l'elenco**. Il film proposto dice in una riga **perché** è stato scelto |
+| Navigazione | 5 schede: **Scegli · Ce l'ho/Manca · Game · Liste · Profilo** (icone disegnate; per Ce l'ho/Manca una margherita senza un petalo) |
+| Pagina Scegli | In alto: **Che voglia hai?** (tutti i mood visibili, a griglia), **Pesca da** (piattaforme, La mia lista, Rewatch, liste a tema e collegate) e il bottone **🎲 Scegli per me**. Il resto (descrizione libera, genere, durata/epoca/voto, opzioni) sta in **"Personalizza la scelta"**, chiuso, con il numero di filtri attivi. Sotto: **📋 Preferisco vedere l'elenco (N)**. Il film proposto dice in una riga **perché** è stato scelto |
+| Film già visti | **Non vengono mai proposti**, tranne quando in "Pesca da" è selezionata la lista **Rewatch** (e solo da lì). Tolta l'opzione "escludi film già visti" |
 | Scheda film | Lo guardo · Trailer (**Premium**) · Salva · Già visto · **Non mi interessa**. Nessun link a siti esterni |
-| Scopri | Si apre direttamente sulle carte. ← **già visto** (va in Rewatch) · → **non visto** · ↓ o ✕ **escludi** · **doppio tap ❤️** = nella mia lista. Ogni film compare una volta sola. Tutorial al primo accesso |
+| Ce l'ho / Manca | (ex Scopri) Si apre direttamente sulle carte, "come con le figurine". ← **ce l'ho** = visto (va in Rewatch) · → **manca** = non visto · ↓ o ✕ **escludi** · **doppio tap ❤️** = nella mia lista. Mentre trascini compare l'etichetta dal lato giusto. Ogni film compare una volta sola. Tutorial al primo accesso |
 | Liste | Sempre presenti: **La mia lista** e **Rewatch** (i film già visti, utilizzabile in Scegli). Altre liste **a tema** create dall'utente (es. "Film romantici"). Rinomina con ✏️. Niente più liste coppia/amici |
 | Collegamento liste | Dentro una lista: "Collega a una persona" → si cerca il **@nomeutente** → invito da accettare. Chi accetta vede la lista tra le sue come **"Lista @nome"** (sola lettura, sempre aggiornata) e può usarla in Scegli. Chi non è registrato riceve un **link di iscrizione**. Il collegamento si può impostare anche mentre si crea la lista |
 | Game | **Cine-quiz del giorno**: da 1 a 5 domande al giorno uguali per tutti, 15 secondi (10 per vero/falso). Si vede solo il risultato finale. Punti = 100 + 10 per ogni secondo avanzato. **Punteggio cumulativo lun–dom**, classifica settimanale e podio della settimana precedente. **Domenica: domanda bonus che vale doppio** |
-| Account | Apple, Google, email + ospite. **@nomeutente** unico. Avatar: **personaggi famosi di film e cartoni** (vedi §8, diritti d'immagine) |
-| Registrazione | Benvenuto → account → personaggio → piattaforme → "già visti?" (con **"Lo faccio dopo"**). La domanda sui generi è stata tolta: non serve a scegliere il film (i generi preferiti restano facoltativi nel Profilo) |
+| Account | Apple, Google, email + ospite. **@nomeutente** unico. Avatar: **personaggi famosi ritratti nel ruolo** (fotogramma o locandina del film con ritaglio sul volto, es. Joaquin Phoenix nei panni di Joker) e personaggi d'animazione (vedi §5, diritti d'immagine) |
+| Registrazione | Benvenuto → account → personaggio → piattaforme (con nota: "se non trovi il tuo abbonamento, aggiungilo dal Profilo") → "già visti?" (con **"Lo faccio dopo"**). La domanda sui generi è stata tolta: non serve a scegliere il film (i generi preferiti restano facoltativi nel Profilo) |
 | Guadagni | Pubblicità + Premium (niente pubblicità, trailer, liste illimitate) |
 | Tecnologia (proposta) | App: React Native + Expo · Backend: Supabase (Postgres + Auth) · Dati film: TMDB |
 
@@ -107,7 +108,7 @@ create table dismissed (                 -- "non mi interessa" / "escludi"
   primary key (user_id, tmdb_id)
 );
 
-create table swipes (                    -- carte di Scopri: ogni film una volta sola
+create table swipes (                    -- carte di Ce l'ho/Manca: ogni film una volta sola
   user_id  uuid references profiles on delete cascade,
   tmdb_id  int,
   verdict  text check (verdict in ('seen','not_seen','dismiss','want')),
@@ -181,7 +182,7 @@ create view quiz_weekly as
 - **Quiz – produzione:** banca domande sul server, nuove domande generate in parte automaticamente (dati TMDB + AI) ma **sempre approvate da una persona** prima di andare online.
 
 ## 8. Domande aperte
-- Nome definitivo dell'app (e di alcune voci: "Cerca tra"; la pagina ora si chiama "Scegli" e il pulsante "Scegli per me")
+- Nome definitivo dell'app
 - Avatar: licenze o illustrazioni originali?
 - Premi per la classifica settimanale del quiz?
 - Frequenza pubblicità: ogni 3 ricerche è un compromesso da testare con utenti reali
