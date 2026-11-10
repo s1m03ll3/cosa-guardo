@@ -20,7 +20,8 @@ App che risolve l'indecisione serale: **non scegli tu, sceglie lei**. Premi "�
 | Collegamento liste | Dentro una lista: "Collega a una persona" → si cerca il **@nomeutente** → invito da accettare. Chi accetta vede la lista tra le sue come **"Lista @nome"** (sola lettura, sempre aggiornata) e può usarla in Scegli. Chi non è registrato riceve un **link di iscrizione**. Il collegamento si può impostare anche mentre si crea la lista |
 | Game | **Cine-quiz del giorno**: da 1 a 5 domande al giorno uguali per tutti, 15 secondi (10 per vero/falso). Si vede solo il risultato finale. Punti = 100 + 10 per ogni secondo avanzato. **Punteggio cumulativo lun–dom**, classifica settimanale e podio della settimana precedente. **Domenica: domanda bonus che vale doppio** |
 | Account | Apple, Google, email + ospite. **@nomeutente** unico. Avatar: **personaggi famosi ritratti nel ruolo** (fotogramma o locandina del film con ritaglio sul volto, es. Joaquin Phoenix nei panni di Joker) e personaggi d'animazione (vedi §5, diritti d'immagine) |
-| Registrazione | Benvenuto → account → personaggio → piattaforme (con nota: "se non trovi il tuo abbonamento, aggiungilo dal Profilo") → "già visti?" (con **"Lo faccio dopo"**). La domanda sui generi è stata tolta: non serve a scegliere il film (i generi preferiti restano facoltativi nel Profilo) |
+| Registrazione | Benvenuto → account → personaggio → piattaforme (con nota: "se non trovi il tuo abbonamento, aggiungilo dal Profilo") → **Porta i tuoi dati** (importazione, facoltativa) → **carte "Ce l'ho o manca?"** direttamente nella registrazione, con la nota che si può continuare nell'app. Niente scelta dei generi (resta nel Profilo) |
+| Importazione dati | Da **Letterboxd** (visti, voti, watchlist, liste), **IMDb** (voti, watchlist) e **cronologia Netflix** (solo film), caricando i file CSV che queste app fanno esportare. Ogni film viene riconosciuto su TMDB (codice IMDb, oppure titolo + anno, anche in inglese). Visti → Rewatch, watchlist → La mia lista, voti → gusti, liste Letterboxd → liste a tema. Disponibile anche dal Profilo. TV Time, Trakt e altre: in arrivo (Trakt con collegamento diretto all'account) |
 | Guadagni | Pubblicità + Premium (niente pubblicità, trailer, liste illimitate) |
 | Tecnologia (proposta) | App: React Native + Expo · Backend: Supabase (Postgres + Auth) · Dati film: TMDB |
 
@@ -106,6 +107,15 @@ create table dismissed (                 -- "non mi interessa" / "escludi"
   tmdb_id int,
   created_at timestamptz default now(),
   primary key (user_id, tmdb_id)
+);
+
+-- importazioni da altre app (per mostrare "✓ N film importati" e non ripetere)
+create table imports (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid references profiles on delete cascade,
+  source text check (source in ('letterboxd','imdb','netflix','trakt','tvtime')),
+  found int, missing int,
+  created_at timestamptz default now()
 );
 
 create table swipes (                    -- carte di Ce l'ho/Manca: ogni film una volta sola

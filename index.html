@@ -243,6 +243,8 @@
   .avopt b{display:block;font-size:11px;color:var(--text);line-height:1.2}
   .avopt small{display:block;font-size:10px;color:var(--muted);margin-top:2px;line-height:1.2}
   .gwrap{position:relative;display:flex;flex-direction:column;height:calc(100vh - 150px);height:calc(100dvh - 150px);min-height:470px}
+  .gwrap.onbg{height:calc(100vh - 330px);height:calc(100dvh - 330px);min-height:420px}
+  .gwrap.onbg .ghead,.gwrap.onbg .gq{display:none}
   .gwrap .ghead{padding:0 0 2px}
   .gwrap .gstack,.gwrap .gbtns,.gwrap .gfoot{width:100%;max-width:420px}
   .gbtns.g4{grid-template-columns:repeat(4,1fr);gap:8px}
@@ -1467,6 +1469,10 @@ function renderProfile(){
       <p class="muted" style="margin:10px 0 0">Servono a proporti più spesso film di questi generi. Anche i tuoi 👍/👎 contano (${Ratings.mine().length} voti finora).</p>
       ${Dismissed.count()?`<p class="muted" style="margin:8px 0 0">🙈 ${Dismissed.count()} film esclusi (“non mi interessa”) · <span class="link" data-a="restoreDismissed">ripristina</span></p>`:""}</div>
 
+    <h2>📦 Porta i tuoi dati</h2>
+    <p class="muted" style="margin:-4px 0 10px">Importa film visti, watchlist e voti da altre app.</p>
+    ${importCards()}
+
     <h2>Abbonamento</h2>
     <div class="section">${p.premium
       ?`<p style="margin:0 0 10px">⭐ Sei Premium: niente pubblicità, trailer e liste illimitate.</p><button class="btn ghost" data-a="cancelPremium">Annulla Premium (simulato)</button>`
@@ -1581,17 +1587,16 @@ function consumeInvite(){
   openSheet(`<h3>🔗 ${esc(l.name)}</h3><p><b>${esc(handle(o)||o?.name)}</b> vuole collegarti questa lista (${Lists.items(l.id).length} film). La vedrai tra le tue liste come “Lista ${esc(handle(o))}”.</p>
     <button class="btn" data-a="joinLink" data-code="${l.invite_code}">Aggiungi alle mie liste</button><button class="btn ghost" data-a="closeSheet" style="margin-top:8px">Non ora</button>`);
 }
-const ONB_STEPS=["welcome","auth","avatar","platforms","seen","done"];
+const ONB_STEPS=["welcome","auth","avatar","platforms","import","seen","done"];
 function startOnboarding(step){ onb={step,method:null,seenTiles:null}; renderOnb(); $("#onb").classList.add("on"); }
 function endOnboarding(){ onb=null; $("#onb").classList.remove("on"); renderAll(); goTo("v-pick"); }
 const avatarPreview = () => { const a=avatarOf(me());
   return `${avatar(me(),"lg")}<div style="margin-top:6px;font-weight:600">${a?esc(a.name):esc(me().name)}</div>${a?`<div class="muted">${esc(a.actor?a.actor+" · ":"")}${esc(a.film)}</div>`:""}`; };
 const avatarFoot = () => `<button class="btn" data-a="onbGo" data-step="platforms">${me().avatar?"Continua":"Salta per ora"}</button>`;
 function seenFoot(){
-  const marked=onb.seenTiles.filter(f=>Seen.has(f.id)).length;
-  return `<button class="btn" data-a="onbGo" data-step="done" ${marked?"":"disabled"}>${marked?`Continua (${marked} segnat${marked>1?"i":"o"})`:"Tocca i film che hai visto"}</button>
-    <button class="btn ghost" data-a="onbGo" data-step="done" style="margin-top:8px">⏭ Lo faccio dopo</button>
-    <p class="muted" style="text-align:center;margin:10px 0 0;line-height:1.5">Potrai farlo quando vuoi nella sezione <b>Ce l'ho / Manca</b>, scorrendo le carte dei film.</p>`;
+  const n=G?G.history.length:0;
+  return `<button class="btn" data-a="onbGo" data-step="done">${n?`Continua (${n} cart${n>1?"e":"a"})`:"Continua"}</button>
+    <p class="muted" style="text-align:center;margin:10px 0 0;line-height:1.5">Non serve finirle tutte: puoi continuare quando vuoi nell'app, nella sezione <b>Ce l'ho / Manca</b>.</p>`;
 }
 async function renderOnb(){
   const el=$("#onb"), s=onb.step, idx=ONB_STEPS.indexOf(s);
@@ -1644,19 +1649,19 @@ async function renderOnb(){
     body=`${dots}<h2 class="big">A cosa sei abbonato?</h2><p class="muted">Ti proporremo solo film inclusi nei tuoi abbonamenti. Puoi cambiarli quando vuoi.</p>
       <div class="chips" style="margin-top:16px">${metaOk?PROVIDERS.slice(0,16).map(g=>chip(`${logoHtml(g)}${esc(g.name)}`,g.ids.some(id=>p.providerIds.includes(id)),`data-a="prov" data-name="${esc(g.name)}"`,"plat")).join(""):`<span class="muted">Caricamento piattaforme…</span>`}</div>`;
     body+=`<div class="hint" style="margin-top:16px;font-size:13px">ℹ️ Non trovi il tuo abbonamento tra questi? Nessun problema: potrai aggiungerlo in qualsiasi momento dal <b>Profilo</b>, dove c'è l'elenco completo delle piattaforme.</div>`;
-    foot=`<button class="btn" data-a="onbGo" data-step="seen" ${p.providerIds.length?"":"disabled"}>Continua</button>`;
+    foot=`<button class="btn" data-a="onbGo" data-step="import" ${p.providerIds.length?"":"disabled"}>Continua</button>`;
+  }
+  if(s==="import"){
+    body=`${dots}<div style="text-align:center;font-size:54px;margin-top:6px">📦</div>
+      <div class="flabel" style="text-align:center;letter-spacing:2px">Porta i tuoi dati</div>
+      <h2 class="big" style="text-align:center">Hai già una collezione altrove?</h2>
+      <p class="muted" style="text-align:center;line-height:1.5;margin-bottom:16px">Importa film visti, watchlist e voti: la tua libreria parte già piena e i consigli diventano subito tuoi.</p>
+      ${importCards()}`;
+    foot=(prof().imports||[]).length?`<button class="btn" data-a="onbGo" data-step="seen">Continua</button>`:`<button class="btn ghost" data-a="onbGo" data-step="seen">Salta, lo farò dopo</button>`;
   }
   if(s==="seen"){
-    if(!onb.seenTiles){
-      body=`${dots}<h2 class="big">Hai già visto qualcuno di questi?</h2><p class="muted">Caricamento…</p>`;
-      el.innerHTML=`<div class="wrap"><div class="body">${body}</div></div>`;
-      try{ const d=await api("/discover/movie",{language:LANG,watch_region:REGION,with_watch_providers:prof().providerIds.join("|"),with_watch_monetization_types:"flatrate",sort_by:"popularity.desc","vote_count.gte":MIN_VOTES,page:1});
-        onb.seenTiles=d.results.slice(0,12).map(normalize); }catch(e){ onb.seenTiles=[]; }
-      return renderOnb();
-    }
-    body=`${dots}<h2 class="big">Hai già visto qualcuno di questi?</h2><p class="muted">Tocca quelli che hai visto: non te li proporremo e finiranno nella tua lista Rewatch.</p>
-      <div class="tiles" style="margin-top:14px">${onb.seenTiles.map(f=>`<div class="tile ${Seen.has(f.id)?"on":""}" data-a="onbSeen" data-id="${f.id}" style="background:${gradient(f.title)}">
-        ${f.poster?`<img src="${img(f.poster,"w185")}" alt="" onerror="this.remove()">`:""}<span>${f.poster?"":esc(f.title)}</span></div>`).join("")||`<p class="muted">Nessun film da mostrare.</p>`}</div>`;
+    body=`${dots}<h2 class="big">Ce l'ho o manca?</h2><p class="muted" style="margin-bottom:6px">Per ogni film: 👈 <b>ce l'ho</b> (l'ho visto) · <b>manca</b> 👉 (non l'ho visto). Così non ti proporremo quello che hai già visto.</p>
+      <div id="onbGame"></div>`;
     foot=seenFoot();
   }
   if(s==="done"){
@@ -1666,6 +1671,7 @@ async function renderOnb(){
   }
   el.innerHTML=`<div class="wrap"><div class="body">${body}</div><div class="onbfoot">${foot}</div></div>`;
   el.scrollTop=0;
+  if(s==="seen"){ $("#v-discover").innerHTML=""; if(!G) G={deck:[],page:prof().scopriPage||0,done:false,loading:false,history:[]}; renderGame(); refillDeck(); if(!prof().tutorials?.scopri) showTutorial(); }
 }
 
 /* ---- Domande del cine-quiz: la prima risposta di "a" è quella giusta (le opzioni vengono mescolate) ----
@@ -1796,6 +1802,7 @@ const Swipes = {
   count(verdict){ return Swipes.mine().filter(x=>x.verdict===verdict).length; },
 };
 let G=null; // mazzo di carte dell'utente corrente
+const gameHost = () => onb && onb.step==="seen" ? $("#onbGame") : $("#v-discover");
 const inAnyList = id => Lists.owned().some(l=>Lists.has(l.id,id));
 const deckOk = m => !Swipes.has(m.id) && !Seen.has(m.id) && !Dismissed.has(m.id) && !inAnyList(m.id);
 function renderDiscover(){
@@ -1827,9 +1834,9 @@ function cardHtml(m,back){
   </div>`;
 }
 function renderGame(){
-  const v=$("#v-discover"); if(!G||!v) return; const tut=v.querySelector(".tut");
+  const v=gameHost(); if(!G||!v) return; const tut=v.querySelector(".tut");
   const top=G.deck[0], next=G.deck[1];
-  v.innerHTML=`<div class="gwrap">
+  v.innerHTML=`<div class="gwrap ${onb?"onbg":""}">
     <div class="ghead"><b style="display:flex;align-items:center;gap:6px">${DAISY_SVG}Ce l'ho o manca?</b><button class="icon" data-a="gameHelp" title="Come funziona">?</button></div>
     <div class="gq">Ogni carta ci insegna i tuoi gusti: la prossima scelta sarà più giusta.<br>👈 ce l'ho · manca 👉 · doppio tap ❤️</div>
     <div class="gstack"><span class="sidehint l" id="shL">👈 Ce l'ho</span><span class="sidehint r" id="shR">Manca 👉</span>${top?(next?cardHtml(next,true):"")+cardHtml(top,false)
@@ -1880,6 +1887,7 @@ function commitSwipe(dir){
   G.history.push({m,verdict}); buzz(8);
   if(verdict==="want") toast(`❤️ “${m.title}” salvato nella tua lista`);
   renderGame();
+  if(onb) $("#onb .onbfoot").innerHTML=seenFoot();
   if(G.deck.length<5) refillDeck();
 }
 function undoSwipe(){
@@ -1888,10 +1896,10 @@ function undoSwipe(){
   if(verdict==="seen") Seen.set(m.id,false);
   if(verdict==="dismiss") Dismissed.set(m.id,false);
   if(verdict==="want") Lists.removeItem(Lists.personal().id,m.id);
-  G.deck.unshift(m); renderGame();
+  G.deck.unshift(m); renderGame(); if(onb) $("#onb .onbfoot").innerHTML=seenFoot();
 }
 function showTutorial(){
-  const w=$("#v-discover .gwrap"); if(!w || w.querySelector(".tut")) return;
+  const w=gameHost()?.querySelector(".gwrap"); if(!w || w.querySelector(".tut")) return;
   const t=document.createElement("div"); t.className="tut";
   t.innerHTML=`<h3 style="display:flex;align-items:center;justify-content:center;gap:6px">${DAISY_SVG} Ce l'ho o manca?</h3><div class="muted">Come con le figurine: ti mostriamo i film più famosi, uno alla volta. Rispondi con un gesto:</div>
     <div class="demo">🎬</div>
@@ -2022,6 +2030,127 @@ function renderQuestion(){
     <div class="qopts">${q.opts.map((o,k)=>`<button class="qopt" data-a="qAns" data-k="${k}">${esc(o)}</button>`).join("")}</div>
   </div>`;
 }
+
+/* =====================================================================
+   12d. PORTA I TUOI DATI – importazione da altre app (file CSV esportati)
+   - Letterboxd: watched.csv, diary.csv, ratings.csv, watchlist.csv e le liste (cartella lists/)
+   - IMDb: ratings.csv (voti) e watchlist.csv
+   - Netflix: cronologia visioni (ViewingActivity / NetflixViewingHistory.csv): solo i film
+   Ogni riga viene cercata su TMDB (per codice IMDb quando c'è, altrimenti titolo + anno).
+   In produzione: stessa logica sul server; per Trakt si userebbe il loro accesso ufficiale (OAuth).
+   ===================================================================== */
+const IMPORTERS = {
+  letterboxd:{name:"Letterboxd",icon:"🟢",desc:"Film visti, voti, watchlist e liste",
+    how:["Apri letterboxd.com da computer → <b>Settings</b> → <b>Import & Export</b>","Premi <b>Export your data</b> e scarica lo zip","Aprilo e carica qui i file: <b>watched.csv</b>, <b>ratings.csv</b>, <b>watchlist.csv</b> e, se vuoi, quelli nella cartella <b>lists</b>"]},
+  imdb:{name:"IMDb",icon:"🟡",desc:"Voti e watchlist",
+    how:["Su imdb.com apri <b>Le tue valutazioni</b> (o la <b>Watchlist</b>)","Dal menu <b>⋯</b> scegli <b>Esporta</b> e scarica il file CSV","Caricalo qui: i voti diventano film visti, la watchlist finisce nella tua lista"]},
+  netflix:{name:"Netflix",icon:"🔴",desc:"Cronologia di quello che hai visto",
+    how:["Da browser vai su netflix.com → <b>Account</b> → <b>Profili</b> → <b>Attività di visualizzazione</b>","In fondo alla pagina premi <b>Scarica tutto</b>","Carica qui il file CSV: importiamo i film (le serie per ora le saltiamo)"]},
+};
+const IMPORT_SOON = [["TV Time","solo con la richiesta dei dati (GDPR); soprattutto serie TV"],["Trakt","in arrivo con il collegamento diretto all'account"],["Cinemaniac","in arrivo"],["Prime Video / Disney+","non permettono di esportare la cronologia"]];
+
+function parseCSV(text){
+  const rows=[]; let row=[], f="", q=false;
+  for(let i=0;i<text.length;i++){ const c=text[i];
+    if(q){ if(c==='"'){ if(text[i+1]==='"'){ f+='"'; i++; } else q=false; } else f+=c; }
+    else if(c==='"') q=true; else if(c===","){ row.push(f); f=""; }
+    else if(c==="\n"||c==="\r"){ if(c==="\r"&&text[i+1]==="\n") i++; row.push(f); rows.push(row); row=[]; f=""; }
+    else f+=c; }
+  if(f!==""||row.length){ row.push(f); rows.push(row); }
+  return rows;
+}
+// riconosce il tipo di file e restituisce le righe da cercare: {title, year, imdb, kind:"seen"|"want", rating:+1|-1|0, list}
+function readExport(name,text){
+  text=text.replace(/^﻿/,""); const rows=parseCSV(text), lower=name.toLowerCase(), out=[];
+  if(/^letterboxd list export/i.test(text)){ // lista di Letterboxd
+    let listName="Lista importata", hdr=-1;
+    rows.forEach((r,i)=>{ if(r[0]==="Date"&&r[1]==="Name"&&rows[i+1]) listName=rows[i+1][1]||listName; if(r[0]==="Position"&&r.includes("Name")) hdr=i; });
+    if(hdr<0) return {type:"?",rows:[]};
+    const h=rows[hdr], iN=h.indexOf("Name"), iY=h.indexOf("Year");
+    rows.slice(hdr+1).forEach(r=>{ if(r[iN]) out.push({title:r[iN],year:+r[iY]||null,kind:"list",list:listName}); });
+    return {type:`Letterboxd · lista “${listName}”`,rows:out};
+  }
+  const h=(rows[0]||[]).map(x=>x.trim()), idx=k=>h.indexOf(k);
+  if(idx("Const")>=0){ // IMDb
+    const iT=idx("Title"), iY=idx("Year"), iR=idx("Your Rating"), iK=idx("Title Type");
+    rows.slice(1).forEach(r=>{ if(!r[idx("Const")]) return;
+      if(iK>=0 && !/movie|film/i.test(r[iK]||"")) return;
+      const v=iR>=0?+r[iR]:0;
+      out.push({imdb:r[idx("Const")],title:r[iT],year:+r[iY]||null,kind:iR>=0?"seen":"want",rating:v>=7?1:(v&&v<=4?-1:0)}); });
+    return {type:iR>=0?"IMDb · voti":"IMDb · watchlist",rows:out};
+  }
+  if(idx("Name")>=0 && idx("Year")>=0){ // Letterboxd
+    const iR=idx("Rating"), kind=/watchlist/.test(lower)?"want":"seen";
+    rows.slice(1).forEach(r=>{ if(!r[idx("Name")]) return; const v=iR>=0?+r[iR]:0;
+      out.push({title:r[idx("Name")],year:+r[idx("Year")]||null,kind,rating:v>=3.5?1:(v&&v<=2?-1:0)}); });
+    return {type:`Letterboxd · ${kind==="want"?"watchlist":iR>=0?"voti":"film visti"}`,rows:out};
+  }
+  if(idx("Title")>=0 && h.length<=3){ // Netflix: Title,Date
+    const seen=new Set();
+    rows.slice(1).forEach(r=>{ const t=(r[idx("Title")]||"").trim(); if(!t) return;
+      if(/:\s*(stagione|season|episodio|episode|capitolo|chapter|parte|part|serie limitata|limited series|volume|vol\.|libro|book)\b/i.test(t)) return;   // serie TV
+      if(seen.has(t)) return; seen.add(t); out.push({title:t,kind:"seen",strict:true}); });
+    return {type:"Netflix · cronologia (solo film)",rows:out};
+  }
+  return {type:"?",rows:[]};
+}
+const normT = t => fold(t||"").replace(/[^a-z0-9]/g,"");
+async function matchMovie(row){
+  if(row.imdb && !isDemo()){ try{ const r=await api(`/find/${row.imdb}`,{external_source:"imdb_id",language:LANG}); const m=(r.movie_results||[])[0]; if(m) return normalize(m); }catch(e){} }
+  const tq=normT(row.title), yr=m=>+(m.release_date||"").slice(0,4), okYear=m=>!row.year||Math.abs(yr(m)-row.year)<=1;
+  const same=m=>[m.title,m.original_title].some(x=>normT(x)===tq) && okYear(m);
+  const search=async lang=>{ const q={query:row.title,language:lang,include_adult:false}; if(row.year) q.year=row.year;
+    let r=(await api("/search/movie",q)).results||[]; if(!r.length&&row.year){ delete q.year; r=(await api("/search/movie",q)).results||[]; } return r; };
+  let res=await search(LANG), hit=res.find(same);
+  if(!hit && !isDemo()){                         // titoli inglesi (Letterboxd, IMDb): cerco anche in inglese, poi riprendo la scheda in italiano
+    const en=await search("en-US"), e=en.find(same);
+    if(e){ try{ return normalize(await api(`/movie/${e.id}`,{language:LANG})); }catch(_){ hit=e; } }
+    if(!res.length) res=en;
+  }
+  if(hit) return normalize(hit);
+  if(row.strict) return null;                    // Netflix: solo corrispondenze esatte (evita falsi positivi)
+  const near=res.filter(okYear).sort((a,b)=>(b.vote_count||0)-(a.vote_count||0))[0];   // altrimenti il più votato di quell'anno
+  return near && (near.vote_count??10)>=10 ? normalize(near) : null;
+}
+let IMP=null; // importazione in corso
+function openImport(src){
+  const s=IMPORTERS[src], done=(prof().imports||[]).filter(x=>x.src===src);
+  openSheet(`<h3>${s.icon} Importa da ${s.name}</h3><p class="muted">${s.desc}</p>
+    <ol class="muted" style="line-height:1.6;padding-left:20px">${s.how.map(x=>`<li>${x}</li>`).join("")}</ol>
+    <label class="btn" for="impFile" style="margin-top:6px">📂 Scegli i file CSV</label>
+    <input type="file" id="impFile" accept=".csv,text/csv" multiple hidden data-src="${src}">
+    <div id="impOut" style="margin-top:12px">${done.length?`<p class="muted">Ultima importazione: ${done[done.length-1].found} film il ${new Date(done[done.length-1].at).toLocaleDateString("it-IT")}.</p>`:""}</div>
+    <p class="muted" style="font-size:12px">I file restano sul tuo telefono: leggiamo solo titoli, anni e voti.</p>`);
+}
+async function runImport(src,files){
+  const out=$("#impOut"); const parsed=[];
+  for(const f of files){ const r=readExport(f.name,await f.text()); parsed.push({file:f.name,...r}); }
+  const rows=parsed.flatMap(p=>p.rows);
+  if(!rows.length){ out.innerHTML=`<p class="muted">😕 Non riconosco questi file. ${parsed.map(p=>esc(p.file)).join(", ")}: controlla di aver scelto i CSV esportati da ${IMPORTERS[src].name}.</p>`; return; }
+  out.innerHTML=`<div class="muted">${parsed.filter(p=>p.rows.length).map(p=>`📄 ${esc(p.type)}: ${p.rows.length} righe`).join("<br>")}</div>
+    <div class="qbar" style="margin:12px 0 6px"><i id="impBar" style="width:0%"></i></div><div class="muted" id="impTxt">Cerco i film…</div>`;
+  IMP={found:0,miss:[]}; const res=new Array(rows.length); let i=0, doneN=0;
+  const worker=async()=>{ while(i<rows.length){ const k=i++; try{ res[k]=await matchMovie(rows[k]); }catch(e){ res[k]=null; }
+    doneN++; $("#impBar")&&($("#impBar").style.width=(doneN/rows.length*100)+"%"); $("#impTxt")&&($("#impTxt").textContent=`Cerco i film… ${doneN} di ${rows.length}`); } };
+  await Promise.all([1,2,3,4].map(worker));
+  let seen=0,want=0,rated=0,listed=0; const lists={};
+  rows.forEach((r,k)=>{ const m=res[k]; if(!m){ IMP.miss.push(r.title+(r.year?` (${r.year})`:"")); return; } IMP.found++;
+    if(r.kind==="seen"){ if(!Seen.has(m.id)) seen++; Seen.set(m.id,true,m); if(r.rating){ Ratings.set(m,r.rating); rated++; } }
+    if(r.kind==="want"){ if(!Lists.has(Lists.personal().id,m.id)) want++; Lists.add(Lists.personal().id,m); }
+    if(r.kind==="list"){ const l=lists[r.list]||(lists[r.list]=Lists.owned().find(x=>x.name===r.list&&x.type==="custom")||Lists.create(r.list,"custom")); Lists.add(l.id,m); listed++; } });
+  prof().imports=[...(prof().imports||[]),{src,at:Date.now(),found:IMP.found}]; save();
+  out.innerHTML=`<div class="fu" style="display:block"><b>✅ Importati ${IMP.found} film su ${rows.length}</b>
+    <div class="muted" style="margin-top:6px;line-height:1.6">${seen?`👀 ${seen} segnati come visti (in Rewatch)<br>`:""}${want?`📋 ${want} aggiunti a “La mia lista”<br>`:""}${rated?`👍 ${rated} voti usati per i tuoi gusti<br>`:""}${listed?`🎞️ ${listed} film in ${Object.keys(lists).length} list${Object.keys(lists).length>1?"e":"a"} a tema<br>`:""}</div></div>
+    ${IMP.miss.length?`<details style="margin-top:8px"><summary class="muted" style="cursor:pointer">${IMP.miss.length} non trovati</summary><div class="muted" style="font-size:12px;line-height:1.5;margin-top:6px">${IMP.miss.slice(0,80).map(esc).join(" · ")}</div></details>`:""}
+    <button class="btn ghost" data-a="closeSheet" style="margin-top:12px">Fatto</button>`;
+  G=null; if(onb){ if(onb.step==="import") renderOnb(); } else renderAll();
+}
+const importCards = (compact) => `${Object.entries(IMPORTERS).map(([k,s])=>{ const n=(prof().imports||[]).filter(x=>x.src===k).reduce((a,x)=>a+x.found,0);
+    return `<div class="listcard" data-a="importOpen" data-id="${k}"><div class="lic">${s.icon}</div><div class="info"><div class="t">${s.name}</div><div class="muted">${n?`✓ ${n} film importati`:s.desc}</div></div><span class="muted">›</span></div>`; }).join("")}
+  <details style="margin-top:4px"><summary class="muted" style="cursor:pointer;text-align:center">Altre app</summary>
+    <div class="section" style="margin-top:8px">${IMPORT_SOON.map(([n,t])=>`<div class="item"><div class="info"><div class="t" style="font-size:14px">${n}</div><div class="muted">${t}</div></div></div>`).join("")}</div></details>`;
+
+document.addEventListener("change",e=>{ if(e.target.id==="impFile" && e.target.files.length) runImport(e.target.dataset.src,[...e.target.files]); });
 
 function goTo(view){
   document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("on",x.dataset.view===view));
@@ -2169,6 +2298,7 @@ const A = {
     Auth.signUp({name,email,provider:onb.method,username}); onb.step="avatar"; onb.method=null; renderOnb();
   },
   // tocco su una locandina: si aggiorna solo quella (lo schermo non si sposta)
+  importOpen:d=>openImport(d.id),
   onbSeen:(d,el)=>{ const id=+d.id, f=onb.seenTiles.find(x=>x.id===id), on=!Seen.has(id);
     Seen.set(id,on,f); el.classList.toggle("on",on); $("#onb .onbfoot").innerHTML=seenFoot(); },
   onbFinish:()=>{ prof().onboarded=true; save(); endOnboarding();
@@ -2194,7 +2324,7 @@ document.addEventListener("click",e=>{
 // Invio o Spazio attivano chip e link (che non sono <button>)
 document.addEventListener("keydown",e=>{ if((e.key==="Enter"||e.key===" ") && e.target.matches?.("[data-a][tabindex]:not(button)")){ e.preventDefault(); e.target.click(); } });
 // frecce da tastiera per le carte di "Ce l'ho / Manca" (utile da computer)
-document.addEventListener("keydown",e=>{ if(!G || !$("#v-discover").classList.contains("on") || $("#v-discover .tut") || /INPUT|TEXTAREA/.test(document.activeElement?.tagName)) return;
+document.addEventListener("keydown",e=>{ const h=gameHost(); if(!G || !h || !(onb?onb.step==="seen":$("#v-discover").classList.contains("on")) || h.querySelector(".tut") || /INPUT|TEXTAREA/.test(document.activeElement?.tagName)) return;
   const d={ArrowRight:"r",ArrowLeft:"l",ArrowDown:"d",ArrowUp:"h"}[e.key]; if(d){ e.preventDefault(); flyOut(d); } });
 let userEdited=false;
 document.addEventListener("input",e=>{
