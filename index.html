@@ -250,12 +250,12 @@
   .gbtns.g4{grid-template-columns:repeat(4,1fr);gap:8px}
   .gbtns.g4 button{font-size:20px;padding:8px 2px}
   .gbtns .gh{border-color:#7a2d4a}
-  .stamp.l{right:20px;left:auto;color:var(--ok);border-color:var(--ok);transform:rotate(14deg)}
-  .stamp.r{left:20px;right:auto;color:#c9ced8;border-color:#c9ced8;transform:rotate(-14deg)}
+  .stamp.l{right:20px;left:auto;color:#c9ced8;border-color:#c9ced8;transform:rotate(14deg)}
+  .stamp.r{left:20px;right:auto;color:var(--ok);border-color:var(--ok);transform:rotate(-14deg)}
   .stamp.h{left:50%;top:38%;transform:translate(-50%,-50%);color:#ff5a8a;border-color:#ff5a8a;white-space:nowrap}
   .sidehint{position:absolute;top:44%;z-index:6;padding:8px 12px;border-radius:12px;font-weight:800;font-size:15px;opacity:0;pointer-events:none;transition:opacity .1s}
-  .sidehint.l{left:-6px;background:var(--ok);color:#06210f}
-  .sidehint.r{right:-6px;background:#c9ced8;color:#111}
+  .sidehint.l{left:-6px;background:#c9ced8;color:#111}
+  .sidehint.r{right:-6px;background:var(--ok);color:#06210f}
   .daisy{display:inline-flex;width:24px;height:24px;color:#fff}
   .daisy svg{width:24px;height:24px}
   .heartpop{position:absolute;left:50%;top:42%;font-size:120px;transform:translate(-50%,-50%) scale(0);animation:hp .6s ease forwards;pointer-events:none;z-index:5}
@@ -1660,7 +1660,7 @@ async function renderOnb(){
     foot=(prof().imports||[]).length?`<button class="btn" data-a="onbGo" data-step="seen">Continua</button>`:`<button class="btn ghost" data-a="onbGo" data-step="seen">Salta, lo farò dopo</button>`;
   }
   if(s==="seen"){
-    body=`${dots}<h2 class="big">Ce l'ho o manca?</h2><p class="muted" style="margin-bottom:6px">Per ogni film: 👈 <b>ce l'ho</b> (l'ho visto) · <b>manca</b> 👉 (non l'ho visto). Così non ti proporremo quello che hai già visto.</p>
+    body=`${dots}<h2 class="big">Ce l'ho o manca?</h2><p class="muted" style="margin-bottom:6px">Per ogni film: 👈 <b>manca</b> (non l'ho visto) · <b>ce l'ho</b> 👉 (l'ho visto). Così non ti proporremo quello che hai già visto.</p>
       <div id="onbGame"></div>`;
     foot=seenFoot();
   }
@@ -1792,7 +1792,7 @@ function renderAll(){ if(!me()) return; renderHeader(); renderPick(); renderDisc
    ↓ giù o ✕: escludi (non mi interessa)   doppio tap: ❤️ nella mia lista
    Ogni film analizzato non viene più riproposto.
    ===================================================================== */
-const SW = {l:{verdict:"seen",stamp:"Ce l'ho"}, r:{verdict:"not_seen",stamp:"Manca"}, d:{verdict:"dismiss",stamp:"Escludi"}, h:{verdict:"want",stamp:"❤️ In lista"}};
+const SW = {l:{verdict:"not_seen",stamp:"Manca"}, r:{verdict:"seen",stamp:"Ce l'ho"}, d:{verdict:"dismiss",stamp:"Escludi"}, h:{verdict:"want",stamp:"❤️ In lista"}};
 const DAISY_SVG = `<span class="daisy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5.6" rx="2.2" ry="3.6" transform="rotate(0 12 12)"/><ellipse cx="12" cy="5.6" rx="2.2" ry="3.6" transform="rotate(45 12 12)"/><ellipse cx="12" cy="5.6" rx="2.2" ry="3.6" transform="rotate(90 12 12)"/><ellipse cx="12" cy="5.6" rx="2.2" ry="3.6" transform="rotate(135 12 12)"/><ellipse cx="12" cy="5.6" rx="2.2" ry="3.6" transform="rotate(180 12 12)"/><ellipse cx="12" cy="5.6" rx="2.2" ry="3.6" transform="rotate(225 12 12)"/><ellipse cx="12" cy="5.6" rx="2.2" ry="3.6" transform="rotate(270 12 12)"/><circle cx="12" cy="12" r="2.6" fill="currentColor"/><ellipse cx="20.6" cy="20.4" rx="1.1" ry="2" transform="rotate(50 20.6 20.4)"/></svg></span>`;
 const Swipes = {
   mine(){ const me=Auth.current().id; return D().swipes.filter(x=>x.user_id===me); },
@@ -1838,14 +1838,14 @@ function renderGame(){
   const top=G.deck[0], next=G.deck[1];
   v.innerHTML=`<div class="gwrap ${onb?"onbg":""}">
     <div class="ghead"><b style="display:flex;align-items:center;gap:6px">${DAISY_SVG}Ce l'ho o manca?</b><button class="icon" data-a="gameHelp" title="Come funziona">?</button></div>
-    <div class="gq">Ogni carta ci insegna i tuoi gusti: la prossima scelta sarà più giusta.<br>👈 ce l'ho · manca 👉 · doppio tap ❤️</div>
-    <div class="gstack"><span class="sidehint l" id="shL">👈 Ce l'ho</span><span class="sidehint r" id="shR">Manca 👉</span>${top?(next?cardHtml(next,true):"")+cardHtml(top,false)
+    <div class="gq">Ogni carta ci insegna i tuoi gusti: la prossima scelta sarà più giusta.<br>👈 manca · ce l'ho 👉 · doppio tap ❤️</div>
+    <div class="gstack"><span class="sidehint l" id="shL">👈 Manca</span><span class="sidehint r" id="shR">Ce l'ho 👉</span>${top?(next?cardHtml(next,true):"")+cardHtml(top,false)
       :`<div class="empty" style="padding-top:80px">${G.loading?`<div class="spinner"></div>Preparo le carte…`:`🎉 Hai visto tutte le carte!<br>Torna più tardi per nuovi film.`}</div>`}</div>
     <div class="gbtns g4">
-      <button class="gr" data-a="swipe" data-dir="l" ${top?"":"disabled"}>👈<small>Ce l'ho</small></button>
+      <button data-a="swipe" data-dir="l" ${top?"":"disabled"}>👈<small>Manca</small></button>
       <button class="gd" data-a="swipe" data-dir="d" ${top?"":"disabled"}>✕<small>Escludi</small></button>
       <button class="gh" data-a="swipe" data-dir="h" ${top?"":"disabled"}>❤️<small>In lista</small></button>
-      <button data-a="swipe" data-dir="r" ${top?"":"disabled"}>👉<small>Manca</small></button>
+      <button class="gr" data-a="swipe" data-dir="r" ${top?"":"disabled"}>👉<small>Ce l'ho</small></button>
     </div>
     <div class="gfoot"><span>✓ ${Seen.ids().length} visti · ❤️ ${Swipes.count("want")} salvati</span><button class="btn ghost sm" data-a="undo" ${G.history.length?"":"disabled"}>↩️ Annulla</button></div>
   </div>`;
@@ -1903,8 +1903,8 @@ function showTutorial(){
   const t=document.createElement("div"); t.className="tut";
   t.innerHTML=`<h3 style="display:flex;align-items:center;justify-content:center;gap:6px">${DAISY_SVG} Ce l'ho o manca?</h3><div class="muted">Come con le figurine: ti mostriamo i film più famosi, uno alla volta. Rispondi con un gesto:</div>
     <div class="demo">🎬</div>
-    <div class="rowt"><b>👈</b><div><b style="font-size:15px;width:auto">Sinistra · Ce l'ho</b>: l'ho già visto <span class="muted">(finisce nella lista Rewatch)</span></div></div>
-    <div class="rowt"><b>👉</b><div><b style="font-size:15px;width:auto">Destra · Manca</b>: non l'ho visto</div></div>
+    <div class="rowt"><b>👈</b><div><b style="font-size:15px;width:auto">Sinistra · Manca</b>: non l'ho visto</div></div>
+    <div class="rowt"><b>👉</b><div><b style="font-size:15px;width:auto">Destra · Ce l'ho</b>: l'ho già visto <span class="muted">(finisce nella lista Rewatch)</span></div></div>
     <div class="rowt"><b>👇</b><div><b style="font-size:15px;width:auto">Giù o ✕</b> · Escludi <span class="muted">(non te lo proporremo più)</span></div></div>
     <div class="rowt"><b>❤️</b><div><b style="font-size:15px;width:auto">Doppio tap</b> · Mi interessa: va nella tua lista</div></div>
     <p class="muted" style="margin:14px 0 18px">Ogni film compare una volta sola. Sbagliato? C'è sempre “↩️ Annulla”.</p>
